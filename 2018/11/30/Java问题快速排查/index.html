@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>java问题快速排查 | Better than yesterday</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Kuanger">
+  
+  
+  
+  
+  <meta name="description" content="这是一篇来源于阿里内部技术论坛的文章，原文在阿里内部获得一致好评。">
+<meta name="keywords" content="Java,问题解决">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java问题快速排查">
+<meta property="og:url" content="http://yoursite.com/2018/11/30/Java问题快速排查/index.html">
+<meta property="og:site_name" content="Better than yesterday">
+<meta property="og:description" content="这是一篇来源于阿里内部技术论坛的文章，原文在阿里内部获得一致好评。">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/md_images/p2/1.jpg">
+<meta property="og:image" content="http://yoursite.com/md_images/p2/2.jpg">
+<meta property="og:image" content="http://yoursite.com/md_images/p2/3.jpg">
+<meta property="og:image" content="http://yoursite.com/md_images/p2/4.jpg">
+<meta property="og:image" content="http://yoursite.com/md_images/p2/5.jpg">
+<meta property="og:image" content="http://yoursite.com/md_images/p2/6.jpg">
+<meta property="og:image" content="http://yoursite.com/md_images/p2/7.jpg">
+<meta property="og:image" content="http://yoursite.com/md_images/p2/8.jpg">
+<meta property="og:image" content="http://yoursite.com/md_images/p2/9.jpg">
+<meta property="og:updated_time" content="2018-11-30T02:54:55.588Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java问题快速排查">
+<meta name="twitter:description" content="这是一篇来源于阿里内部技术论坛的文章，原文在阿里内部获得一致好评。">
+<meta name="twitter:image" content="http://yoursite.com/md_images/p2/1.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="Better than yesterday" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css">
+  
+
+  
+  
+  
+
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;" href="#" data-toggle="modal" data-target="#myModal">
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="">
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </ul></div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-Java问题快速排查" style="width: 75%; float:left;" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      Java问题快速排查
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/11/30/Java问题快速排查/" class="article-date">
+	  <time datetime="2018-11-30T02:54:55.000Z" itemprop="datePublished">2018-11-30</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/问题解决/">问题解决</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <!-- <div class="article-entry" itemprop="articleBody">
+      
+        <p>这是一篇来源于阿里内部技术论坛的文章，原文在阿里内部获得一致好评。</p>
+<a id="more"></a>
+<ul>
+<li>作者：红魔七号</li>
+<li>链接：<a href="https://yq.aliyun.com/articles/69520?utm_content=m_10360" target="_blank" rel="noopener">https://yq.aliyun.com/articles/69520?utm_content=m_10360</a></li>
+<li>参考文章： <a href="https://mp.weixin.qq.com/s/TMAe3AyOfUQIOf0hGurR4A" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/TMAe3AyOfUQIOf0hGurR4A</a></li>
+<li>原谅小弟不才，有问题可以下方留言指教~</li>
+</ul>
+<blockquote>
+<p>本文约7000字符，阅读时间约14分钟 – about 14 min read</p>
+</blockquote>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>平时的工作中经常碰到很多疑难问题的处理，在解决问题的同时，有一些工具起到了相当大的作用，在此书写下来，一是作为笔记，可以让自己后续忘记了可快速翻阅，二是分享，希望看到此文的同学们可以拿出自己日常觉得帮助很大的工具，大家一起进步。</p>
+<h3 id="Linux命令类"><a href="#Linux命令类" class="headerlink" title="Linux命令类"></a>Linux命令类</h3><h4 id="tail"><a href="#tail" class="headerlink" title="tail"></a>tail</h4><p>最常用的tail -f</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tail <span class="number">-300</span>f shopbase.log <span class="comment">#倒数300行并进入实时监听文件写入模式</span></span><br></pre></td></tr></table></figure>
+<h4 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">grep forest f.txt     <span class="comment">#文件查找</span></span><br><span class="line">grep forest f.txt cpf.txt <span class="comment">#多文件查找</span></span><br><span class="line">grep <span class="string">'log'</span> /home/admin -r -n <span class="comment">#目录下查找所有符合关键字的文件</span></span><br><span class="line">cat f.txt | grep -i shopbase    </span><br><span class="line">grep <span class="string">'shopbase'</span> /home/admin -r -n --<span class="keyword">include</span> *.&#123;vm,java&#125; <span class="comment">#指定文件后缀</span></span><br><span class="line">grep <span class="string">'shopbase'</span> /home/admin -r -n --exclude *.&#123;vm,java&#125; <span class="comment">#反匹配</span></span><br><span class="line">seq <span class="number">10</span> | grep <span class="number">5</span> -A <span class="number">3</span>    <span class="comment">#上匹配</span></span><br><span class="line">seq <span class="number">10</span> | grep <span class="number">5</span> -B <span class="number">3</span>    <span class="comment">#下匹配</span></span><br><span class="line">seq <span class="number">10</span> | grep <span class="number">5</span> -C <span class="number">3</span>    <span class="comment">#上下匹配，平时用这个就妥了</span></span><br><span class="line">cat f.txt | grep -c <span class="string">'SHOPBASE'</span></span><br></pre></td></tr></table></figure>
+<h4 id="awk"><a href="#awk" class="headerlink" title="awk"></a>awk</h4><ol>
+<li><p>基本命令</p>
+ <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">'&#123;print $4,$6&#125;'</span> f.txt</span><br><span class="line">awk <span class="string">'&#123;print NR,$0&#125;'</span> f.txt cpf.txt    </span><br><span class="line">awk <span class="string">'&#123;print FNR,$0&#125;'</span> f.txt cpf.txt</span><br><span class="line">awk <span class="string">'&#123;print FNR,FILENAME,$0&#125;'</span> f.txt cpf.txt</span><br><span class="line">awk <span class="string">'&#123;print FILENAME,"NR="NR,"FNR="FNR,"$"NF"="$NF&#125;'</span> f.txt cpf.txt</span><br><span class="line"><span class="keyword">echo</span> <span class="number">1</span>:<span class="number">2</span>:<span class="number">3</span>:<span class="number">4</span> | awk -F: <span class="string">'&#123;print $1,$2,$3,$4&#125;'</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>匹配</p>
+ <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">'/ldb/ &#123;print&#125;'</span> f.txt   <span class="comment">#匹配ldb</span></span><br><span class="line">awk <span class="string">'!/ldb/ &#123;print&#125;'</span> f.txt  <span class="comment">#不匹配ldb</span></span><br><span class="line">awk <span class="string">'/ldb/ &amp;&amp; /LISTEN/ &#123;print&#125;'</span> f.txt   <span class="comment">#匹配ldb和LISTEN</span></span><br><span class="line">awk <span class="string">'$5 ~ /ldb/ &#123;print&#125;'</span> f.txt <span class="comment">#第五列匹配ldb</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>内建变量</p>
+</li>
+</ol>
+<ul>
+<li><p><code>NR</code>:NR表示从awk开始执行后，按照记录分隔符读取的数据次数，默认的记录分隔符为换行符，因此默认的就是读取的数据行数，NR可以理解为<code>Number of Record</code>的缩写。</p>
+</li>
+<li><p><code>FNR</code>:在awk处理多个输入文件的时候，在处理完第一个文件后，NR并不会从1开始，而是继续累加，因此就出现了FNR，每当处理一个新文件的时候，FNR就从1开始计数，FNR可以理解为<code>File Number of Record</code>。</p>
+</li>
+<li><p><code>NF</code>: NF表示目前的记录被分割的字段的数目，NF可以理解为<code>Number of Field</code>。</p>
+</li>
+</ul>
+<h4 id="find"><a href="#find" class="headerlink" title="find"></a>find</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">sudo -u admin find /home/admin /tmp /usr -name \*.log <span class="comment">#(多个目录去找)</span></span><br><span class="line">find . -iname \*.txt <span class="comment">#(大小写都匹配)</span></span><br><span class="line">find . -type d <span class="comment">#(当前目录下的所有子目录)</span></span><br><span class="line">find /usr -type l <span class="comment">#(当前目录下所有的符号链接)</span></span><br><span class="line">find /usr -type l -name <span class="string">"z*"</span> -ls <span class="comment">#(符号链接的详细信息 eg:inode,目录)</span></span><br><span class="line">find /home/admin -size +<span class="number">250000</span>k <span class="comment">#(超过250000k的文件，当然+改成-就是小于了)</span></span><br><span class="line">find /home/admin f -perm <span class="number">777</span> -exec ls -l &#123;&#125; \;  <span class="comment">#(按照权限查询文件)</span></span><br><span class="line">find /home/admin -atime <span class="number">-1</span>   <span class="comment">#1天内访问过的文件</span></span><br><span class="line">find /home/admin -ctime <span class="number">-1</span>   <span class="comment">#1天内状态改变过的文件    </span></span><br><span class="line">find /home/admin -mtime <span class="number">-1</span>   <span class="comment">#1天内修改过的文件</span></span><br><span class="line">find /home/admin -amin <span class="number">-1</span>   <span class="comment">#1分钟内访问过的文件</span></span><br><span class="line">find /home/admin -cmin <span class="number">-1</span>   <span class="comment">#1分钟内状态改变过的文件    </span></span><br><span class="line">find /home/admin -mmin <span class="number">-1</span>   <span class="comment">#1分钟内修改过的文件</span></span><br></pre></td></tr></table></figure>
+<h4 id="pgm"><a href="#pgm" class="headerlink" title="pgm"></a>pgm</h4><p>批量查询vm-shopbase满足条件的日志<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pgm -A -f vm-shopbase <span class="string">'cat /home/admin/shopbase/logs/shopbase.log.2017-01-17|grep 2069861630'</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="tsar"><a href="#tsar" class="headerlink" title="tsar"></a>tsar</h4><ul>
+<li>tsar是alibabak开发的一个采集工具，可以上github去clone安装。他可以将历史收集到的数据持久化在磁盘上，所以我们快速来查询历史的系统数据<ul>
+<li><a href="https://github.com/alibaba/tsar" target="_blank" rel="noopener">https://github.com/alibaba/tsar</a></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">tsar  <span class="comment">###可以查看最近一天的各项指标</span></span><br><span class="line"></span><br><span class="line">tsar --live <span class="comment">###可以查看实时指标，默认五秒一刷</span></span><br><span class="line"></span><br><span class="line">tsar -d <span class="number">20161218</span> <span class="comment">###指定查看某天的数据，貌似最多只能看四个月的数据</span></span><br><span class="line"></span><br><span class="line">tsar --mem</span><br><span class="line">tsar --load</span><br><span class="line">tsar --cpu</span><br><span class="line"><span class="comment">###当然这个也可以和-d参数配合来查询某天的单个指标的情况</span></span><br></pre></td></tr></table></figure>
+<h4 id="top"><a href="#top" class="headerlink" title="top"></a>top</h4><p>top除了看一些基本信息之外，剩下的就是配合来查询vm的各种问题了<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ps -ef | grep java</span><br><span class="line">top -H -p pid</span><br></pre></td></tr></table></figure></p>
+<p>获得线程10进制转16进制后jstack去抓看这个线程到底在干啥</p>
+<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">netstat -nat|awk  <span class="string">'&#123;print $6&#125;'</span>|sort|uniq -c|sort -rn </span><br><span class="line"><span class="comment">#查看当前连接，注意close_wait偏高的情况，比如如下</span></span><br></pre></td></tr></table></figure>
+<p><img src="/md_images/p2/1.jpg" alt="1"></p>
+<hr>
+<h3 id="排查利器"><a href="#排查利器" class="headerlink" title="排查利器"></a>排查利器</h3><h4 id="btrace"><a href="#btrace" class="headerlink" title="btrace"></a>btrace</h4><p>首当其冲的要说的是btrace。真是生产环境&amp;预发的排查问题大杀器。更详情可以移步到github：<a href="https://github.com/btraceio/btrace" target="_blank" rel="noopener">https://github.com/btraceio/btrace</a></p>
+<ol>
+<li>查看当前谁调用了ArrayList的add方法，同时只打印当前ArrayList的size大于500的线程调用栈</li>
+<li>监控当前服务方法被调用时返回的值以及请求的参数</li>
+</ol>
+<ul>
+<li><p>注意:</p>
+<ol>
+<li>经过观察，1.3.9的release输出不稳定，要多触发几次才能看到正确的结果</li>
+<li>正则表达式匹配trace类时范围一定要控制，否则极有可能出现跑满CPU导致应用卡死的情况</li>
+<li>由于是字节码注入的原理，想要应用恢复到正常情况，需要重启应用。</li>
+</ol>
+</li>
+</ul>
+<h4 id="Greys"><a href="#Greys" class="headerlink" title="Greys"></a>Greys</h4><p>说几个挺棒的功能(部分功能和btrace重合):</p>
+<ul>
+<li><p><code>sc -df</code> xxx: 输出当前类的详情,包括源码位置和classloader结构</p>
+</li>
+<li><p><code>trace class method</code>: 相当喜欢这个功能! 很早前可以早JProfiler看到这个功能。打印出当前方法调用的耗时情况，细分到每个方法。</p>
+</li>
+</ul>
+<h4 id="javOSize"><a href="#javOSize" class="headerlink" title="javOSize"></a>javOSize</h4><p>就说一个功能</p>
+<ul>
+<li><code>classes</code>：通过修改了字节码，改变了类的内容，即时生效。 所以可以做到快速的在某个地方打个日志看看输出，缺点是对代码的侵入性太大。但是如果自己知道自己在干嘛，的确是不错的玩意儿。</li>
+</ul>
+<p>其他功能Greys和btrace都能很轻易做的到，不说了。</p>
+<h4 id="JProfiler"><a href="#JProfiler" class="headerlink" title="JProfiler"></a>JProfiler</h4><p>之前判断许多问题要通过 <strong>JProfiler</strong>，但是现在 <strong>Greys</strong>和 <strong>btrace</strong>基本都能搞定了。再加上出问题的基本上都是生产环境(网络隔离)，所以基本不怎么使用了，但是还是要标记一下。<br>官网请移步<a href="https://www.ej-technologies.com/products/jprofiler/overview.html" target="_blank" rel="noopener">https://www.ej-technologies.com/products/jprofiler/overview.html</a></p>
+<hr>
+<h3 id="Java-Tool"><a href="#Java-Tool" class="headerlink" title="Java Tool"></a>Java Tool</h3><h4 id="jps"><a href="#jps" class="headerlink" title="jps"></a>jps</h4><ul>
+<li>m:输出主函数传入的参数. 下的hello 就是在执行程序时从命令行输入的参数</li>
+<li>l: 输出应用程序主类完整package名称或jar完整名称.</li>
+<li>v: 列出jvm参数, -Xms20m -Xmx50m是启动程序指定的jvm参数</li>
+<li>V: 输出通过.hotsportrc或-XX:Flags=<filename>指定的jvm参数<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u admin /opt/taobao/java/bin/jps -mlvV</span><br></pre></td></tr></table></figure>
+</filename></li>
+</ul>
+<p><img src="/md_images/p2/2.jpg" alt="2"></p>
+<h4 id="jstack"><a href="#jstack" class="headerlink" title="jstack"></a>jstack</h4><ul>
+<li>普通用法:<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u admin /opt/taobao/install/ajdk<span class="number">-8</span>_1_1_fp1-b52/bin/jstack <span class="number">2815</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="/md_images/p2/3.jpg" alt="3"></p>
+<ul>
+<li>native+java栈:<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u admin /opt/taobao/install/ajdk<span class="number">-8</span>_1_1_fp1-b52/bin/jstack -m <span class="number">2815</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="/md_images/p2/4.jpg" alt="4"></p>
+<h4 id="jinfo"><a href="#jinfo" class="headerlink" title="jinfo"></a>jinfo</h4><p>可看系统启动的参数，如下<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u admin /opt/taobao/install/ajdk<span class="number">-8</span>_1_1_fp1-b52/bin/jinfo -flags <span class="number">2815</span></span><br></pre></td></tr></table></figure></p>
+<p><img src="/md_images/p2/5.jpg" alt="5"></p>
+<h4 id="jmap"><a href="#jmap" class="headerlink" title="jmap"></a>jmap</h4><ol>
+<li><p>查看堆的情况</p>
+ <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u admin /opt/taobao/install/ajdk<span class="number">-8</span>_1_1_fp1-b52/bin/jmap -heap <span class="number">2815</span></span><br></pre></td></tr></table></figure>
+<p> <img src="/md_images/p2/6.jpg" alt="6"><br> <img src="/md_images/p2/7.jpg" alt="7"></p>
+</li>
+<li><p>dump</p>
+ <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u admin /opt/taobao/install/ajdk<span class="number">-8</span>_1_1_fp1-b52/bin/jmap -dump:live,format=b,file=/tmp/heap2.bin <span class="number">2815</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>or<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u admin /opt/taobao/install/ajdk<span class="number">-8</span>_1_1_fp1-b52/bin/jmap -dump:format=b,file=/tmp/heap3.bin <span class="number">2815</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>看看堆都被谁占了? 再配合zprofiler和btrace，排查问题简直是如虎添翼</p>
+ <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u admin /opt/taobao/install/ajdk<span class="number">-8</span>_1_1_fp1-b52/bin/jmap -histo <span class="number">2815</span> | head <span class="number">-10</span></span><br></pre></td></tr></table></figure>
+<p> <img src="/md_images/p2/8.jpg" alt="8"></p>
+</li>
+</ol>
+<h4 id="jstat"><a href="#jstat" class="headerlink" title="jstat"></a>jstat</h4><p>jstat参数众多，但是使用一个就够了<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u admin /opt/taobao/install/ajdk<span class="number">-8</span>_1_1_fp1-b52/bin/jstat -gcutil <span class="number">2815</span> <span class="number">1000</span></span><br></pre></td></tr></table></figure></p>
+<p><img src="/md_images/p2/9.jpg" alt="9"></p>
+<h4 id="jdb"><a href="#jdb" class="headerlink" title="jdb"></a>jdb</h4><p>时至今日，jdb也是经常使用的。<br>jdb可以用来预发debug,假设你预发的java_home是/opt/taobao/java/，远程调试端口是8000.那么<br><code>sudo -u admin /opt/taobao/java/bin/jdb -attach 8000</code>.</p>
+<p>出现以上代表jdb启动成功。后续可以进行设置断点进行调试。<br>具体参数可见oracle官方说明<a href="http://docs.oracle.com/javase/7/docs/technotes/tools/windows/jdb.html" target="_blank" rel="noopener">http://docs.oracle.com/javase/7/docs/technotes/tools/windows/jdb.html</a></p>
+<h4 id="CHLSDB"><a href="#CHLSDB" class="headerlink" title="CHLSDB"></a>CHLSDB</h4><p>CHLSDB感觉很多情况下可以看到更好玩的东西，不详细叙述了。 查询资料听说jstack和jmap等工具就是基于它的。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u admin /opt/taobao/java/bin/java -classpath /opt/taobao/java/lib/sa-jdi.jar sun.jvm.hotspot.CLHSDB</span><br></pre></td></tr></table></figure></p>
+<p>更详细的可见R大此贴<br><a href="http://rednaxelafx.iteye.com/blog/1847971" target="_blank" rel="noopener">http://rednaxelafx.iteye.com/blog/1847971</a></p>
+<hr>
+<h3 id="jar包冲突"><a href="#jar包冲突" class="headerlink" title="jar包冲突"></a>jar包冲突</h3><p>把这个单独写个大标题不过分吧？每个人或多或少都处理过这种烦人的case。我特么下边这么多方案不信就搞不定你?<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn <span class="symbol">dependency:</span>tree &gt; ~<span class="regexp">/dependency.txt</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><p>打出所有依赖</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn <span class="symbol">dependency:</span>tree -Dverbose -Dincludes=<span class="symbol">groupId:</span>artifactId</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>只打出指定groupId和artifactId的依赖关系</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-<span class="symbol">XX:</span>+TraceClassLoading</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>vm启动脚本加入。在tomcat启动脚本中可见加载类的详细信息</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-verbose</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>vm启动脚本加入。在tomcat启动脚本中可见加载类的详细信息</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">greys:</span>sc</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>greys的sc命令也能清晰的看到当前类是从哪里加载过来的</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tomcat-classloader-locate</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过以下url可以获知当前类是从哪里加载的</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl <span class="symbol">http:</span>/<span class="regexp">/localhost:8006/classloader</span><span class="regexp">/locate?class=org.apache.xerces.xs.XSObjec</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="其他-1"><a href="#其他-1" class="headerlink" title="其他"></a>其他</h3><h4 id="dmesg"><a href="#dmesg" class="headerlink" title="dmesg"></a>dmesg</h4><p>如果发现自己的java进程悄无声息的消失了，几乎没有留下任何线索，那么dmesg一发，很有可能有你想要的。<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dmesg<span class="params">|grep -i kill|</span>less</span><br></pre></td></tr></table></figure></p>
+<p>去找关键字oom_killer。找到的结果类似如下:<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">6710782.021013</span>] java invoked oom-<span class="symbol">killer:</span> gfp_mask=<span class="number">0xd0</span>, order=<span class="number">0</span>, oom_adj=<span class="number">0</span>, oom_scoe_adj=<span class="number">0</span></span><br><span class="line">[<span class="number">6710782.070639</span>] [&lt;ffffffff81118898&gt;] ? oom_kill_process+<span class="number">0x68</span>/<span class="number">0x140</span> </span><br><span class="line">[<span class="number">6710782.257588</span>] Task <span class="keyword">in</span> /LXC011175068174 killed as a result of limit of /LXC011175068174 </span><br><span class="line">[<span class="number">6710784.698347</span>] Memory cgroup out of <span class="symbol">memory:</span> Kill process <span class="number">215701</span> (java) score <span class="number">854</span> <span class="keyword">or</span> sacrifice child </span><br><span class="line">[<span class="number">6710784.707978</span>] Killed process <span class="number">215701</span>, UID <span class="number">679</span>, (java) total-<span class="symbol">vm:</span><span class="number">11017300</span>kB, anon-<span class="symbol">rss:</span><span class="number">7152432</span>kB, file-<span class="symbol">rss:</span><span class="number">1232</span>kB</span><br></pre></td></tr></table></figure></p>
+<p>以上表明，对应的java进程被系统的OOM Killer给干掉了，得分为854.<br>解释一下OOM killer（Out-Of-Memory killer），该机制会监控机器的内存资源消耗。当机器内存耗尽前，该机制会扫描所有的进程（按照一定规则计算，内存占用，时间等），挑选出得分最高的进程，然后杀死，从而保护机器。</p>
+<ul>
+<li>dmesg日志时间转换公式:<ul>
+<li>log实际时间=格林威治1970-01-01+(当前时间秒数-系统启动至今的秒数+dmesg打印的log时间)秒数：<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">date -d <span class="string">"1970-01-01 UTC `echo "</span>$(date +%s)-$(cat /proc/uptime<span class="params">|cut -f 1 -d' ')+12288812.926194"|</span>bc <span class="string">` seconds"</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<p>剩下的，就是看看为什么内存这么大，触发了OOM-Killer了。</p>
+<h4 id="eclipseMAT"><a href="#eclipseMAT" class="headerlink" title="eclipseMAT"></a>eclipseMAT</h4><p>可作为eclipse的插件，也可作为单独的程序打开。<br>详情请移步<a href="http://www.eclipse.org/mat/" target="_blank" rel="noopener">http://www.eclipse.org/mat/</a></p>
+<h4 id="Plugin-of-intellij-idea"><a href="#Plugin-of-intellij-idea" class="headerlink" title="Plugin of intellij idea"></a>Plugin of intellij idea</h4><ul>
+<li>key promoter</li>
+<li>maven helper<ul>
+<li>分析maven依赖的好帮手。</li>
+</ul>
+</li>
+</ul>
+<h4 id="RateLimiter"><a href="#RateLimiter" class="headerlink" title="RateLimiter"></a>RateLimiter</h4><p>想要精细的控制QPS? 比如这样一个场景，你调用某个接口，对方明确需要你限制你的QPS在400之内你怎么控制？这个时候RateLimiter就有了用武之地。</p>
+<ul>
+<li>详情可移步<a href="http://ifeve.com/guava-ratelimite" target="_blank" rel="noopener">http://ifeve.com/guava-ratelimite</a></li>
+</ul>
+<hr>
+<h2 id="Thanks"><a href="#Thanks" class="headerlink" title="Thanks~"></a>Thanks~</h2>
+      
+    </div> -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+        
+          <p>这是一篇来源于阿里内部技术论坛的文章，原文在阿里内部获得一致好评。</p>
+<a id="more"></a>
+<ul>
+<li>作者：红魔七号</li>
+<li>链接：<a href="https://yq.aliyun.com/articles/69520?utm_content=m_10360" target="_blank" rel="noopener">https://yq.aliyun.com/articles/69520?utm_content=m_10360</a></li>
+<li>参考文章： <a href="https://mp.weixin.qq.com/s/TMAe3AyOfUQIOf0hGurR4A" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/TMAe3AyOfUQIOf0hGurR4A</a></li>
+<li>原谅小弟不才，有问题可以下方留言指教~</li>
+</ul>
+<blockquote>
+<p>本文约7000字符，阅读时间约14分钟 – about 14 min read</p>
+</blockquote>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>平时的工作中经常碰到很多疑难问题的处理，在解决问题的同时，有一些工具起到了相当大的作用，在此书写下来，一是作为笔记，可以让自己后续忘记了可快速翻阅，二是分享，希望看到此文的同学们可以拿出自己日常觉得帮助很大的工具，大家一起进步。</p>
+<h3 id="Linux命令类"><a href="#Linux命令类" class="headerlink" title="Linux命令类"></a>Linux命令类</h3><h4 id="tail"><a href="#tail" class="headerlink" title="tail"></a>tail</h4><p>最常用的tail -f</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tail <span class="number">-300</span>f shopbase.log <span class="comment">#倒数300行并进入实时监听文件写入模式</span></span><br></pre></td></tr></table></figure>
+<h4 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">grep forest f.txt     <span class="comment">#文件查找</span></span><br><span class="line">grep forest f.txt cpf.txt <span class="comment">#多文件查找</span></span><br><span class="line">grep <span class="string">'log'</span> /home/admin -r -n <span class="comment">#目录下查找所有符合关键字的文件</span></span><br><span class="line">cat f.txt | grep -i shopbase    </span><br><span class="line">grep <span class="string">'shopbase'</span> /home/admin -r -n --<span class="keyword">include</span> *.&#123;vm,java&#125; <span class="comment">#指定文件后缀</span></span><br><span class="line">grep <span class="string">'shopbase'</span> /home/admin -r -n --exclude *.&#123;vm,java&#125; <span class="comment">#反匹配</span></span><br><span class="line">seq <span class="number">10</span> | grep <span class="number">5</span> -A <span class="number">3</span>    <span class="comment">#上匹配</span></span><br><span class="line">seq <span class="number">10</span> | grep <span class="number">5</span> -B <span class="number">3</span>    <span class="comment">#下匹配</span></span><br><span class="line">seq <span class="number">10</span> | grep <span class="number">5</span> -C <span class="number">3</span>    <span class="comment">#上下匹配，平时用这个就妥了</span></span><br><span class="line">cat f.txt | grep -c <span class="string">'SHOPBASE'</span></span><br></pre></td></tr></table></figure>
+<h4 id="awk"><a href="#awk" class="headerlink" title="awk"></a>awk</h4><ol>
+<li><p>基本命令</p>
+ <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">'&#123;print $4,$6&#125;'</span> f.txt</span><br><span class="line">awk <span class="string">'&#123;print NR,$0&#125;'</span> f.txt cpf.txt    </span><br><span class="line">awk <span class="string">'&#123;print FNR,$0&#125;'</span> f.txt cpf.txt</span><br><span class="line">awk <span class="string">'&#123;print FNR,FILENAME,$0&#125;'</span> f.txt cpf.txt</span><br><span class="line">awk <span class="string">'&#123;print FILENAME,"NR="NR,"FNR="FNR,"$"NF"="$NF&#125;'</span> f.txt cpf.txt</span><br><span class="line"><span class="keyword">echo</span> <span class="number">1</span>:<span class="number">2</span>:<span class="number">3</span>:<span class="number">4</span> | awk -F: <span class="string">'&#123;print $1,$2,$3,$4&#125;'</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>匹配</p>
+ <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">'/ldb/ &#123;print&#125;'</span> f.txt   <span class="comment">#匹配ldb</span></span><br><span class="line">awk <span class="string">'!/ldb/ &#123;print&#125;'</span> f.txt  <span class="comment">#不匹配ldb</span></span><br><span class="line">awk <span class="string">'/ldb/ &amp;&amp; /LISTEN/ &#123;print&#125;'</span> f.txt   <span class="comment">#匹配ldb和LISTEN</span></span><br><span class="line">awk <span class="string">'$5 ~ /ldb/ &#123;print&#125;'</span> f.txt <span class="comment">#第五列匹配ldb</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>内建变量</p>
+</li>
+</ol>
+<ul>
+<li><p><code>NR</code>:NR表示从awk开始执行后，按照记录分隔符读取的数据次数，默认的记录分隔符为换行符，因此默认的就是读取的数据行数，NR可以理解为<code>Number of Record</code>的缩写。</p>
+</li>
+<li><p><code>FNR</code>:在awk处理多个输入文件的时候，在处理完第一个文件后，NR并不会从1开始，而是继续累加，因此就出现了FNR，每当处理一个新文件的时候，FNR就从1开始计数，FNR可以理解为<code>File Number of Record</code>。</p>
+</li>
+<li><p><code>NF</code>: NF表示目前的记录被分割的字段的数目，NF可以理解为<code>Number of Field</code>。</p>
+</li>
+</ul>
+<h4 id="find"><a href="#find" class="headerlink" title="find"></a>find</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">sudo -u admin find /home/admin /tmp /usr -name \*.log <span class="comment">#(多个目录去找)</span></span><br><span class="line">find . -iname \*.txt <span class="comment">#(大小写都匹配)</span></span><br><span class="line">find . -type d <span class="comment">#(当前目录下的所有子目录)</span></span><br><span class="line">find /usr -type l <span class="comment">#(当前目录下所有的符号链接)</span></span><br><span class="line">find /usr -type l -name <span class="string">"z*"</span> -ls <span class="comment">#(符号链接的详细信息 eg:inode,目录)</span></span><br><span class="line">find /home/admin -size +<span class="number">250000</span>k <span class="comment">#(超过250000k的文件，当然+改成-就是小于了)</span></span><br><span class="line">find /home/admin f -perm <span class="number">777</span> -exec ls -l &#123;&#125; \;  <span class="comment">#(按照权限查询文件)</span></span><br><span class="line">find /home/admin -atime <span class="number">-1</span>   <span class="comment">#1天内访问过的文件</span></span><br><span class="line">find /home/admin -ctime <span class="number">-1</span>   <span class="comment">#1天内状态改变过的文件    </span></span><br><span class="line">find /home/admin -mtime <span class="number">-1</span>   <span class="comment">#1天内修改过的文件</span></span><br><span class="line">find /home/admin -amin <span class="number">-1</span>   <span class="comment">#1分钟内访问过的文件</span></span><br><span class="line">find /home/admin -cmin <span class="number">-1</span>   <span class="comment">#1分钟内状态改变过的文件    </span></span><br><span class="line">find /home/admin -mmin <span class="number">-1</span>   <span class="comment">#1分钟内修改过的文件</span></span><br></pre></td></tr></table></figure>
+<h4 id="pgm"><a href="#pgm" class="headerlink" title="pgm"></a>pgm</h4><p>批量查询vm-shopbase满足条件的日志<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pgm -A -f vm-shopbase <span class="string">'cat /home/admin/shopbase/logs/shopbase.log.2017-01-17|grep 2069861630'</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="tsar"><a href="#tsar" class="headerlink" title="tsar"></a>tsar</h4><ul>
+<li>tsar是alibabak开发的一个采集工具，可以上github去clone安装。他可以将历史收集到的数据持久化在磁盘上，所以我们快速来查询历史的系统数据<ul>
+<li><a href="https://github.com/alibaba/tsar" target="_blank" rel="noopener">https://github.com/alibaba/tsar</a></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">tsar  <span class="comment">###可以查看最近一天的各项指标</span></span><br><span class="line"></span><br><span class="line">tsar --live <span class="comment">###可以查看实时指标，默认五秒一刷</span></span><br><span class="line"></span><br><span class="line">tsar -d <span class="number">20161218</span> <span class="comment">###指定查看某天的数据，貌似最多只能看四个月的数据</span></span><br><span class="line"></span><br><span class="line">tsar --mem</span><br><span class="line">tsar --load</span><br><span class="line">tsar --cpu</span><br><span class="line"><span class="comment">###当然这个也可以和-d参数配合来查询某天的单个指标的情况</span></span><br></pre></td></tr></table></figure>
+<h4 id="top"><a href="#top" class="headerlink" title="top"></a>top</h4><p>top除了看一些基本信息之外，剩下的就是配合来查询vm的各种问题了<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ps -ef | grep java</span><br><span class="line">top -H -p pid</span><br></pre></td></tr></table></figure></p>
+<p>获得线程10进制转16进制后jstack去抓看这个线程到底在干啥</p>
+<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">netstat -nat|awk  <span class="string">'&#123;print $6&#125;'</span>|sort|uniq -c|sort -rn </span><br><span class="line"><span class="comment">#查看当前连接，注意close_wait偏高的情况，比如如下</span></span><br></pre></td></tr></table></figure>
+<p><img src="/md_images/p2/1.jpg" alt="1"></p>
+<hr>
+<h3 id="排查利器"><a href="#排查利器" class="headerlink" title="排查利器"></a>排查利器</h3><h4 id="btrace"><a href="#btrace" class="headerlink" title="btrace"></a>btrace</h4><p>首当其冲的要说的是btrace。真是生产环境&amp;预发的排查问题大杀器。更详情可以移步到github：<a href="https://github.com/btraceio/btrace" target="_blank" rel="noopener">https://github.com/btraceio/btrace</a></p>
+<ol>
+<li>查看当前谁调用了ArrayList的add方法，同时只打印当前ArrayList的size大于500的线程调用栈</li>
+<li>监控当前服务方法被调用时返回的值以及请求的参数</li>
+</ol>
+<ul>
+<li><p>注意:</p>
+<ol>
+<li>经过观察，1.3.9的release输出不稳定，要多触发几次才能看到正确的结果</li>
+<li>正则表达式匹配trace类时范围一定要控制，否则极有可能出现跑满CPU导致应用卡死的情况</li>
+<li>由于是字节码注入的原理，想要应用恢复到正常情况，需要重启应用。</li>
+</ol>
+</li>
+</ul>
+<h4 id="Greys"><a href="#Greys" class="headerlink" title="Greys"></a>Greys</h4><p>说几个挺棒的功能(部分功能和btrace重合):</p>
+<ul>
+<li><p><code>sc -df</code> xxx: 输出当前类的详情,包括源码位置和classloader结构</p>
+</li>
+<li><p><code>trace class method</code>: 相当喜欢这个功能! 很早前可以早JProfiler看到这个功能。打印出当前方法调用的耗时情况，细分到每个方法。</p>
+</li>
+</ul>
+<h4 id="javOSize"><a href="#javOSize" class="headerlink" title="javOSize"></a>javOSize</h4><p>就说一个功能</p>
+<ul>
+<li><code>classes</code>：通过修改了字节码，改变了类的内容，即时生效。 所以可以做到快速的在某个地方打个日志看看输出，缺点是对代码的侵入性太大。但是如果自己知道自己在干嘛，的确是不错的玩意儿。</li>
+</ul>
+<p>其他功能Greys和btrace都能很轻易做的到，不说了。</p>
+<h4 id="JProfiler"><a href="#JProfiler" class="headerlink" title="JProfiler"></a>JProfiler</h4><p>之前判断许多问题要通过 <strong>JProfiler</strong>，但是现在 <strong>Greys</strong>和 <strong>btrace</strong>基本都能搞定了。再加上出问题的基本上都是生产环境(网络隔离)，所以基本不怎么使用了，但是还是要标记一下。<br>官网请移步<a href="https://www.ej-technologies.com/products/jprofiler/overview.html" target="_blank" rel="noopener">https://www.ej-technologies.com/products/jprofiler/overview.html</a></p>
+<hr>
+<h3 id="Java-Tool"><a href="#Java-Tool" class="headerlink" title="Java Tool"></a>Java Tool</h3><h4 id="jps"><a href="#jps" class="headerlink" title="jps"></a>jps</h4><ul>
+<li>m:输出主函数传入的参数. 下的hello 就是在执行程序时从命令行输入的参数</li>
+<li>l: 输出应用程序主类完整package名称或jar完整名称.</li>
+<li>v: 列出jvm参数, -Xms20m -Xmx50m是启动程序指定的jvm参数</li>
+<li>V: 输出通过.hotsportrc或-XX:Flags=<filename>指定的jvm参数<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u admin /opt/taobao/java/bin/jps -mlvV</span><br></pre></td></tr></table></figure>
+</filename></li>
+</ul>
+<p><img src="/md_images/p2/2.jpg" alt="2"></p>
+<h4 id="jstack"><a href="#jstack" class="headerlink" title="jstack"></a>jstack</h4><ul>
+<li>普通用法:<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u admin /opt/taobao/install/ajdk<span class="number">-8</span>_1_1_fp1-b52/bin/jstack <span class="number">2815</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="/md_images/p2/3.jpg" alt="3"></p>
+<ul>
+<li>native+java栈:<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u admin /opt/taobao/install/ajdk<span class="number">-8</span>_1_1_fp1-b52/bin/jstack -m <span class="number">2815</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="/md_images/p2/4.jpg" alt="4"></p>
+<h4 id="jinfo"><a href="#jinfo" class="headerlink" title="jinfo"></a>jinfo</h4><p>可看系统启动的参数，如下<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u admin /opt/taobao/install/ajdk<span class="number">-8</span>_1_1_fp1-b52/bin/jinfo -flags <span class="number">2815</span></span><br></pre></td></tr></table></figure></p>
+<p><img src="/md_images/p2/5.jpg" alt="5"></p>
+<h4 id="jmap"><a href="#jmap" class="headerlink" title="jmap"></a>jmap</h4><ol>
+<li><p>查看堆的情况</p>
+ <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u admin /opt/taobao/install/ajdk<span class="number">-8</span>_1_1_fp1-b52/bin/jmap -heap <span class="number">2815</span></span><br></pre></td></tr></table></figure>
+<p> <img src="/md_images/p2/6.jpg" alt="6"><br> <img src="/md_images/p2/7.jpg" alt="7"></p>
+</li>
+<li><p>dump</p>
+ <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u admin /opt/taobao/install/ajdk<span class="number">-8</span>_1_1_fp1-b52/bin/jmap -dump:live,format=b,file=/tmp/heap2.bin <span class="number">2815</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>or<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u admin /opt/taobao/install/ajdk<span class="number">-8</span>_1_1_fp1-b52/bin/jmap -dump:format=b,file=/tmp/heap3.bin <span class="number">2815</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>看看堆都被谁占了? 再配合zprofiler和btrace，排查问题简直是如虎添翼</p>
+ <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u admin /opt/taobao/install/ajdk<span class="number">-8</span>_1_1_fp1-b52/bin/jmap -histo <span class="number">2815</span> | head <span class="number">-10</span></span><br></pre></td></tr></table></figure>
+<p> <img src="/md_images/p2/8.jpg" alt="8"></p>
+</li>
+</ol>
+<h4 id="jstat"><a href="#jstat" class="headerlink" title="jstat"></a>jstat</h4><p>jstat参数众多，但是使用一个就够了<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u admin /opt/taobao/install/ajdk<span class="number">-8</span>_1_1_fp1-b52/bin/jstat -gcutil <span class="number">2815</span> <span class="number">1000</span></span><br></pre></td></tr></table></figure></p>
+<p><img src="/md_images/p2/9.jpg" alt="9"></p>
+<h4 id="jdb"><a href="#jdb" class="headerlink" title="jdb"></a>jdb</h4><p>时至今日，jdb也是经常使用的。<br>jdb可以用来预发debug,假设你预发的java_home是/opt/taobao/java/，远程调试端口是8000.那么<br><code>sudo -u admin /opt/taobao/java/bin/jdb -attach 8000</code>.</p>
+<p>出现以上代表jdb启动成功。后续可以进行设置断点进行调试。<br>具体参数可见oracle官方说明<a href="http://docs.oracle.com/javase/7/docs/technotes/tools/windows/jdb.html" target="_blank" rel="noopener">http://docs.oracle.com/javase/7/docs/technotes/tools/windows/jdb.html</a></p>
+<h4 id="CHLSDB"><a href="#CHLSDB" class="headerlink" title="CHLSDB"></a>CHLSDB</h4><p>CHLSDB感觉很多情况下可以看到更好玩的东西，不详细叙述了。 查询资料听说jstack和jmap等工具就是基于它的。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u admin /opt/taobao/java/bin/java -classpath /opt/taobao/java/lib/sa-jdi.jar sun.jvm.hotspot.CLHSDB</span><br></pre></td></tr></table></figure></p>
+<p>更详细的可见R大此贴<br><a href="http://rednaxelafx.iteye.com/blog/1847971" target="_blank" rel="noopener">http://rednaxelafx.iteye.com/blog/1847971</a></p>
+<hr>
+<h3 id="jar包冲突"><a href="#jar包冲突" class="headerlink" title="jar包冲突"></a>jar包冲突</h3><p>把这个单独写个大标题不过分吧？每个人或多或少都处理过这种烦人的case。我特么下边这么多方案不信就搞不定你?<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn <span class="symbol">dependency:</span>tree &gt; ~<span class="regexp">/dependency.txt</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><p>打出所有依赖</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn <span class="symbol">dependency:</span>tree -Dverbose -Dincludes=<span class="symbol">groupId:</span>artifactId</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>只打出指定groupId和artifactId的依赖关系</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-<span class="symbol">XX:</span>+TraceClassLoading</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>vm启动脚本加入。在tomcat启动脚本中可见加载类的详细信息</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-verbose</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>vm启动脚本加入。在tomcat启动脚本中可见加载类的详细信息</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">greys:</span>sc</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>greys的sc命令也能清晰的看到当前类是从哪里加载过来的</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tomcat-classloader-locate</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过以下url可以获知当前类是从哪里加载的</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl <span class="symbol">http:</span>/<span class="regexp">/localhost:8006/classloader</span><span class="regexp">/locate?class=org.apache.xerces.xs.XSObjec</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="其他-1"><a href="#其他-1" class="headerlink" title="其他"></a>其他</h3><h4 id="dmesg"><a href="#dmesg" class="headerlink" title="dmesg"></a>dmesg</h4><p>如果发现自己的java进程悄无声息的消失了，几乎没有留下任何线索，那么dmesg一发，很有可能有你想要的。<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dmesg<span class="params">|grep -i kill|</span>less</span><br></pre></td></tr></table></figure></p>
+<p>去找关键字oom_killer。找到的结果类似如下:<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">6710782.021013</span>] java invoked oom-<span class="symbol">killer:</span> gfp_mask=<span class="number">0xd0</span>, order=<span class="number">0</span>, oom_adj=<span class="number">0</span>, oom_scoe_adj=<span class="number">0</span></span><br><span class="line">[<span class="number">6710782.070639</span>] [&lt;ffffffff81118898&gt;] ? oom_kill_process+<span class="number">0x68</span>/<span class="number">0x140</span> </span><br><span class="line">[<span class="number">6710782.257588</span>] Task <span class="keyword">in</span> /LXC011175068174 killed as a result of limit of /LXC011175068174 </span><br><span class="line">[<span class="number">6710784.698347</span>] Memory cgroup out of <span class="symbol">memory:</span> Kill process <span class="number">215701</span> (java) score <span class="number">854</span> <span class="keyword">or</span> sacrifice child </span><br><span class="line">[<span class="number">6710784.707978</span>] Killed process <span class="number">215701</span>, UID <span class="number">679</span>, (java) total-<span class="symbol">vm:</span><span class="number">11017300</span>kB, anon-<span class="symbol">rss:</span><span class="number">7152432</span>kB, file-<span class="symbol">rss:</span><span class="number">1232</span>kB</span><br></pre></td></tr></table></figure></p>
+<p>以上表明，对应的java进程被系统的OOM Killer给干掉了，得分为854.<br>解释一下OOM killer（Out-Of-Memory killer），该机制会监控机器的内存资源消耗。当机器内存耗尽前，该机制会扫描所有的进程（按照一定规则计算，内存占用，时间等），挑选出得分最高的进程，然后杀死，从而保护机器。</p>
+<ul>
+<li>dmesg日志时间转换公式:<ul>
+<li>log实际时间=格林威治1970-01-01+(当前时间秒数-系统启动至今的秒数+dmesg打印的log时间)秒数：<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">date -d <span class="string">"1970-01-01 UTC `echo "</span>$(date +%s)-$(cat /proc/uptime<span class="params">|cut -f 1 -d' ')+12288812.926194"|</span>bc <span class="string">` seconds"</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<p>剩下的，就是看看为什么内存这么大，触发了OOM-Killer了。</p>
+<h4 id="eclipseMAT"><a href="#eclipseMAT" class="headerlink" title="eclipseMAT"></a>eclipseMAT</h4><p>可作为eclipse的插件，也可作为单独的程序打开。<br>详情请移步<a href="http://www.eclipse.org/mat/" target="_blank" rel="noopener">http://www.eclipse.org/mat/</a></p>
+<h4 id="Plugin-of-intellij-idea"><a href="#Plugin-of-intellij-idea" class="headerlink" title="Plugin of intellij idea"></a>Plugin of intellij idea</h4><ul>
+<li>key promoter</li>
+<li>maven helper<ul>
+<li>分析maven依赖的好帮手。</li>
+</ul>
+</li>
+</ul>
+<h4 id="RateLimiter"><a href="#RateLimiter" class="headerlink" title="RateLimiter"></a>RateLimiter</h4><p>想要精细的控制QPS? 比如这样一个场景，你调用某个接口，对方明确需要你限制你的QPS在400之内你怎么控制？这个时候RateLimiter就有了用武之地。</p>
+<ul>
+<li>详情可移步<a href="http://ifeve.com/guava-ratelimite" target="_blank" rel="noopener">http://ifeve.com/guava-ratelimite</a></li>
+</ul>
+<hr>
+<h2 id="Thanks"><a href="#Thanks" class="headerlink" title="Thanks~"></a>Thanks~</h2>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Kuanger
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2018/11/30/Java问题快速排查/" target="_blank" title="Java问题快速排查">http://yoursite.com/2018/11/30/Java问题快速排查/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+</div></div>
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/问题解决/">问题解决</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/11/28/Hello-World/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hello World</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux命令类"><span class="nav-number">2.</span> <span class="nav-text">Linux命令类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#tail"><span class="nav-number">2.1.</span> <span class="nav-text">tail</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#grep"><span class="nav-number">2.2.</span> <span class="nav-text">grep</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#awk"><span class="nav-number">2.3.</span> <span class="nav-text">awk</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#find"><span class="nav-number">2.4.</span> <span class="nav-text">find</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pgm"><span class="nav-number">2.5.</span> <span class="nav-text">pgm</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tsar"><span class="nav-number">2.6.</span> <span class="nav-text">tsar</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#top"><span class="nav-number">2.7.</span> <span class="nav-text">top</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其他"><span class="nav-number">2.8.</span> <span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#排查利器"><span class="nav-number">3.</span> <span class="nav-text">排查利器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#btrace"><span class="nav-number">3.1.</span> <span class="nav-text">btrace</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Greys"><span class="nav-number">3.2.</span> <span class="nav-text">Greys</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#javOSize"><span class="nav-number">3.3.</span> <span class="nav-text">javOSize</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JProfiler"><span class="nav-number">3.4.</span> <span class="nav-text">JProfiler</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-Tool"><span class="nav-number">4.</span> <span class="nav-text">Java Tool</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#jps"><span class="nav-number">4.1.</span> <span class="nav-text">jps</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#jstack"><span class="nav-number">4.2.</span> <span class="nav-text">jstack</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#jinfo"><span class="nav-number">4.3.</span> <span class="nav-text">jinfo</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#jmap"><span class="nav-number">4.4.</span> <span class="nav-text">jmap</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#jstat"><span class="nav-number">4.5.</span> <span class="nav-text">jstat</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#jdb"><span class="nav-number">4.6.</span> <span class="nav-text">jdb</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CHLSDB"><span class="nav-number">4.7.</span> <span class="nav-text">CHLSDB</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jar包冲突"><span class="nav-number">5.</span> <span class="nav-text">jar包冲突</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他-1"><span class="nav-number">6.</span> <span class="nav-text">其他</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#dmesg"><span class="nav-number">6.1.</span> <span class="nav-text">dmesg</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#eclipseMAT"><span class="nav-number">6.2.</span> <span class="nav-text">eclipseMAT</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Plugin-of-intellij-idea"><span class="nav-number">6.3.</span> <span class="nav-text">Plugin of intellij idea</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RateLimiter"><span class="nav-number">6.4.</span> <span class="nav-text">RateLimiter</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#Thanks"><span class="nav-number"></span> <span class="nav-text">Thanks~</span></a>
+    
+    </li></div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <!-- <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>-->
+	      <p id="copyRightEn">Copyright &copy; 2018 - 2018 Kuanger All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Better than yesterday
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 Kuanger All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>
