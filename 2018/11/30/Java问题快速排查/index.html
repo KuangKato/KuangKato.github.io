@@ -18,7 +18,7 @@
 <meta property="og:url" content="http://yoursite.com/2018/11/30/Java问题快速排查/index.html">
 <meta property="og:site_name" content="Better than yesterday">
 <meta property="og:description" content="这是一篇来源于阿里内部技术论坛的文章，原文在阿里内部获得一致好评。">
-<meta property="og:locale" content="default">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/md_images/p2/1.jpg">
 <meta property="og:image" content="http://yoursite.com/md_images/p2/2.jpg">
 <meta property="og:image" content="http://yoursite.com/md_images/p2/3.jpg">
@@ -28,7 +28,7 @@
 <meta property="og:image" content="http://yoursite.com/md_images/p2/7.jpg">
 <meta property="og:image" content="http://yoursite.com/md_images/p2/8.jpg">
 <meta property="og:image" content="http://yoursite.com/md_images/p2/9.jpg">
-<meta property="og:updated_time" content="2018-11-30T02:54:55.588Z">
+<meta property="og:updated_time" content="2018-11-30T06:53:55.897Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java问题快速排查">
 <meta name="twitter:description" content="这是一篇来源于阿里内部技术论坛的文章，原文在阿里内部获得一致好评。">
@@ -108,15 +108,15 @@
             <div class="navbar-collapse collapse">
               <ul class="hnav navbar-nav">
                 
-                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                  <li> <a class="main-nav-link" href="/">首页</a> </li>
                 
-                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                  <li> <a class="main-nav-link" href="/archives">归档</a> </li>
                 
-                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
+                  <li> <a class="main-nav-link" href="/categories">分类</a> </li>
                 
-                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                  <li> <a class="main-nav-link" href="/tags">标签</a> </li>
                 
-                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                  <li> <a class="main-nav-link" href="/about">关于</a> </li>
                 
                   <li><div id="search-form-wrap">
 
@@ -128,7 +128,7 @@
     <div class="ins-search-mask"></div>
     <div class="ins-search-container">
         <div class="ins-input-wrapper">
-            <input type="text" class="ins-search-input" placeholder="Type something...">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词...">
             <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
         </div>
         <div class="ins-section-wrapper">
@@ -140,11 +140,11 @@
 (function (window) {
     var INSIGHT_CONFIG = {
         TRANSLATION: {
-            POSTS: 'Posts',
-            PAGES: 'Pages',
-            CATEGORIES: 'Categories',
-            TAGS: 'Tags',
-            UNTITLED: '(Untitled)',
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(无标题)',
         },
         ROOT_URL: '/',
         CONTENT_URL: '/content.json',
@@ -195,7 +195,7 @@
       
 	<a class="article-views">
 	<span id="busuanzi_container_page_pv">
-		PV:<span id="busuanzi_value_page_pv"></span>
+		阅读量<span id="busuanzi_value_page_pv"></span>
 	</span>
 	</a>
 
@@ -247,7 +247,7 @@
 <h4 id="top"><a href="#top" class="headerlink" title="top"></a>top</h4><p>top除了看一些基本信息之外，剩下的就是配合来查询vm的各种问题了<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ps -ef | grep java</span><br><span class="line">top -H -p pid</span><br></pre></td></tr></table></figure></p>
 <p>获得线程10进制转16进制后jstack去抓看这个线程到底在干啥</p>
 <h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">netstat -nat|awk  <span class="string">'&#123;print $6&#125;'</span>|sort|uniq -c|sort -rn </span><br><span class="line"><span class="comment">#查看当前连接，注意close_wait偏高的情况，比如如下</span></span><br></pre></td></tr></table></figure>
-<p><img src="/md_images/p2/1.jpg" alt="1"></p>
+<p><img src="/md_images/p2/1.jpg" alt=""></p>
 <hr>
 <h3 id="排查利器"><a href="#排查利器" class="headerlink" title="排查利器"></a>排查利器</h3><h4 id="btrace"><a href="#btrace" class="headerlink" title="btrace"></a>btrace</h4><p>首当其冲的要说的是btrace。真是生产环境&amp;预发的排查问题大杀器。更详情可以移步到github：<a href="https://github.com/btraceio/btrace" target="_blank" rel="noopener">https://github.com/btraceio/btrace</a></p>
 <ol>
@@ -284,23 +284,23 @@
 <li>V: 输出通过.hotsportrc或-XX:Flags=<filename>指定的jvm参数<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u admin /opt/taobao/java/bin/jps -mlvV</span><br></pre></td></tr></table></figure>
 </filename></li>
 </ul>
-<p><img src="/md_images/p2/2.jpg" alt="2"></p>
+<p><img src="/md_images/p2/2.jpg" alt=""></p>
 <h4 id="jstack"><a href="#jstack" class="headerlink" title="jstack"></a>jstack</h4><ul>
 <li>普通用法:<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u admin /opt/taobao/install/ajdk<span class="number">-8</span>_1_1_fp1-b52/bin/jstack <span class="number">2815</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<p><img src="/md_images/p2/3.jpg" alt="3"></p>
+<p><img src="/md_images/p2/3.jpg" alt=""></p>
 <ul>
 <li>native+java栈:<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u admin /opt/taobao/install/ajdk<span class="number">-8</span>_1_1_fp1-b52/bin/jstack -m <span class="number">2815</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<p><img src="/md_images/p2/4.jpg" alt="4"></p>
+<p><img src="/md_images/p2/4.jpg" alt=""></p>
 <h4 id="jinfo"><a href="#jinfo" class="headerlink" title="jinfo"></a>jinfo</h4><p>可看系统启动的参数，如下<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u admin /opt/taobao/install/ajdk<span class="number">-8</span>_1_1_fp1-b52/bin/jinfo -flags <span class="number">2815</span></span><br></pre></td></tr></table></figure></p>
-<p><img src="/md_images/p2/5.jpg" alt="5"></p>
+<p><img src="/md_images/p2/5.jpg" alt=""></p>
 <h4 id="jmap"><a href="#jmap" class="headerlink" title="jmap"></a>jmap</h4><ol>
 <li><p>查看堆的情况</p>
  <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u admin /opt/taobao/install/ajdk<span class="number">-8</span>_1_1_fp1-b52/bin/jmap -heap <span class="number">2815</span></span><br></pre></td></tr></table></figure>
-<p> <img src="/md_images/p2/6.jpg" alt="6"><br> <img src="/md_images/p2/7.jpg" alt="7"></p>
+<p> <img src="/md_images/p2/6.jpg" alt=""><br> <img src="/md_images/p2/7.jpg" alt=""></p>
 </li>
 <li><p>dump</p>
  <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u admin /opt/taobao/install/ajdk<span class="number">-8</span>_1_1_fp1-b52/bin/jmap -dump:live,format=b,file=/tmp/heap2.bin <span class="number">2815</span></span><br></pre></td></tr></table></figure>
@@ -311,11 +311,11 @@
 </li>
 <li><p>看看堆都被谁占了? 再配合zprofiler和btrace，排查问题简直是如虎添翼</p>
  <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u admin /opt/taobao/install/ajdk<span class="number">-8</span>_1_1_fp1-b52/bin/jmap -histo <span class="number">2815</span> | head <span class="number">-10</span></span><br></pre></td></tr></table></figure>
-<p> <img src="/md_images/p2/8.jpg" alt="8"></p>
+<p> <img src="/md_images/p2/8.jpg" alt=""></p>
 </li>
 </ol>
 <h4 id="jstat"><a href="#jstat" class="headerlink" title="jstat"></a>jstat</h4><p>jstat参数众多，但是使用一个就够了<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u admin /opt/taobao/install/ajdk<span class="number">-8</span>_1_1_fp1-b52/bin/jstat -gcutil <span class="number">2815</span> <span class="number">1000</span></span><br></pre></td></tr></table></figure></p>
-<p><img src="/md_images/p2/9.jpg" alt="9"></p>
+<p><img src="/md_images/p2/9.jpg" alt=""></p>
 <h4 id="jdb"><a href="#jdb" class="headerlink" title="jdb"></a>jdb</h4><p>时至今日，jdb也是经常使用的。<br>jdb可以用来预发debug,假设你预发的java_home是/opt/taobao/java/，远程调试端口是8000.那么<br><code>sudo -u admin /opt/taobao/java/bin/jdb -attach 8000</code>.</p>
 <p>出现以上代表jdb启动成功。后续可以进行设置断点进行调试。<br>具体参数可见oracle官方说明<a href="http://docs.oracle.com/javase/7/docs/technotes/tools/windows/jdb.html" target="_blank" rel="noopener">http://docs.oracle.com/javase/7/docs/technotes/tools/windows/jdb.html</a></p>
 <h4 id="CHLSDB"><a href="#CHLSDB" class="headerlink" title="CHLSDB"></a>CHLSDB</h4><p>CHLSDB感觉很多情况下可以看到更好玩的东西，不详细叙述了。 查询资料听说jstack和jmap等工具就是基于它的。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u admin /opt/taobao/java/bin/java -classpath /opt/taobao/java/lib/sa-jdi.jar sun.jvm.hotspot.CLHSDB</span><br></pre></td></tr></table></figure></p>
@@ -418,7 +418,7 @@
 <h4 id="top"><a href="#top" class="headerlink" title="top"></a>top</h4><p>top除了看一些基本信息之外，剩下的就是配合来查询vm的各种问题了<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ps -ef | grep java</span><br><span class="line">top -H -p pid</span><br></pre></td></tr></table></figure></p>
 <p>获得线程10进制转16进制后jstack去抓看这个线程到底在干啥</p>
 <h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">netstat -nat|awk  <span class="string">'&#123;print $6&#125;'</span>|sort|uniq -c|sort -rn </span><br><span class="line"><span class="comment">#查看当前连接，注意close_wait偏高的情况，比如如下</span></span><br></pre></td></tr></table></figure>
-<p><img src="/md_images/p2/1.jpg" alt="1"></p>
+<p><img src="/md_images/p2/1.jpg" alt=""></p>
 <hr>
 <h3 id="排查利器"><a href="#排查利器" class="headerlink" title="排查利器"></a>排查利器</h3><h4 id="btrace"><a href="#btrace" class="headerlink" title="btrace"></a>btrace</h4><p>首当其冲的要说的是btrace。真是生产环境&amp;预发的排查问题大杀器。更详情可以移步到github：<a href="https://github.com/btraceio/btrace" target="_blank" rel="noopener">https://github.com/btraceio/btrace</a></p>
 <ol>
@@ -455,23 +455,23 @@
 <li>V: 输出通过.hotsportrc或-XX:Flags=<filename>指定的jvm参数<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u admin /opt/taobao/java/bin/jps -mlvV</span><br></pre></td></tr></table></figure>
 </filename></li>
 </ul>
-<p><img src="/md_images/p2/2.jpg" alt="2"></p>
+<p><img src="/md_images/p2/2.jpg" alt=""></p>
 <h4 id="jstack"><a href="#jstack" class="headerlink" title="jstack"></a>jstack</h4><ul>
 <li>普通用法:<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u admin /opt/taobao/install/ajdk<span class="number">-8</span>_1_1_fp1-b52/bin/jstack <span class="number">2815</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<p><img src="/md_images/p2/3.jpg" alt="3"></p>
+<p><img src="/md_images/p2/3.jpg" alt=""></p>
 <ul>
 <li>native+java栈:<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u admin /opt/taobao/install/ajdk<span class="number">-8</span>_1_1_fp1-b52/bin/jstack -m <span class="number">2815</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<p><img src="/md_images/p2/4.jpg" alt="4"></p>
+<p><img src="/md_images/p2/4.jpg" alt=""></p>
 <h4 id="jinfo"><a href="#jinfo" class="headerlink" title="jinfo"></a>jinfo</h4><p>可看系统启动的参数，如下<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u admin /opt/taobao/install/ajdk<span class="number">-8</span>_1_1_fp1-b52/bin/jinfo -flags <span class="number">2815</span></span><br></pre></td></tr></table></figure></p>
-<p><img src="/md_images/p2/5.jpg" alt="5"></p>
+<p><img src="/md_images/p2/5.jpg" alt=""></p>
 <h4 id="jmap"><a href="#jmap" class="headerlink" title="jmap"></a>jmap</h4><ol>
 <li><p>查看堆的情况</p>
  <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u admin /opt/taobao/install/ajdk<span class="number">-8</span>_1_1_fp1-b52/bin/jmap -heap <span class="number">2815</span></span><br></pre></td></tr></table></figure>
-<p> <img src="/md_images/p2/6.jpg" alt="6"><br> <img src="/md_images/p2/7.jpg" alt="7"></p>
+<p> <img src="/md_images/p2/6.jpg" alt=""><br> <img src="/md_images/p2/7.jpg" alt=""></p>
 </li>
 <li><p>dump</p>
  <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u admin /opt/taobao/install/ajdk<span class="number">-8</span>_1_1_fp1-b52/bin/jmap -dump:live,format=b,file=/tmp/heap2.bin <span class="number">2815</span></span><br></pre></td></tr></table></figure>
@@ -482,11 +482,11 @@
 </li>
 <li><p>看看堆都被谁占了? 再配合zprofiler和btrace，排查问题简直是如虎添翼</p>
  <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u admin /opt/taobao/install/ajdk<span class="number">-8</span>_1_1_fp1-b52/bin/jmap -histo <span class="number">2815</span> | head <span class="number">-10</span></span><br></pre></td></tr></table></figure>
-<p> <img src="/md_images/p2/8.jpg" alt="8"></p>
+<p> <img src="/md_images/p2/8.jpg" alt=""></p>
 </li>
 </ol>
 <h4 id="jstat"><a href="#jstat" class="headerlink" title="jstat"></a>jstat</h4><p>jstat参数众多，但是使用一个就够了<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u admin /opt/taobao/install/ajdk<span class="number">-8</span>_1_1_fp1-b52/bin/jstat -gcutil <span class="number">2815</span> <span class="number">1000</span></span><br></pre></td></tr></table></figure></p>
-<p><img src="/md_images/p2/9.jpg" alt="9"></p>
+<p><img src="/md_images/p2/9.jpg" alt=""></p>
 <h4 id="jdb"><a href="#jdb" class="headerlink" title="jdb"></a>jdb</h4><p>时至今日，jdb也是经常使用的。<br>jdb可以用来预发debug,假设你预发的java_home是/opt/taobao/java/，远程调试端口是8000.那么<br><code>sudo -u admin /opt/taobao/java/bin/jdb -attach 8000</code>.</p>
 <p>出现以上代表jdb启动成功。后续可以进行设置断点进行调试。<br>具体参数可见oracle官方说明<a href="http://docs.oracle.com/javase/7/docs/technotes/tools/windows/jdb.html" target="_blank" rel="noopener">http://docs.oracle.com/javase/7/docs/technotes/tools/windows/jdb.html</a></p>
 <h4 id="CHLSDB"><a href="#CHLSDB" class="headerlink" title="CHLSDB"></a>CHLSDB</h4><p>CHLSDB感觉很多情况下可以看到更好玩的东西，不详细叙述了。 查询资料听说jstack和jmap等工具就是基于它的。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u admin /opt/taobao/java/bin/java -classpath /opt/taobao/java/lib/sa-jdi.jar sun.jvm.hotspot.CLHSDB</span><br></pre></td></tr></table></figure></p>
@@ -547,16 +547,16 @@
       <div>
         <ul class="post-copyright">
           <li class="post-copyright-author">
-          <strong>Post author:  </strong>Kuanger
+          <strong>本文作者:  </strong>Kuanger
           </li>
           <li class="post-copyright-link">
-          <strong>Post link:  </strong>
+          <strong>本文链接:  </strong>
           <a href="/2018/11/30/Java问题快速排查/" target="_blank" title="Java问题快速排查">http://yoursite.com/2018/11/30/Java问题快速排查/</a>
           </li>
           <li class="post-copyright-license">
-            <strong>Copyright Notice:   </strong>
-            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
-            unless stating additionally.
+            <strong>版权声明:   </strong>
+            本博客所有文章除特别声明外，均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            许可协议。转载请注明出处
           </li>
          
         </ul>
@@ -602,7 +602,7 @@
 <nav id="article-nav">
   
     <a href="/2018/11/30/一个学习Git的有趣网站/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
+      <strong class="article-nav-caption">上一篇</strong>
       <div class="article-nav-title">
         
           一个学习Git的有趣网站
@@ -612,7 +612,7 @@
   
   
     <a href="/2018/11/28/Hello-World/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
+      <strong class="article-nav-caption">下一篇</strong>
       <div class="article-nav-title">Hello World</div>
     </a>
   
@@ -625,7 +625,7 @@
 
   <aside id="toc-sidebar">
     <div id="toc" class="toc-article">
-    <strong class="toc-title">Contents</strong>
+    <strong class="toc-title">文章目录</strong>
     
         <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux命令类"><span class="nav-number">2.</span> <span class="nav-text">Linux命令类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#tail"><span class="nav-number">2.1.</span> <span class="nav-text">tail</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#grep"><span class="nav-number">2.2.</span> <span class="nav-text">grep</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#awk"><span class="nav-number">2.3.</span> <span class="nav-text">awk</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#find"><span class="nav-number">2.4.</span> <span class="nav-text">find</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pgm"><span class="nav-number">2.5.</span> <span class="nav-text">pgm</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tsar"><span class="nav-number">2.6.</span> <span class="nav-text">tsar</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#top"><span class="nav-number">2.7.</span> <span class="nav-text">top</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其他"><span class="nav-number">2.8.</span> <span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#排查利器"><span class="nav-number">3.</span> <span class="nav-text">排查利器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#btrace"><span class="nav-number">3.1.</span> <span class="nav-text">btrace</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Greys"><span class="nav-number">3.2.</span> <span class="nav-text">Greys</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#javOSize"><span class="nav-number">3.3.</span> <span class="nav-text">javOSize</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JProfiler"><span class="nav-number">3.4.</span> <span class="nav-text">JProfiler</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-Tool"><span class="nav-number">4.</span> <span class="nav-text">Java Tool</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#jps"><span class="nav-number">4.1.</span> <span class="nav-text">jps</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#jstack"><span class="nav-number">4.2.</span> <span class="nav-text">jstack</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#jinfo"><span class="nav-number">4.3.</span> <span class="nav-text">jinfo</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#jmap"><span class="nav-number">4.4.</span> <span class="nav-text">jmap</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#jstat"><span class="nav-number">4.5.</span> <span class="nav-text">jstat</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#jdb"><span class="nav-number">4.6.</span> <span class="nav-text">jdb</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CHLSDB"><span class="nav-number">4.7.</span> <span class="nav-text">CHLSDB</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jar包冲突"><span class="nav-number">5.</span> <span class="nav-text">jar包冲突</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他-1"><span class="nav-number">6.</span> <span class="nav-text">其他</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#dmesg"><span class="nav-number">6.1.</span> <span class="nav-text">dmesg</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#eclipseMAT"><span class="nav-number">6.2.</span> <span class="nav-text">eclipseMAT</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Plugin-of-intellij-idea"><span class="nav-number">6.3.</span> <span class="nav-text">Plugin of intellij idea</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RateLimiter"><span class="nav-number">6.4.</span> <span class="nav-text">RateLimiter</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#Thanks"><span class="nav-number"></span> <span class="nav-text">Thanks~</span></a>
     
@@ -646,8 +646,8 @@
 	      
 	      
     		<p class="busuanzi_uv">
-				UV : <span id="busuanzi_value_site_uv"></span> |  
-				PV : <span id="busuanzi_value_site_pv"></span>
+				访客数 : <span id="busuanzi_value_site_uv"></span> |  
+				访问量 : <span id="busuanzi_value_site_pv"></span>
 		    </p>
   		   
 		</div>
