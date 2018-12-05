@@ -11,22 +11,22 @@
   
   
   
-  <meta name="description" content="前言对于分布式概念就不详细介绍了，分布式简单理解就是：一个业务分拆多个子业务，部署在不同的服务器上。  一般来说，一个子业务我们称为节点。   Content 首先，我们来看一下CAP分别代表的是什么意思：  C：数据一致性(consistency)  所有节点拥有数据的最新版本   A：可用性(availability)  数据具备高可用性   P：分区容错性(partition-toleran">
+  <meta name="description" content="本文约1500字符，阅读时间约3分钟 – about 3 min read  前言对于分布式概念就不详细介绍了，分布式简单理解就是：一个业务分拆多个子业务，部署在不同的服务器上。  一般来说，一个子业务我们称为节点。   Content 首先，我们来看一下CAP分别代表的是什么意思：  C：数据一致性(consistency)  所有节点拥有数据的最新版本   A：可用性(availabilit">
 <meta name="keywords" content="CAP理论">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CAP理论">
-<meta property="og:url" content="http://yoursite.com/2018/12/03/CAP理论/index.html">
+<meta property="og:url" content="http://yoursite.com/2018/12/03/knowledge/CAP理论/index.html">
 <meta property="og:site_name" content="Better than yesterday">
-<meta property="og:description" content="前言对于分布式概念就不详细介绍了，分布式简单理解就是：一个业务分拆多个子业务，部署在不同的服务器上。  一般来说，一个子业务我们称为节点。   Content 首先，我们来看一下CAP分别代表的是什么意思：  C：数据一致性(consistency)  所有节点拥有数据的最新版本   A：可用性(availability)  数据具备高可用性   P：分区容错性(partition-toleran">
+<meta property="og:description" content="本文约1500字符，阅读时间约3分钟 – about 3 min read  前言对于分布式概念就不详细介绍了，分布式简单理解就是：一个业务分拆多个子业务，部署在不同的服务器上。  一般来说，一个子业务我们称为节点。   Content 首先，我们来看一下CAP分别代表的是什么意思：  C：数据一致性(consistency)  所有节点拥有数据的最新版本   A：可用性(availabilit">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/md_images/p4/1.jpg">
 <meta property="og:image" content="http://yoursite.com/md_images/p4/2.jpg">
 <meta property="og:image" content="http://yoursite.com/md_images/p4/3.jpg">
 <meta property="og:image" content="http://yoursite.com/md_images/p4/4.jpg">
-<meta property="og:updated_time" content="2018-12-03T02:23:22.167Z">
+<meta property="og:updated_time" content="2018-12-05T08:54:36.049Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CAP理论">
-<meta name="twitter:description" content="前言对于分布式概念就不详细介绍了，分布式简单理解就是：一个业务分拆多个子业务，部署在不同的服务器上。  一般来说，一个子业务我们称为节点。   Content 首先，我们来看一下CAP分别代表的是什么意思：  C：数据一致性(consistency)  所有节点拥有数据的最新版本   A：可用性(availability)  数据具备高可用性   P：分区容错性(partition-toleran">
+<meta name="twitter:description" content="本文约1500字符，阅读时间约3分钟 – about 3 min read  前言对于分布式概念就不详细介绍了，分布式简单理解就是：一个业务分拆多个子业务，部署在不同的服务器上。  一般来说，一个子业务我们称为节点。   Content 首先，我们来看一下CAP分别代表的是什么意思：  C：数据一致性(consistency)  所有节点拥有数据的最新版本   A：可用性(availabilit">
 <meta name="twitter:image" content="http://yoursite.com/md_images/p4/1.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Better than yesterday" type="application/atom+xml">
@@ -164,7 +164,7 @@
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;"><article id="post-CAP理论" style="width: 75%; float:left;" class="article article-type-post" itemscope="" itemprop="blogPost">
+          <section id="main" style="float:none;"><article id="post-knowledge/CAP理论" style="width: 75%; float:left;" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div id="articleInner" class="article-inner">
     
     
@@ -180,7 +180,7 @@
     
     <div class="article-meta">
       
-	<a href="/2018/12/03/CAP理论/" class="article-date">
+	<a href="/2018/12/03/knowledge/CAP理论/" class="article-date">
 	  <time datetime="2018-12-03T03:54:55.000Z" itemprop="datePublished">2018-12-03</time>
 	</a>
 
@@ -197,7 +197,10 @@
     </div>
     <!-- <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>对于分布式概念就不详细介绍了，分布式简单理解就是：<strong>一个业务分拆多个子业务，部署在不同的服务器上</strong>。</p>
+        <blockquote>
+<p>本文约1500字符，阅读时间约3分钟 – about 3 min read</p>
+</blockquote>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>对于分布式概念就不详细介绍了，分布式简单理解就是：<strong>一个业务分拆多个子业务，部署在不同的服务器上</strong>。</p>
 <ul>
 <li>一般来说，一个子业务我们称为节点。</li>
 </ul>
@@ -297,7 +300,10 @@
       
         
         
-          <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>对于分布式概念就不详细介绍了，分布式简单理解就是：<strong>一个业务分拆多个子业务，部署在不同的服务器上</strong>。</p>
+          <blockquote>
+<p>本文约1500字符，阅读时间约3分钟 – about 3 min read</p>
+</blockquote>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>对于分布式概念就不详细介绍了，分布式简单理解就是：<strong>一个业务分拆多个子业务，部署在不同的服务器上</strong>。</p>
 <ul>
 <li>一般来说，一个子业务我们称为节点。</li>
 </ul>
@@ -404,7 +410,7 @@
           </li>
           <li class="post-copyright-link">
           <strong>本文链接:  </strong>
-          <a href="/2018/12/03/CAP理论/" target="_blank" title="CAP理论">http://yoursite.com/2018/12/03/CAP理论/</a>
+          <a href="/2018/12/03/knowledge/CAP理论/" target="_blank" title="CAP理论">http://yoursite.com/2018/12/03/knowledge/CAP理论/</a>
           </li>
           <li class="post-copyright-license">
             <strong>版权声明:   </strong>
@@ -454,8 +460,17 @@
     
 <nav id="article-nav">
   
+    <a href="/2018/12/04/something/之前的笔记/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          之前的笔记
+        
+      </div>
+    </a>
   
-    <a href="/2018/11/30/一个学习Git的有趣网站/" id="article-nav-older" class="article-nav-link-wrap">
+  
+    <a href="/2018/11/30/something/一个学习Git的有趣网站/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
       <div class="article-nav-title">一个学习Git的有趣网站</div>
     </a>

@@ -300,7 +300,7 @@
         
           <section id="main" style="float:none;">
   
-    <article id="post-CAP理论" class="article article-type-post" itemscope="" itemprop="blogPost">
+    <article id="post-redis/Redis的学习_基础数据结构（二）" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div id="articleInner" class="article-inner">
     
     
@@ -308,7 +308,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/12/03/CAP理论/">CAP理论</a>
+      <a class="article-title" href="/2018/12/04/redis/Redis的学习_基础数据结构（二）/">Redis的学习_基础数据结构（二）(可能是最完善的整理)</a>
     </h1>
   
 
@@ -316,7 +316,200 @@
     
     <div class="article-meta">
       
-	<a href="/2018/12/03/CAP理论/" class="article-date">
+	<a href="/2018/12/04/redis/Redis的学习_基础数据结构（二）/" class="article-date">
+	  <time datetime="2018-12-04T03:57:00.000Z" itemprop="datePublished">2018-12-04</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/Redis/">Redis</a>
+
+      
+    </div>
+    <!-- <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Redis-基础数据结构"><a href="#Redis-基础数据结构" class="headerlink" title="Redis 基础数据结构"></a>Redis 基础数据结构</h3><p>Redis 有 5 种基础数据结构，分别为：</p>
+<ul>
+<li>string (字符串)</li>
+<li>list (列表)</li>
+<li>hash (哈希) </li>
+<li>set (集合)</li>
+<li>zset (有序集合)</li>
+</ul>
+<p><strong>Redis 所有的数据结构都是以唯一的 key 字符串作为名称，然后通过这个唯一 key 值来获取相应的 value 数据。不同类型的数据结构的差异就在于 value 的结构不一样。</strong></p>
+      
+    </div> -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Redis-基础数据结构"><a href="#Redis-基础数据结构" class="headerlink" title="Redis 基础数据结构"></a>Redis 基础数据结构</h3><p>Redis 有 5 种基础数据结构，分别为：</p>
+<ul>
+<li>string (字符串)</li>
+<li>list (列表)</li>
+<li>hash (哈希) </li>
+<li>set (集合)</li>
+<li>zset (有序集合)</li>
+</ul>
+<p><strong>Redis 所有的数据结构都是以唯一的 key 字符串作为名称，然后通过这个唯一 key 值来获取相应的 value 数据。不同类型的数据结构的差异就在于 value 的结构不一样。</strong></p>
+        <p class="article-more-link">
+          <a href="/2018/12/04/redis/Redis的学习_基础数据结构（二）/#more">阅读全文</a>
+        </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/">Redis</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-redis/Redis的学习_介绍（一）" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/12/04/redis/Redis的学习_介绍（一）/">Redis的学习_开篇（一）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/12/04/redis/Redis的学习_介绍（一）/" class="article-date">
+	  <time datetime="2018-12-04T03:56:55.000Z" itemprop="datePublished">2018-12-04</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/Redis/">Redis</a>
+
+      
+    </div>
+    <!-- <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/md_images/p4/4_5_5.jpg" alt=""></p>
+<h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>最近对 <strong>老钱</strong> 的 <strong>《Redis 深度历险：核心原理与应用实践》</strong>进行学习，并且一同做笔记，所以后续的Redis博客都是基于《Redis 深度历险：核心原理与应用实践》和其他的文著，再结合自己的所学到的进行结合，然后进行笔记记录，所以在此统一声明。</p>
+      
+    </div> -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/md_images/p4/4_5_5.jpg" alt=""></p>
+<h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>最近对 <strong>老钱</strong> 的 <strong>《Redis 深度历险：核心原理与应用实践》</strong>进行学习，并且一同做笔记，所以后续的Redis博客都是基于《Redis 深度历险：核心原理与应用实践》和其他的文著，再结合自己的所学到的进行结合，然后进行笔记记录，所以在此统一声明。</p>
+        <p class="article-more-link">
+          <a href="/2018/12/04/redis/Redis的学习_介绍（一）/#more">阅读全文</a>
+        </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/">Redis</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-something/之前的笔记" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/12/04/something/之前的笔记/">之前的笔记</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/12/04/something/之前的笔记/" class="article-date">
+	  <time datetime="2018-12-04T02:54:55.000Z" itemprop="datePublished">2018-12-04</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/Talk/">Talk</a>
+
+      
+    </div>
+    <!-- <div class="article-entry" itemprop="articleBody">
+      
+        <p>每天我都会阅读一到两篇的博客、人家的经验总结等等，看完后自己会做一下小笔记，笔记都做在有道云，因为手机电脑都可以随时看到，挺方便的，然后过往分享了一下笔记在 <code>CSDN</code> 上面， 我就不搬过来了，有兴趣可以点击去阅读：<a href="https://blog.csdn.net/Kato_op" target="_blank" rel="noopener">https://blog.csdn.net/Kato_op</a></p>
+
+      
+    </div> -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+        
+          <p>每天我都会阅读一到两篇的博客、人家的经验总结等等，看完后自己会做一下小笔记，笔记都做在有道云，因为手机电脑都可以随时看到，挺方便的，然后过往分享了一下笔记在 <code>CSDN</code> 上面， 我就不搬过来了，有兴趣可以点击去阅读：<a href="https://blog.csdn.net/Kato_op" target="_blank" rel="noopener">https://blog.csdn.net/Kato_op</a></p>
+          
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/笔记/">笔记</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-knowledge/CAP理论" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/12/03/knowledge/CAP理论/">CAP理论</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/12/03/knowledge/CAP理论/" class="article-date">
 	  <time datetime="2018-12-03T03:54:55.000Z" itemprop="datePublished">2018-12-03</time>
 	</a>
 
@@ -327,7 +520,10 @@
     </div>
     <!-- <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>对于分布式概念就不详细介绍了，分布式简单理解就是：<strong>一个业务分拆多个子业务，部署在不同的服务器上</strong>。</p>
+        <blockquote>
+<p>本文约1500字符，阅读时间约3分钟 – about 3 min read</p>
+</blockquote>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>对于分布式概念就不详细介绍了，分布式简单理解就是：<strong>一个业务分拆多个子业务，部署在不同的服务器上</strong>。</p>
 <ul>
 <li>一般来说，一个子业务我们称为节点。</li>
 </ul>
@@ -357,7 +553,10 @@
     </div> -->
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>对于分布式概念就不详细介绍了，分布式简单理解就是：<strong>一个业务分拆多个子业务，部署在不同的服务器上</strong>。</p>
+        <blockquote>
+<p>本文约1500字符，阅读时间约3分钟 – about 3 min read</p>
+</blockquote>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>对于分布式概念就不详细介绍了，分布式简单理解就是：<strong>一个业务分拆多个子业务，部署在不同的服务器上</strong>。</p>
 <ul>
 <li>一般来说，一个子业务我们称为节点。</li>
 </ul>
@@ -384,7 +583,7 @@
 </li>
 </ul>
         <p class="article-more-link">
-          <a href="/2018/12/03/CAP理论/#more">阅读全文</a>
+          <a href="/2018/12/03/knowledge/CAP理论/#more">阅读全文</a>
         </p>
         
       
@@ -408,7 +607,7 @@
 
 
   
-    <article id="post-一个学习Git的有趣网站" class="article article-type-post" itemscope="" itemprop="blogPost">
+    <article id="post-something/一个学习Git的有趣网站" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div id="articleInner" class="article-inner">
     
     
@@ -416,7 +615,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/11/30/一个学习Git的有趣网站/">一个学习Git的有趣网站</a>
+      <a class="article-title" href="/2018/11/30/something/一个学习Git的有趣网站/">一个学习Git的有趣网站</a>
     </h1>
   
 
@@ -424,7 +623,7 @@
     
     <div class="article-meta">
       
-	<a href="/2018/11/30/一个学习Git的有趣网站/" class="article-date">
+	<a href="/2018/11/30/something/一个学习Git的有趣网站/" class="article-date">
 	  <time datetime="2018-11-30T06:54:55.000Z" itemprop="datePublished">2018-11-30</time>
 	</a>
 
@@ -444,7 +643,7 @@
         <p><img src="/md_images/p3/1.jpg" alt=""></p>
 <p><strong>一个非常有趣的小网站，把Git的命令和知识点做成类似于游戏闯关一样，生动有效地帮助初步学习Git的朋友们。</strong></p>
         <p class="article-more-link">
-          <a href="/2018/11/30/一个学习Git的有趣网站/#more">阅读全文</a>
+          <a href="/2018/11/30/something/一个学习Git的有趣网站/#more">阅读全文</a>
         </p>
         
       
@@ -468,7 +667,7 @@
 
 
   
-    <article id="post-Java问题快速排查" class="article article-type-post" itemscope="" itemprop="blogPost">
+    <article id="post-question/Java问题快速排查" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div id="articleInner" class="article-inner">
     
     
@@ -476,7 +675,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/11/30/Java问题快速排查/">Java问题快速排查</a>
+      <a class="article-title" href="/2018/11/30/question/Java问题快速排查/">Java问题快速排查</a>
     </h1>
   
 
@@ -484,7 +683,7 @@
     
     <div class="article-meta">
       
-	<a href="/2018/11/30/Java问题快速排查/" class="article-date">
+	<a href="/2018/11/30/question/Java问题快速排查/" class="article-date">
 	  <time datetime="2018-11-30T02:54:55.000Z" itemprop="datePublished">2018-11-30</time>
 	</a>
 
@@ -502,7 +701,7 @@
       
         <p>这是一篇来源于阿里内部技术论坛的文章，原文在阿里内部获得一致好评。</p>
         <p class="article-more-link">
-          <a href="/2018/11/30/Java问题快速排查/#more">阅读全文</a>
+          <a href="/2018/11/30/question/Java问题快速排查/#more">阅读全文</a>
         </p>
         
       
@@ -526,7 +725,7 @@
 
 
   
-    <article id="post-Hello-World" class="article article-type-post" itemscope="" itemprop="blogPost">
+    <article id="post-something/Hello-World" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div id="articleInner" class="article-inner">
     
     
@@ -534,7 +733,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/11/28/Hello-World/">Hello World</a>
+      <a class="article-title" href="/2018/11/28/something/Hello-World/">Hello World</a>
     </h1>
   
 
@@ -542,7 +741,7 @@
     
     <div class="article-meta">
       
-	<a href="/2018/11/28/Hello-World/" class="article-date">
+	<a href="/2018/11/28/something/Hello-World/" class="article-date">
 	  <time datetime="2018-11-28T07:47:17.000Z" itemprop="datePublished">2018-11-28</time>
 	</a>
 
@@ -568,7 +767,7 @@
 </blockquote>
 <p>记录一下我的网站的诞生~</p>
         <p class="article-more-link">
-          <a href="/2018/11/28/Hello-World/#more">阅读全文</a>
+          <a href="/2018/11/28/something/Hello-World/#more">阅读全文</a>
         </p>
         
       
