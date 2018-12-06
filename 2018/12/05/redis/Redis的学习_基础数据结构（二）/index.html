@@ -31,7 +31,7 @@
 <meta property="og:image" content="http://yoursite.com/md_images/p5/10.gif">
 <meta property="og:image" content="http://yoursite.com/md_images/p5/11.jpg">
 <meta property="og:image" content="http://yoursite.com/md_images/p5/12.jpg">
-<meta property="og:updated_time" content="2018-12-05T15:04:32.186Z">
+<meta property="og:updated_time" content="2018-12-06T09:16:42.388Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis的学习_基础数据结构（二）(可能是最完善的整理)">
 <meta name="twitter:description" content="Redis 基础数据结构Redis 有 5 种基础数据结构，分别为：  string (字符串) list (列表) hash (哈希)  set (集合) zset (有序集合)  Redis 所有的数据结构都是以唯一的 key 字符串作为名称，然后通过这个唯一 key 值来获取相应的 value 数据。不同类型的数据结构的差异就在于 value 的结构不一样。">
@@ -309,7 +309,7 @@
 <li><p>不同的是，Redis 的字典的值只能是字符串，另外它们 <code>rehash</code> 的方式不一样，因为 Java 的 HashMap 在字典很大时，<code>rehash</code> 是个耗时的操作，需要一次性全部 <code>rehash</code>。Redis 为了高性能，<strong>不能堵塞服务</strong>，所以采用了<strong>渐进式</strong> <code>rehash</code> 策略。</p>
 <ul>
 <li>rehash : 重新散列, 指的是重新计算键的哈希值和索引值， 然后将键值对放置到 新计算的哈希表的指定位置上。</li>
-<li><a href="http://redisbook.com/preview/dict/rehashing.html#id1" target="_blank" rel="noopener">有兴趣再继续深入的可以前往了解</a></li>
+<li><a href="http://redisbook.com/preview/dict/rehashing.html#id1" target="_blank" rel="noopener">Redis设计与实现——哈希表的扩展与收缩</a></li>
 <li><a href="https://juejin.im/post/5b5ac3316fb9a04fd260a17e" target="_blank" rel="noopener">美团针对Redis Rehash机制的探索和实践</a></li>
 <li><a href="https://juejin.im/post/5a224e1551882535c56cb940" target="_blank" rel="noopener">HashMap的Rehash</a></li>
 </ul>
@@ -510,7 +510,7 @@
 <li><p>不同的是，Redis 的字典的值只能是字符串，另外它们 <code>rehash</code> 的方式不一样，因为 Java 的 HashMap 在字典很大时，<code>rehash</code> 是个耗时的操作，需要一次性全部 <code>rehash</code>。Redis 为了高性能，<strong>不能堵塞服务</strong>，所以采用了<strong>渐进式</strong> <code>rehash</code> 策略。</p>
 <ul>
 <li>rehash : 重新散列, 指的是重新计算键的哈希值和索引值， 然后将键值对放置到 新计算的哈希表的指定位置上。</li>
-<li><a href="http://redisbook.com/preview/dict/rehashing.html#id1" target="_blank" rel="noopener">有兴趣再继续深入的可以前往了解</a></li>
+<li><a href="http://redisbook.com/preview/dict/rehashing.html#id1" target="_blank" rel="noopener">Redis设计与实现——哈希表的扩展与收缩</a></li>
 <li><a href="https://juejin.im/post/5b5ac3316fb9a04fd260a17e" target="_blank" rel="noopener">美团针对Redis Rehash机制的探索和实践</a></li>
 <li><a href="https://juejin.im/post/5a224e1551882535c56cb940" target="_blank" rel="noopener">HashMap的Rehash</a></li>
 </ul>
