@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="jGpOWJy4VY">
+  
+  <title>jsoup的学习(二)_案例 | Better than yesterday</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Kuanger">
+  
+  
+  
+  
+  <meta name="description" content="本文约3000字符，阅读时间约6分钟 – about 6 min read  需要学习对页面的数据进行爬取，以下内容仅供学习demo，非商业用途。">
+<meta name="keywords" content="spider,爬虫,jsoup">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jsoup的学习(二)_案例">
+<meta property="og:url" content="http://yoursite.com/2018/12/11/spider/Jsoup的学习--(二)案例/index.html">
+<meta property="og:site_name" content="Better than yesterday">
+<meta property="og:description" content="本文约3000字符，阅读时间约6分钟 – about 6 min read  需要学习对页面的数据进行爬取，以下内容仅供学习demo，非商业用途。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/md_images/p6/1.jpg">
+<meta property="og:image" content="http://yoursite.com/md_images/p6/2.jpg">
+<meta property="og:updated_time" content="2018-12-19T03:39:16.915Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Jsoup的学习(二)_案例">
+<meta name="twitter:description" content="本文约3000字符，阅读时间约6分钟 – about 6 min read  需要学习对页面的数据进行爬取，以下内容仅供学习demo，非商业用途。">
+<meta name="twitter:image" content="http://yoursite.com/md_images/p6/1.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="Better than yesterday" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css">
+  
+
+  
+  
+  
+
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;" href="#" data-toggle="modal" data-target="#myModal">
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">首页</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">归档</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">分类</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">标签</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">关于</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="">
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(无标题)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </ul></div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-spider/Jsoup的学习--(二)案例" style="width: 75%; float:left;" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      Jsoup的学习(二)_案例
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/12/11/spider/Jsoup的学习--(二)案例/" class="article-date">
+	  <time datetime="2018-12-11T03:57:00.000Z" itemprop="datePublished">2018-12-11</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/爬虫/">爬虫</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		阅读量<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <!-- <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>本文约3000字符，阅读时间约6分钟 – about 6 min read</p>
+</blockquote>
+<p>需要学习对页面的数据进行爬取，以下内容仅供学习demo，非商业用途。</p>
+<a id="more"></a>
+<h3 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h3><h4 id="举例一"><a href="#举例一" class="headerlink" title="举例一"></a>举例一</h4><blockquote>
+<p>举例：获取携程的酒店名称</p>
+</blockquote>
+<p><img src="/md_images/p6/1.jpg" alt=""><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span></span>&#123;</span><br><span class="line">    String url = <span class="string">"http://hotels.ctrip.com/hotel/701612.html"</span>;</span><br><span class="line">    Document document = Jsoup.connect(url)</span><br><span class="line">        .timeout(<span class="number">10000</span>)</span><br><span class="line">        .referrer(<span class="string">"http://hotels.ctrip.com"</span>)</span><br><span class="line">        .get();</span><br><span class="line">    System.out.println(document);</span><br><span class="line">    Elements elements = document.select(<span class="string">".cn_n"</span>);</span><br><span class="line">    System.out.println(<span class="string">"酒店名称："</span>+elements.text());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><p>输出 </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"htl_info"</span> <span class="attr">id</span>=<span class="string">"J_htl_info"</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"name"</span> <span class="attr">itemtype</span>=<span class="string">"//schema.org/Hotel"</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">h2</span> <span class="attr">class</span>=<span class="string">"cn_n"</span> <span class="attr">itemprop</span>=<span class="string">"name"</span>&gt;</span>河南大厦<span class="tag">&lt;/<span class="name">h2</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">h2</span> <span class="attr">class</span>=<span class="string">"en_n"</span>&gt;</span>Beijing Henan Plaza Hotel<span class="tag">&lt;/<span class="name">h2</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"ctl00_MainContentPlaceHolder_commonHead_span_hotel_medal"</span> <span class="attr">data-role</span>=<span class="string">"title"</span> <span class="attr">class</span>=<span class="string">"medal "</span> <span class="attr">title</span>=<span class="string">""</span> <span class="attr">rstar</span>=<span class="string">"2"</span> <span class="attr">cpr</span>=<span class="string">"0"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"medal ico_quality_gold"</span> <span class="attr">title</span>=<span class="string">"确认订单更快速，入住过程更顺利，携程服务品质认证。"</span> <span class="attr">style</span>=<span class="string">"display:none"</span> <span class="attr">id</span>=<span class="string">"J_ServiceScoreIcon"</span>&gt;</span>品质保障<span class="tag">&lt;/<span class="name">span</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span> </span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过标签选择器定位就可以了,效果和element可以看上图</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">酒店名称：河南大厦</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="举例二"><a href="#举例二" class="headerlink" title="举例二"></a>举例二</h4><blockquote>
+<p>举例：获取酒店详情中房型的价格</p>
+</blockquote>
+<p><img src="/md_images/p6/2.jpg" alt=""></p>
+<h5 id="寻找url"><a href="#寻找url" class="headerlink" title="寻找url"></a>寻找url</h5><ul>
+<li>由于酒店房型数据是Ajax的，需要在开发者工具中（F12）寻找url<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">原url：http://hotels.ctrip.com/Domestic/tool/AjaxHote1RoomListForDetai1.aspx?psid=&amp;MasterHotelID=701612&amp;hotel=701612&amp;EDM=F&amp;roomId=&amp;IncludeRoom=&amp;city=1&amp;showspothotel=T&amp;supplier=&amp;IsDecoupleSpotHotelAndGroup=F&amp;contrast=0&amp;brand=0&amp;startDate=2018-12-10&amp;depDate=2018-12-11&amp;IsFlash=F&amp;RequestTravelMoney=F&amp;hsids=&amp;IsJustConfirm=&amp;contyped=0&amp;priceInfo=-1&amp;equip=&amp;filter=&amp;productcode=&amp;couponList=&amp;abForHuaZhu=&amp;defaultLoad=T&amp;esfiltertag=&amp;estagid=&amp;Currency=&amp;Exchange=&amp;TmFromList=F&amp;RoomGuestCount=1,1,0&amp;eleven=1a82f6826ef6f79f8b687d200c8bc26bc83f5fd6e22ce188fa46c37e596ada0f&amp;callback=CASZypaSpRGHqDDaCsI&amp;_=1544406910108</span><br><span class="line"></span><br><span class="line">//然后进行测试缩小请求参数范围</span><br><span class="line"></span><br><span class="line">最后url：http://hotels.ctrip.com/Domestic/tool/AjaxHote1RoomListForDetai1.aspx?MasterHotelID=701615&amp;hotel=701615&amp;startDate=2018-12-10&amp;depDate=2018-12-11</span><br><span class="line"></span><br><span class="line">//范围只需要改动酒店id和入住时间即可</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="设置请求头参数"><a href="#设置请求头参数" class="headerlink" title="设置请求头参数"></a>设置请求头参数</h5><ul>
+<li>如果对请求的来源做了判断就需要在header设置<code>referrer</code>参数</li>
+</ul>
+<h5 id="寻找规律"><a href="#寻找规律" class="headerlink" title="寻找规律"></a>寻找规律</h5><ul>
+<li>每一行的价格都是放在tr标签中的其中一个td中，仔细观察里面有span标签有<code>base_price</code>属性，直接属性选择器定位获取text，后续在正则取值。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span></span>&#123;</span><br><span class="line">    String url2 = <span class="string">"http://hotels.ctrip.com/Domestic/tool/AjaxHote1RoomListForDetai1.aspx?MasterHotelID=701615&amp;hotel=701615&amp;startDate=2018-12-10&amp;depDate=2018-12-11"</span>;</span><br><span class="line">    Document document = Jsoup.connect(url2)</span><br><span class="line">            .timeout(<span class="number">10000</span>)</span><br><span class="line">            .referrer(<span class="string">"http://hotels.ctrip.com"</span>).get();</span><br><span class="line">    Elements select2 = element.select(<span class="string">"tr td .base_price"</span>);</span><br><span class="line">    System.out.println(select2.text());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>输出<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">¥&lt;\/dfn&gt;1374&lt;\/span&gt;&lt;\/div&gt;\u000a\u0009 \u000a\u0009\u0009\u000a\u0009\u0009\u000a\u0009&lt;\/p&gt;\u000a \u000a &lt;\/span&gt;\u000a&lt;\/p&gt;\u000a\u0009\u000a&lt;\/td&gt;\u000a</span><br><span class="line">¥&lt;\/dfn&gt;942&lt;\/span&gt;&lt;\/div&gt;\u000a\u0009 \u000a\u0009\u0009\u000a\u0009\u0009\u000a\u0009&lt;\/p&gt;\u000a \u000a &lt;\/span&gt;\u000a&lt;\/p&gt;\u000a\u0009\u000a&lt;\/td&gt;\u000a</span><br><span class="line">¥&lt;\/dfn&gt;1140&lt;\/span&gt;&lt;\/div&gt;\u000a\u0009 \u000a\u0009\u0009\u000a\u0009\u0009\u000a\u0009&lt;\/p&gt;\u000a \u000a &lt;\/span&gt;\u000a&lt;\/p&gt;\u000a\u0009\u000a&lt;\/td&gt;\u000a</span><br><span class="line">¥&lt;\/dfn&gt;849&lt;\/span&gt;&lt;\/div&gt;\u000a\u0009 \u000a\u0009\u0009\u000a\u0009\u0009\u000a\u0009&lt;\/p&gt;\u000a \u000a &lt;\/span&gt;\u000a&lt;\/p&gt;\u000a\u0009\u000a&lt;\/td&gt;\u000a</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="正则取值"><a href="#正则取值" class="headerlink" title="正则取值"></a>正则取值</h5><ul>
+<li><p>对dfn标签后的值进行匹配取值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test3</span><span class="params">()</span></span>&#123;</span><br><span class="line">    String url2 = <span class="string">"http://hotels.ctrip.com/Domestic/tool/AjaxHote1RoomListForDetai1.aspx?MasterHotelID=701615&amp;hotel=701615&amp;startDate=2018-12-10&amp;depDate=2018-12-11"</span>;</span><br><span class="line">    Document document = Jsoup.connect(url2)</span><br><span class="line">            .timeout(<span class="number">10000</span>)</span><br><span class="line">            .referrer(<span class="string">"http://hotels.ctrip.com"</span>).get();</span><br><span class="line">    Elements select = element.select(<span class="string">"tr td .base_price"</span>);</span><br><span class="line">    <span class="keyword">for</span> (Element element1 : select) &#123;</span><br><span class="line">        String text = element1.text();</span><br><span class="line">        <span class="comment">//¥&lt;\/dfn&gt;1374&lt;\/span&gt;&lt;\/div&gt;\u000a\u0009...</span></span><br><span class="line">        Pattern pattern = Pattern.compile(<span class="string">"dfn&gt;(\\d+)&lt;"</span>);</span><br><span class="line">        Matcher matcher = pattern.matcher(text);</span><br><span class="line">        <span class="keyword">if</span>(matcher.find())&#123;</span><br><span class="line">            System.out.println(matcher.group(<span class="number">1</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>输出</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1374</span></span><br><span class="line"><span class="number">942</span></span><br><span class="line"><span class="number">1140</span></span><br><span class="line"><span class="number">849</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      
+    </div> -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+        
+          <blockquote>
+<p>本文约3000字符，阅读时间约6分钟 – about 6 min read</p>
+</blockquote>
+<p>需要学习对页面的数据进行爬取，以下内容仅供学习demo，非商业用途。</p>
+<a id="more"></a>
+<h3 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h3><h4 id="举例一"><a href="#举例一" class="headerlink" title="举例一"></a>举例一</h4><blockquote>
+<p>举例：获取携程的酒店名称</p>
+</blockquote>
+<p><img src="/md_images/p6/1.jpg" alt=""><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span></span>&#123;</span><br><span class="line">    String url = <span class="string">"http://hotels.ctrip.com/hotel/701612.html"</span>;</span><br><span class="line">    Document document = Jsoup.connect(url)</span><br><span class="line">        .timeout(<span class="number">10000</span>)</span><br><span class="line">        .referrer(<span class="string">"http://hotels.ctrip.com"</span>)</span><br><span class="line">        .get();</span><br><span class="line">    System.out.println(document);</span><br><span class="line">    Elements elements = document.select(<span class="string">".cn_n"</span>);</span><br><span class="line">    System.out.println(<span class="string">"酒店名称："</span>+elements.text());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><p>输出 </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"htl_info"</span> <span class="attr">id</span>=<span class="string">"J_htl_info"</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"name"</span> <span class="attr">itemtype</span>=<span class="string">"//schema.org/Hotel"</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">h2</span> <span class="attr">class</span>=<span class="string">"cn_n"</span> <span class="attr">itemprop</span>=<span class="string">"name"</span>&gt;</span>河南大厦<span class="tag">&lt;/<span class="name">h2</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">h2</span> <span class="attr">class</span>=<span class="string">"en_n"</span>&gt;</span>Beijing Henan Plaza Hotel<span class="tag">&lt;/<span class="name">h2</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"ctl00_MainContentPlaceHolder_commonHead_span_hotel_medal"</span> <span class="attr">data-role</span>=<span class="string">"title"</span> <span class="attr">class</span>=<span class="string">"medal "</span> <span class="attr">title</span>=<span class="string">""</span> <span class="attr">rstar</span>=<span class="string">"2"</span> <span class="attr">cpr</span>=<span class="string">"0"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"medal ico_quality_gold"</span> <span class="attr">title</span>=<span class="string">"确认订单更快速，入住过程更顺利，携程服务品质认证。"</span> <span class="attr">style</span>=<span class="string">"display:none"</span> <span class="attr">id</span>=<span class="string">"J_ServiceScoreIcon"</span>&gt;</span>品质保障<span class="tag">&lt;/<span class="name">span</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span> </span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过标签选择器定位就可以了,效果和element可以看上图</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">酒店名称：河南大厦</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="举例二"><a href="#举例二" class="headerlink" title="举例二"></a>举例二</h4><blockquote>
+<p>举例：获取酒店详情中房型的价格</p>
+</blockquote>
+<p><img src="/md_images/p6/2.jpg" alt=""></p>
+<h5 id="寻找url"><a href="#寻找url" class="headerlink" title="寻找url"></a>寻找url</h5><ul>
+<li>由于酒店房型数据是Ajax的，需要在开发者工具中（F12）寻找url<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">原url：http://hotels.ctrip.com/Domestic/tool/AjaxHote1RoomListForDetai1.aspx?psid=&amp;MasterHotelID=701612&amp;hotel=701612&amp;EDM=F&amp;roomId=&amp;IncludeRoom=&amp;city=1&amp;showspothotel=T&amp;supplier=&amp;IsDecoupleSpotHotelAndGroup=F&amp;contrast=0&amp;brand=0&amp;startDate=2018-12-10&amp;depDate=2018-12-11&amp;IsFlash=F&amp;RequestTravelMoney=F&amp;hsids=&amp;IsJustConfirm=&amp;contyped=0&amp;priceInfo=-1&amp;equip=&amp;filter=&amp;productcode=&amp;couponList=&amp;abForHuaZhu=&amp;defaultLoad=T&amp;esfiltertag=&amp;estagid=&amp;Currency=&amp;Exchange=&amp;TmFromList=F&amp;RoomGuestCount=1,1,0&amp;eleven=1a82f6826ef6f79f8b687d200c8bc26bc83f5fd6e22ce188fa46c37e596ada0f&amp;callback=CASZypaSpRGHqDDaCsI&amp;_=1544406910108</span><br><span class="line"></span><br><span class="line">//然后进行测试缩小请求参数范围</span><br><span class="line"></span><br><span class="line">最后url：http://hotels.ctrip.com/Domestic/tool/AjaxHote1RoomListForDetai1.aspx?MasterHotelID=701615&amp;hotel=701615&amp;startDate=2018-12-10&amp;depDate=2018-12-11</span><br><span class="line"></span><br><span class="line">//范围只需要改动酒店id和入住时间即可</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="设置请求头参数"><a href="#设置请求头参数" class="headerlink" title="设置请求头参数"></a>设置请求头参数</h5><ul>
+<li>如果对请求的来源做了判断就需要在header设置<code>referrer</code>参数</li>
+</ul>
+<h5 id="寻找规律"><a href="#寻找规律" class="headerlink" title="寻找规律"></a>寻找规律</h5><ul>
+<li>每一行的价格都是放在tr标签中的其中一个td中，仔细观察里面有span标签有<code>base_price</code>属性，直接属性选择器定位获取text，后续在正则取值。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span></span>&#123;</span><br><span class="line">    String url2 = <span class="string">"http://hotels.ctrip.com/Domestic/tool/AjaxHote1RoomListForDetai1.aspx?MasterHotelID=701615&amp;hotel=701615&amp;startDate=2018-12-10&amp;depDate=2018-12-11"</span>;</span><br><span class="line">    Document document = Jsoup.connect(url2)</span><br><span class="line">            .timeout(<span class="number">10000</span>)</span><br><span class="line">            .referrer(<span class="string">"http://hotels.ctrip.com"</span>).get();</span><br><span class="line">    Elements select2 = element.select(<span class="string">"tr td .base_price"</span>);</span><br><span class="line">    System.out.println(select2.text());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>输出<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">¥&lt;\/dfn&gt;1374&lt;\/span&gt;&lt;\/div&gt;\u000a\u0009 \u000a\u0009\u0009\u000a\u0009\u0009\u000a\u0009&lt;\/p&gt;\u000a \u000a &lt;\/span&gt;\u000a&lt;\/p&gt;\u000a\u0009\u000a&lt;\/td&gt;\u000a</span><br><span class="line">¥&lt;\/dfn&gt;942&lt;\/span&gt;&lt;\/div&gt;\u000a\u0009 \u000a\u0009\u0009\u000a\u0009\u0009\u000a\u0009&lt;\/p&gt;\u000a \u000a &lt;\/span&gt;\u000a&lt;\/p&gt;\u000a\u0009\u000a&lt;\/td&gt;\u000a</span><br><span class="line">¥&lt;\/dfn&gt;1140&lt;\/span&gt;&lt;\/div&gt;\u000a\u0009 \u000a\u0009\u0009\u000a\u0009\u0009\u000a\u0009&lt;\/p&gt;\u000a \u000a &lt;\/span&gt;\u000a&lt;\/p&gt;\u000a\u0009\u000a&lt;\/td&gt;\u000a</span><br><span class="line">¥&lt;\/dfn&gt;849&lt;\/span&gt;&lt;\/div&gt;\u000a\u0009 \u000a\u0009\u0009\u000a\u0009\u0009\u000a\u0009&lt;\/p&gt;\u000a \u000a &lt;\/span&gt;\u000a&lt;\/p&gt;\u000a\u0009\u000a&lt;\/td&gt;\u000a</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="正则取值"><a href="#正则取值" class="headerlink" title="正则取值"></a>正则取值</h5><ul>
+<li><p>对dfn标签后的值进行匹配取值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test3</span><span class="params">()</span></span>&#123;</span><br><span class="line">    String url2 = <span class="string">"http://hotels.ctrip.com/Domestic/tool/AjaxHote1RoomListForDetai1.aspx?MasterHotelID=701615&amp;hotel=701615&amp;startDate=2018-12-10&amp;depDate=2018-12-11"</span>;</span><br><span class="line">    Document document = Jsoup.connect(url2)</span><br><span class="line">            .timeout(<span class="number">10000</span>)</span><br><span class="line">            .referrer(<span class="string">"http://hotels.ctrip.com"</span>).get();</span><br><span class="line">    Elements select = element.select(<span class="string">"tr td .base_price"</span>);</span><br><span class="line">    <span class="keyword">for</span> (Element element1 : select) &#123;</span><br><span class="line">        String text = element1.text();</span><br><span class="line">        <span class="comment">//¥&lt;\/dfn&gt;1374&lt;\/span&gt;&lt;\/div&gt;\u000a\u0009...</span></span><br><span class="line">        Pattern pattern = Pattern.compile(<span class="string">"dfn&gt;(\\d+)&lt;"</span>);</span><br><span class="line">        Matcher matcher = pattern.matcher(text);</span><br><span class="line">        <span class="keyword">if</span>(matcher.find())&#123;</span><br><span class="line">            System.out.println(matcher.group(<span class="number">1</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>输出</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1374</span></span><br><span class="line"><span class="number">942</span></span><br><span class="line"><span class="number">1140</span></span><br><span class="line"><span class="number">849</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>本文作者:  </strong>Kuanger
+          </li>
+          <li class="post-copyright-link">
+          <strong>本文链接:  </strong>
+          <a href="/2018/12/11/spider/Jsoup的学习--(二)案例/" target="_blank" title="Jsoup的学习(二)_案例">http://yoursite.com/2018/12/11/spider/Jsoup的学习--(二)案例/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>版权声明:   </strong>
+            本博客所有文章除特别声明外，均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            许可协议。转载请注明出处
+          </li>
+         
+        </ul>
+<div>
+</div></div>
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jsoup/">jsoup</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spider/">spider</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫/">爬虫</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/12/19/frontend/实用的字符串格式化/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          实用的字符串格式化
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/12/10/spider/Jsoup的学习一篇就够/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">Jsoup的学习一篇就够</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#案例"><span class="nav-number">1.</span> <span class="nav-text">案例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#举例一"><span class="nav-number">1.1.</span> <span class="nav-text">举例一</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#举例二"><span class="nav-number">1.2.</span> <span class="nav-text">举例二</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#寻找url"><span class="nav-number">1.2.1.</span> <span class="nav-text">寻找url</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#设置请求头参数"><span class="nav-number">1.2.2.</span> <span class="nav-text">设置请求头参数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#寻找规律"><span class="nav-number">1.2.3.</span> <span class="nav-text">寻找规律</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#正则取值"><span class="nav-number">1.2.4.</span> <span class="nav-text">正则取值</span></a></li></ol></li></ol></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <!-- <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>-->
+	      <p id="copyRightEn">Copyright &copy; 2018 - 2018 Kuanger All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				访客数 : <span id="busuanzi_value_site_uv"></span> |  
+				访问量 : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Better than yesterday
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 Kuanger All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>
