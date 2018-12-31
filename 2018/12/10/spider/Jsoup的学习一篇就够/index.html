@@ -12,18 +12,18 @@
   
   
   
-  <meta name="description" content="本文约9000字符，阅读时间约18分钟 – about 18 min read  摘要Jsoup是一款比较好的Java版HTML解析器。可直接解析某个URL地址、HTML文本内容。它提供了一套非常省力的API，可通过DOM，CSS以及类似于jQuery的操作方法来取出和操作数据。  由于工作原因，需要学习对页面的数据进行爬取，以下内容仅供学习demo，非商业用途。 学习途中查询了一些资料，也发现">
+  <meta name="description" content="摘要Jsoup是一款比较好的Java版HTML解析器。可直接解析某个URL地址、HTML文本内容。它提供了一套非常省力的API，可通过DOM，CSS以及类似于jQuery的操作方法来取出和操作数据。  由于工作原因，需要学习对页面的数据进行爬取，以下内容仅供学习demo，非商业用途。 学习途中查询了一些资料，也发现很多工具也可以实现，有兴趣可以前往了解 然后我发现jsoup可以对响应的html数据">
 <meta name="keywords" content="spider,爬虫,jsoup">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Jsoup的学习一篇就够">
 <meta property="og:url" content="http://yoursite.com/2018/12/10/spider/Jsoup的学习一篇就够/index.html">
 <meta property="og:site_name" content="Better than yesterday">
-<meta property="og:description" content="本文约9000字符，阅读时间约18分钟 – about 18 min read  摘要Jsoup是一款比较好的Java版HTML解析器。可直接解析某个URL地址、HTML文本内容。它提供了一套非常省力的API，可通过DOM，CSS以及类似于jQuery的操作方法来取出和操作数据。  由于工作原因，需要学习对页面的数据进行爬取，以下内容仅供学习demo，非商业用途。 学习途中查询了一些资料，也发现">
+<meta property="og:description" content="摘要Jsoup是一款比较好的Java版HTML解析器。可直接解析某个URL地址、HTML文本内容。它提供了一套非常省力的API，可通过DOM，CSS以及类似于jQuery的操作方法来取出和操作数据。  由于工作原因，需要学习对页面的数据进行爬取，以下内容仅供学习demo，非商业用途。 学习途中查询了一些资料，也发现很多工具也可以实现，有兴趣可以前往了解 然后我发现jsoup可以对响应的html数据">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-12-19T03:37:55.541Z">
+<meta property="og:updated_time" content="2018-12-30T11:34:40.599Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Jsoup的学习一篇就够">
-<meta name="twitter:description" content="本文约9000字符，阅读时间约18分钟 – about 18 min read  摘要Jsoup是一款比较好的Java版HTML解析器。可直接解析某个URL地址、HTML文本内容。它提供了一套非常省力的API，可通过DOM，CSS以及类似于jQuery的操作方法来取出和操作数据。  由于工作原因，需要学习对页面的数据进行爬取，以下内容仅供学习demo，非商业用途。 学习途中查询了一些资料，也发现">
+<meta name="twitter:description" content="摘要Jsoup是一款比较好的Java版HTML解析器。可直接解析某个URL地址、HTML文本内容。它提供了一套非常省力的API，可通过DOM，CSS以及类似于jQuery的操作方法来取出和操作数据。  由于工作原因，需要学习对页面的数据进行爬取，以下内容仅供学习demo，非商业用途。 学习途中查询了一些资料，也发现很多工具也可以实现，有兴趣可以前往了解 然后我发现jsoup可以对响应的html数据">
   
     <link rel="alternate" href="/atom.xml" title="Better than yesterday" type="application/atom+xml">
   
@@ -172,6 +172,30 @@
     </h1>
   
 
+		    
+        <!-- 开始添加字数统计-->
+        
+          <div style="margin-top:10px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">3.9k字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">16分</span>
+      </span>
+    </span>
+</div>
+
+          
+        
       </header>
     
     <div class="article-meta">
@@ -193,10 +217,7 @@
     </div>
     <!-- <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>本文约9000字符，阅读时间约18分钟 – about 18 min read</p>
-</blockquote>
-<h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>Jsoup是一款比较好的Java版HTML解析器。可直接解析某个URL地址、HTML文本内容。它提供了一套非常省力的API，可通过DOM，CSS以及类似于jQuery的操作方法来取出和操作数据。</p>
+        <h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>Jsoup是一款比较好的Java版HTML解析器。可直接解析某个URL地址、HTML文本内容。它提供了一套非常省力的API，可通过DOM，CSS以及类似于jQuery的操作方法来取出和操作数据。</p>
 <ul>
 <li>由于工作原因，需要学习对页面的数据进行爬取，以下内容仅供学习demo，非商业用途。<ul>
 <li>学习途中查询了一些资料，也发现很多工具也可以实现，<a href="https://www.cnblogs.com/zhumengke/p/8847224.html" target="_blank" rel="noopener">有兴趣可以前往了解</a></li>
@@ -673,7 +694,7 @@
 <li>Element.prepend(String first) 和 Element.append(String last) 将分别在元素的内部html前后添加文本节点。</li>
 </ul>
 <hr>
-<h3 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h3><p>案例可以前往浏览第二篇 <a href="">Jsoup的学习–(二)案例</a></p>
+<h3 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h3><p>案例可以前往浏览第二篇 <strong>Jsoup的学习(二)–案例</strong></p>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
 <li><a href="http://www.open-open.com/jsoup/" target="_blank" rel="noopener">jsoup开发指南,jsoup中文使用手册,jsoup中文文档</a></li>
 <li><a href="https://jsoup.org/" target="_blank" rel="noopener">jsoup官方文档</a></li>
@@ -687,10 +708,7 @@
       
         
         
-          <blockquote>
-<p>本文约9000字符，阅读时间约18分钟 – about 18 min read</p>
-</blockquote>
-<h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>Jsoup是一款比较好的Java版HTML解析器。可直接解析某个URL地址、HTML文本内容。它提供了一套非常省力的API，可通过DOM，CSS以及类似于jQuery的操作方法来取出和操作数据。</p>
+          <h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>Jsoup是一款比较好的Java版HTML解析器。可直接解析某个URL地址、HTML文本内容。它提供了一套非常省力的API，可通过DOM，CSS以及类似于jQuery的操作方法来取出和操作数据。</p>
 <ul>
 <li>由于工作原因，需要学习对页面的数据进行爬取，以下内容仅供学习demo，非商业用途。<ul>
 <li>学习途中查询了一些资料，也发现很多工具也可以实现，<a href="https://www.cnblogs.com/zhumengke/p/8847224.html" target="_blank" rel="noopener">有兴趣可以前往了解</a></li>
@@ -1167,7 +1185,7 @@
 <li>Element.prepend(String first) 和 Element.append(String last) 将分别在元素的内部html前后添加文本节点。</li>
 </ul>
 <hr>
-<h3 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h3><p>案例可以前往浏览第二篇 <a href="">Jsoup的学习–(二)案例</a></p>
+<h3 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h3><p>案例可以前往浏览第二篇 <strong>Jsoup的学习(二)–案例</strong></p>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
 <li><a href="http://www.open-open.com/jsoup/" target="_blank" rel="noopener">jsoup开发指南,jsoup中文使用手册,jsoup中文文档</a></li>
 <li><a href="https://jsoup.org/" target="_blank" rel="noopener">jsoup官方文档</a></li>

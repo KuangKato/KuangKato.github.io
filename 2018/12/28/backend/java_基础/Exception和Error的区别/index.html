@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="jGpOWJy4VY">
+  
+  <title>exception和error的区别 | Better than yesterday</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Kuanger">
+  
+  
+  
+  
+  <meta name="description" content="典型回答Exception 和 Error 都是继承了 Throwable 类，在 Java 中只有 Throwable 类型的实例才可以被抛出（throw） 或者捕获（catch），它是异常处理机制的基本组成类型。  Exception 和 Error 体现了 Java 平台设计者对不同异常情况的分类。  Exception 是程序正常运行中，可以预料的意外情况，可能并且应该被捕获，进行相应处理">
+<meta name="keywords" content="java,java基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Exception和Error的区别">
+<meta property="og:url" content="http://yoursite.com/2018/12/28/backend/java_基础/Exception和Error的区别/index.html">
+<meta property="og:site_name" content="Better than yesterday">
+<meta property="og:description" content="典型回答Exception 和 Error 都是继承了 Throwable 类，在 Java 中只有 Throwable 类型的实例才可以被抛出（throw） 或者捕获（catch），它是异常处理机制的基本组成类型。  Exception 和 Error 体现了 Java 平台设计者对不同异常情况的分类。  Exception 是程序正常运行中，可以预料的意外情况，可能并且应该被捕获，进行相应处理">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/md_images/jk_java/2.png">
+<meta property="og:image" content="http://yoursite.com/md_images/jk_java/3.png">
+<meta property="og:updated_time" content="2018-12-30T11:35:36.240Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Exception和Error的区别">
+<meta name="twitter:description" content="典型回答Exception 和 Error 都是继承了 Throwable 类，在 Java 中只有 Throwable 类型的实例才可以被抛出（throw） 或者捕获（catch），它是异常处理机制的基本组成类型。  Exception 和 Error 体现了 Java 平台设计者对不同异常情况的分类。  Exception 是程序正常运行中，可以预料的意外情况，可能并且应该被捕获，进行相应处理">
+<meta name="twitter:image" content="http://yoursite.com/md_images/jk_java/2.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Better than yesterday" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css">
+  
+
+  
+  
+  
+
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;" href="#" data-toggle="modal" data-target="#myModal">
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">首页</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">归档</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">分类</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">标签</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">关于</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="">
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(无标题)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </ul></div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-backend/java_基础/Exception和Error的区别" style="width: 75%; float:left;" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      Exception和Error的区别
+    </h1>
+  
+
+		    
+        <!-- 开始添加字数统计-->
+        
+          <div style="margin-top:10px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">3.1k字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">11分</span>
+      </span>
+    </span>
+</div>
+
+          
+        
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/12/28/backend/java_基础/Exception和Error的区别/" class="article-date">
+	  <time datetime="2018-12-27T16:00:00.000Z" itemprop="datePublished">2018-12-28</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/java/">java</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		阅读量<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <!-- <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="典型回答"><a href="#典型回答" class="headerlink" title="典型回答"></a>典型回答</h3><p><code>Exception</code> 和 <code>Error</code> 都是继承了 Throwable 类，在 Java 中只有 <code>Throwable</code> 类型的实例才可以<code>被抛出（throw）</code> 或者<code>捕获（catch）</code>，它是异常处理机制的基本组成类型。</p>
+<ol>
+<li><p>Exception 和 Error 体现了 Java 平台设计者对不同异常情况的分类。</p>
+<ul>
+<li><p>Exception 是程序正常运行中，可以预料的意外情况，可能并且应该被捕获，进行相应处理。</p>
+</li>
+<li><p>Error 是指在正常情况下，不大可能出现的情况，绝大部分的 Error 都会导致程序（比如 JVM 自身）处于非正常的、不可恢复状态。既然是非正常情况，所以不便于也不需要捕获，常见的比如 OutOfMemoryError 之类，都是 Error 的子类。</p>
+</li>
+</ul>
+</li>
+</ol>
+<a id="more"></a>
+<ol start="2">
+<li><p>Exception 又分为可检查（checked）异常和不检查（unchecked）异常，可检查异常在源代码里必须显式地进行捕获处理，这是编译期检查的一部分。不检查异常就是所谓的运行时异常，具体根据需要来判断是否需要捕获，并不会在编译期强制要求。</p>
+<ul>
+<li><p><code>checked exception</code> ：Java编译器要求对检查异常必须捕获或抛出，代码逻辑没有错误，但程序运行时会因为IO等错误导致异常，你在编写程序阶段是预料不到的。如果不处理这些异常，程序将来肯定会出错。所以编译器会提示你要去捕获并处理这种可能发生的异常，不处理就不能通过编译 <strong>（可以简单理解为指的是编译时异常）</strong></p>
+</li>
+<li><p><code>unchecked exception</code>：Java编译器不要求对未检查异常一定捕获或抛出，可以不做处理。此类异常通常是在逻辑上有错误，具体根据需要来判断是否需要捕获，并不会在编译期强制要求。<strong>(可以简单理解为指的是运行时异常)</strong></p>
+</li>
+</ul>
+</li>
+</ol>
+<p><img src="/md_images/jk_java/2.png" alt=""></p>
+<hr>
+<h3 id="NoClassDefFoundError-和-ClassNotFoundException-有什么区别"><a href="#NoClassDefFoundError-和-ClassNotFoundException-有什么区别" class="headerlink" title="NoClassDefFoundError 和 ClassNotFoundException 有什么区别"></a>NoClassDefFoundError 和 ClassNotFoundException 有什么区别</h3><p>NoClassDefFoundError是一个错误(Error)，而ClassNOtFoundException是一个异常，在Java中对于错误和异常的处理是不同的，我们可以从异常中恢复程序但却不应该尝试从错误中恢复程序。</p>
+<ul>
+<li><p><strong>ClassNotFoundException</strong> 的产生原因：</p>
+<ul>
+<li><p>Java支持使用Class.forName方法来动态地加载类，任意一个类的类名如果被作为参数传递给这个方法都将导致该类被加载到JVM内存中，如果这个类在类路径中没有被找到，那么此时就会在运行时抛出 <code>ClassNotFoundException</code> 异常。</p>
+</li>
+<li><p>解决该问题</p>
+<ol>
+<li>需要确保所需的类连同它依赖的包存在于类路径中，常见问题在于类名书写错误。</li>
+<li>另外还有一个导致 <code>ClassNotFoundException</code> 的原因就是：当一个类已经某个类加载器加载到内存中了，此时另一个类加载器又尝试着动态地从同一个包中加载这个类。通过控制动态类加载过程，可以避免上述情况发生。</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p><strong>NoClassDefFoundError</strong> 产生的原因在于：</p>
+<ul>
+<li><p>如果 <code>JVM</code> 或者 <code>ClassLoader</code> 实例尝试加载（可以通过正常的方法调用，也可能是使用new来创建新的对象）类的时候却找不到类的定义。要查找的类在编译的时候是存在的，运行的时候却找不到了。这个时候就会导致 <code>NoClassDefFoundError</code>.</p>
+</li>
+<li><p>解决该问题</p>
+<ol>
+<li>可能是打包过程漏掉了部分类，或者jar包出现损坏或者篡改。</li>
+<li>查找那些在开发期间存在于类路径下但在运行期间却不在类路径下的类。</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><p>先看一段代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  <span class="comment">// 业务代码</span></span><br><span class="line">  <span class="comment">// …</span></span><br><span class="line">  Thread.sleep(<span class="number">1000L</span>);</span><br><span class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">  <span class="comment">// Ignore it</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这段代码虽然很短，但是已经违反了异常处理的两个基本原则。</p>
+<h4 id="尽量捕获特定异常"><a href="#尽量捕获特定异常" class="headerlink" title="尽量捕获特定异常"></a>尽量捕获特定异常</h4><p>尽量不要捕获类似 Exception 这样的通用异常，而是应该捕获特定异常，在这里是 <code>Thread.sleep()</code> 抛出的 <code>InterruptedException。</code></p>
+<p>这是因为在日常的开发和合作中，我们读代码的机会往往超过写代码，软件工程是门协作的艺术，所以我们有义务让自己的代码能够直观地体现出尽量多的信息，<strong>而泛泛的 Exception 之类，恰恰隐藏了我们的目的</strong>。</p>
+<p>另外，我们也要保证程序不会捕获到我们不希望捕获的异常。比如，你可能更希望 RuntimeException 被扩散出来，而不是被捕获。</p>
+<p>进一步讲，除非深思熟虑了，否则不要捕获 Throwable 或者 Error，这样很难保证我们能够正确程序处理 OutOfMemoryError。</p>
+<p><strong>或者另一个角度说，捕获异常的范围应该是由小到大的范围。</strong></p>
+<h4 id="不要生吞（swallow）异常"><a href="#不要生吞（swallow）异常" class="headerlink" title="不要生吞（swallow）异常"></a>不要生吞（swallow）异常</h4><p>不要生吞（swallow）异常。这是异常处理中要特别注意的事情，因为很可能会导致非常难以诊断的诡异情况。</p>
+<p>如果我们不把异常抛出来，或者也没有输出到日志（Logger）之类，程序可能在后续代码以不可控的方式结束。没人能够轻易判断究竟是哪里抛出了异常，以及是什么原因产生了异常。</p>
+<hr>
+<h4 id="完整正确输出异常错误打印"><a href="#完整正确输出异常错误打印" class="headerlink" title="完整正确输出异常错误打印"></a>完整正确输出异常错误打印</h4><p>再来看看第二段代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">   <span class="comment">// 业务代码</span></span><br><span class="line">   <span class="comment">// …</span></span><br><span class="line">&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这段代码作为一段实验代码，它是没有任何问题的，但是在产品代码中，通常都不允许这样处理。你先思考一下这是为什么呢？</p>
+<p>我们先来看看 <a href="https://docs.oracle.com/javase/9/docs/api/java/lang/Throwable.html#printStackTrace--" target="_blank" rel="noopener">printStackTrace()</a> 的文档，开头就是 <code>“Prints this throwable and its backtrace to the standard error stream”</code> 。问题就在这里，在稍微复杂一点的生产系统中，标准出错（STERR）不是个合适的输出选项，因为你很难判断出到底输出到哪里去了。</p>
+<p><strong>尤其是对于分布式系统，如果发生异常，但是无法找到堆栈轨迹（stacktrace），这纯属是为诊断设置障碍。所以，最好使用产品日志，详细地输出到日志系统里。</strong></p>
+<h4 id="Throw-early-catch-late-原则"><a href="#Throw-early-catch-late-原则" class="headerlink" title="Throw early, catch late 原则"></a>Throw early, catch late 原则</h4><ul>
+<li>Throw early</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">readPreferences</span><span class="params">(String fileName)</span></span>&#123;</span><br><span class="line">	 <span class="comment">//...perform operations... </span></span><br><span class="line">	InputStream in = <span class="keyword">new</span> FileInputStream(fileName);</span><br><span class="line">	 <span class="comment">//...read the preferences file...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果 fileName 是 null，那么程序就会抛出 NullPointerException，但是由于没有第一时间暴露出问题，堆栈信息可能非常令人费解，往往需要相对复杂的定位。这个 NPE 只是作为例子，实际产品代码中，可能是各种情况，比如获取配置失败之类的。在发现问题的时候，第一时间抛出，能够更加清晰地反映问题。</p>
+<p>我们可以修改一下判断一下fileName，让问题“throw early”，对应的异常信息就非常直观了。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">readPreferences</span><span class="params">(String filename)</span> </span>&#123;</span><br><span class="line">	Objects. requireNonNull(filename);</span><br><span class="line">	<span class="comment">//...perform other operations... </span></span><br><span class="line">	InputStream in = <span class="keyword">new</span> FileInputStream(filename);</span><br><span class="line">	 <span class="comment">//...read the preferences file...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>catch late</li>
+</ul>
+<p>至于“catch late”，其实是我们经常苦恼的问题，捕获异常后，需要怎么处理呢？最差的处理方式，就是我前面提到的“生吞异常”，本质上其实是掩盖问题。如果实在不知道如何处理，<strong>可以选择保留原有异常的 cause 信息，直接再抛出或者构建新的异常抛出去。</strong> 在更高层面，因为有了清晰的（业务）逻辑，往往会更清楚合适的处理方式是什么。</p>
+<ul>
+<li><p>有的时候，我们会根据需要自定义异常，这个时候除了保证提供足够的信息，还有两点需要考虑：</p>
+<ol>
+<li><p>是否需要定义成 Checked Exception，因为这种类型设计的 <strong>初衷更是为了从异常情况恢复</strong>，作为异常设计者，我们往往有充足信息进行分类。</p>
+</li>
+<li><p>在保证诊断信息足够的同时，也要<strong>考虑避免包含敏感信息</strong>，因为那样可能导致潜在的安全问题。</p>
+<ul>
+<li>如果我们看 Java 的标准类库，你可能注意到类似 <code>java.net.ConnectException</code>，出错信息是类似 <code>“ Connection refused (Connection refused)”</code>，而<u>不包含具体的机器名、IP、端口等，一个重要考量就是信息安全。</u>类似的情况在日志中也有，比如，用户数据一般是不可以输出到日志里面的。</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>业界有一种争论（甚至可以算是某种程度的共识），Java 语言的 Checked Exception 也许是个设计错误，反对者列举了几点：</p>
+<ul>
+<li><p><u>Checked Exception 的假设是我们捕获了异常，然后恢复程序。但是，其实我们大多数情况下，根本就不可能恢复。Checked Exception 的使用，已经大大偏离了最初的设计目的。</u>（当然，很多人也觉得没有必要矫枉过正，因为确实有一些异常，比如和环境相关的 IO、网络等，其实是存在可恢复性的，而且 Java 已经通过业界的海量实践，证明了其构建高质量软件的能力。）</p>
+</li>
+<li><p><strong>Checked Exception 不兼容 functional 编程</strong>，如果你写过 Lambda/Stream 代码，相信深有体会。</p>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="Checked-Exception-不兼容-functional-编程"><a href="#Checked-Exception-不兼容-functional-编程" class="headerlink" title="Checked Exception 不兼容 functional 编程"></a>Checked Exception 不兼容 functional 编程</h4><p>至于Checked Exception 不兼容 functional 编程可以简单说明一下</p>
+<p><img src="/md_images/jk_java/3.png" alt=""></p>
+<ul>
+<li><p>当我们在使用 Java 8 的 Lambda 表达式时，表达式内容需要抛出异常，也许还会想当然的让当前方法再往外抛来解决编译问题,如上图所示，但还是提示IO异常 <code>Unhandled exception: java.io.FileNotFoundException</code>。</p>
+</li>
+<li><p>但是 Lambda 本身就是一个功能性接口方法的实现，所以把上面图片的代码还原为匿名类的方式</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">foo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Stream.of(<span class="string">"a"</span>, <span class="string">"b"</span>).forEach(<span class="keyword">new</span> Consumer&lt;String&gt;() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">accept</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">new</span> FileInputStream(s).close();</span><br><span class="line">        &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>那怎样解决这个 <code>check exception</code> 呢？如果需要抛异常只能在 <code>accept()</code> 方法来向外层抛异常，正是因为 <code>Consumer</code> 定义的 <code>accept()</code> 方法定义不抛异常，所以只能try/catch起来。 这种情况似乎只能这样把 checked exception 转换为 unchecked exception 了。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">new</span> FileInputStream(s).close();</span><br><span class="line">&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">    <span class="comment">//这是我加的，可以在这里抛出一个 unchecked 异常，如</span></span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"file not found"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果不想要捕获异常再转换为 <code>unchecked exception</code> 的话，那就不能用 Java 8 内置的 <code>Consumer</code> 接口了，需要有一个声明抛出 <code>Exception</code> 的  <code>accept()</code> 方法的 <code>Consumer</code>. 比如下面的定义的 <code>MyConsumer</code>, 它的 <code>accept()</code> 方法抛出异常，代码如下：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line">    <span class="class"><span class="keyword">interface</span> <span class="title">MyConsumer</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">accept</span><span class="params">(String s)</span> <span class="keyword">throws</span> Exception</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">foo</span><span class="params">(String f, MyConsumer consumer)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    consumer.accept(f);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">client</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">    foo(<span class="string">"a"</span>, s -&gt; <span class="keyword">new</span> FileInputStream(s).close());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>上面的 foo() 和 client() 方法就可以声明抛出由 new FileInputStream() 产生的异常，而不需要进行异常转换。</p>
+<ul>
+<li>想了解更详情可以前往浏览：<a href="https://yanbin.blog/java8-lambda-and-checked-exception/" target="_blank" rel="noopener">https://yanbin.blog/java8-lambda-and-checked-exception/</a></li>
+</ul>
+<hr>
+<h3 id="性能角度"><a href="#性能角度" class="headerlink" title="性能角度"></a>性能角度</h3><p>我们从性能角度来审视一下 Java 的异常处理机制，这里有两个可能会相对昂贵的地方：</p>
+<ol>
+<li><p><strong>try-catch 代码段会产生额外的性能开销</strong>，或者换个角度说，它往往会影响 JVM 对代码进行优化，所以<strong>建议仅捕获有必要的代码段</strong>，尽量不要一个大的 try 包住整段的代码；与此同时，利用异常控制代码流程，也不是一个好主意，远比我们通常意义上的条件语句（if/else、switch）要低效。</p>
+</li>
+<li><p><strong>Java 每实例化一个 Exception，都会对当时的栈进行快照</strong>，这是一个相对比较重的操作。如果发生的非常频繁，这个开销可就不能被忽略了。</p>
+</li>
+</ol>
+<p>所以，对于部分追求极致性能的底层类库，有种方式是尝试创建不进行栈快照的 Exception。这本身也存在争议，因为这样做的假设在于，我创建异常时知道未来是否需要堆栈。问题是，实际上可能吗？小范围或许可能，但是在大规模项目中，这么做可能不是个理智的选择。如果需要堆栈，但又没有收集这些信息，在复杂情况下，尤其是类似微服务这种分布式系统，这会大大增加诊断的难度。</p>
+<p><u>当我们的服务出现反应变慢、吞吐量下降的时候，检查发生最频繁的 Exception 也是一种思路。</u></p>
+
+      
+    </div> -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+        
+          <h3 id="典型回答"><a href="#典型回答" class="headerlink" title="典型回答"></a>典型回答</h3><p><code>Exception</code> 和 <code>Error</code> 都是继承了 Throwable 类，在 Java 中只有 <code>Throwable</code> 类型的实例才可以<code>被抛出（throw）</code> 或者<code>捕获（catch）</code>，它是异常处理机制的基本组成类型。</p>
+<ol>
+<li><p>Exception 和 Error 体现了 Java 平台设计者对不同异常情况的分类。</p>
+<ul>
+<li><p>Exception 是程序正常运行中，可以预料的意外情况，可能并且应该被捕获，进行相应处理。</p>
+</li>
+<li><p>Error 是指在正常情况下，不大可能出现的情况，绝大部分的 Error 都会导致程序（比如 JVM 自身）处于非正常的、不可恢复状态。既然是非正常情况，所以不便于也不需要捕获，常见的比如 OutOfMemoryError 之类，都是 Error 的子类。</p>
+</li>
+</ul>
+</li>
+</ol>
+<a id="more"></a>
+<ol start="2">
+<li><p>Exception 又分为可检查（checked）异常和不检查（unchecked）异常，可检查异常在源代码里必须显式地进行捕获处理，这是编译期检查的一部分。不检查异常就是所谓的运行时异常，具体根据需要来判断是否需要捕获，并不会在编译期强制要求。</p>
+<ul>
+<li><p><code>checked exception</code> ：Java编译器要求对检查异常必须捕获或抛出，代码逻辑没有错误，但程序运行时会因为IO等错误导致异常，你在编写程序阶段是预料不到的。如果不处理这些异常，程序将来肯定会出错。所以编译器会提示你要去捕获并处理这种可能发生的异常，不处理就不能通过编译 <strong>（可以简单理解为指的是编译时异常）</strong></p>
+</li>
+<li><p><code>unchecked exception</code>：Java编译器不要求对未检查异常一定捕获或抛出，可以不做处理。此类异常通常是在逻辑上有错误，具体根据需要来判断是否需要捕获，并不会在编译期强制要求。<strong>(可以简单理解为指的是运行时异常)</strong></p>
+</li>
+</ul>
+</li>
+</ol>
+<p><img src="/md_images/jk_java/2.png" alt=""></p>
+<hr>
+<h3 id="NoClassDefFoundError-和-ClassNotFoundException-有什么区别"><a href="#NoClassDefFoundError-和-ClassNotFoundException-有什么区别" class="headerlink" title="NoClassDefFoundError 和 ClassNotFoundException 有什么区别"></a>NoClassDefFoundError 和 ClassNotFoundException 有什么区别</h3><p>NoClassDefFoundError是一个错误(Error)，而ClassNOtFoundException是一个异常，在Java中对于错误和异常的处理是不同的，我们可以从异常中恢复程序但却不应该尝试从错误中恢复程序。</p>
+<ul>
+<li><p><strong>ClassNotFoundException</strong> 的产生原因：</p>
+<ul>
+<li><p>Java支持使用Class.forName方法来动态地加载类，任意一个类的类名如果被作为参数传递给这个方法都将导致该类被加载到JVM内存中，如果这个类在类路径中没有被找到，那么此时就会在运行时抛出 <code>ClassNotFoundException</code> 异常。</p>
+</li>
+<li><p>解决该问题</p>
+<ol>
+<li>需要确保所需的类连同它依赖的包存在于类路径中，常见问题在于类名书写错误。</li>
+<li>另外还有一个导致 <code>ClassNotFoundException</code> 的原因就是：当一个类已经某个类加载器加载到内存中了，此时另一个类加载器又尝试着动态地从同一个包中加载这个类。通过控制动态类加载过程，可以避免上述情况发生。</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p><strong>NoClassDefFoundError</strong> 产生的原因在于：</p>
+<ul>
+<li><p>如果 <code>JVM</code> 或者 <code>ClassLoader</code> 实例尝试加载（可以通过正常的方法调用，也可能是使用new来创建新的对象）类的时候却找不到类的定义。要查找的类在编译的时候是存在的，运行的时候却找不到了。这个时候就会导致 <code>NoClassDefFoundError</code>.</p>
+</li>
+<li><p>解决该问题</p>
+<ol>
+<li>可能是打包过程漏掉了部分类，或者jar包出现损坏或者篡改。</li>
+<li>查找那些在开发期间存在于类路径下但在运行期间却不在类路径下的类。</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><p>先看一段代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  <span class="comment">// 业务代码</span></span><br><span class="line">  <span class="comment">// …</span></span><br><span class="line">  Thread.sleep(<span class="number">1000L</span>);</span><br><span class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">  <span class="comment">// Ignore it</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这段代码虽然很短，但是已经违反了异常处理的两个基本原则。</p>
+<h4 id="尽量捕获特定异常"><a href="#尽量捕获特定异常" class="headerlink" title="尽量捕获特定异常"></a>尽量捕获特定异常</h4><p>尽量不要捕获类似 Exception 这样的通用异常，而是应该捕获特定异常，在这里是 <code>Thread.sleep()</code> 抛出的 <code>InterruptedException。</code></p>
+<p>这是因为在日常的开发和合作中，我们读代码的机会往往超过写代码，软件工程是门协作的艺术，所以我们有义务让自己的代码能够直观地体现出尽量多的信息，<strong>而泛泛的 Exception 之类，恰恰隐藏了我们的目的</strong>。</p>
+<p>另外，我们也要保证程序不会捕获到我们不希望捕获的异常。比如，你可能更希望 RuntimeException 被扩散出来，而不是被捕获。</p>
+<p>进一步讲，除非深思熟虑了，否则不要捕获 Throwable 或者 Error，这样很难保证我们能够正确程序处理 OutOfMemoryError。</p>
+<p><strong>或者另一个角度说，捕获异常的范围应该是由小到大的范围。</strong></p>
+<h4 id="不要生吞（swallow）异常"><a href="#不要生吞（swallow）异常" class="headerlink" title="不要生吞（swallow）异常"></a>不要生吞（swallow）异常</h4><p>不要生吞（swallow）异常。这是异常处理中要特别注意的事情，因为很可能会导致非常难以诊断的诡异情况。</p>
+<p>如果我们不把异常抛出来，或者也没有输出到日志（Logger）之类，程序可能在后续代码以不可控的方式结束。没人能够轻易判断究竟是哪里抛出了异常，以及是什么原因产生了异常。</p>
+<hr>
+<h4 id="完整正确输出异常错误打印"><a href="#完整正确输出异常错误打印" class="headerlink" title="完整正确输出异常错误打印"></a>完整正确输出异常错误打印</h4><p>再来看看第二段代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">   <span class="comment">// 业务代码</span></span><br><span class="line">   <span class="comment">// …</span></span><br><span class="line">&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这段代码作为一段实验代码，它是没有任何问题的，但是在产品代码中，通常都不允许这样处理。你先思考一下这是为什么呢？</p>
+<p>我们先来看看 <a href="https://docs.oracle.com/javase/9/docs/api/java/lang/Throwable.html#printStackTrace--" target="_blank" rel="noopener">printStackTrace()</a> 的文档，开头就是 <code>“Prints this throwable and its backtrace to the standard error stream”</code> 。问题就在这里，在稍微复杂一点的生产系统中，标准出错（STERR）不是个合适的输出选项，因为你很难判断出到底输出到哪里去了。</p>
+<p><strong>尤其是对于分布式系统，如果发生异常，但是无法找到堆栈轨迹（stacktrace），这纯属是为诊断设置障碍。所以，最好使用产品日志，详细地输出到日志系统里。</strong></p>
+<h4 id="Throw-early-catch-late-原则"><a href="#Throw-early-catch-late-原则" class="headerlink" title="Throw early, catch late 原则"></a>Throw early, catch late 原则</h4><ul>
+<li>Throw early</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">readPreferences</span><span class="params">(String fileName)</span></span>&#123;</span><br><span class="line">	 <span class="comment">//...perform operations... </span></span><br><span class="line">	InputStream in = <span class="keyword">new</span> FileInputStream(fileName);</span><br><span class="line">	 <span class="comment">//...read the preferences file...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果 fileName 是 null，那么程序就会抛出 NullPointerException，但是由于没有第一时间暴露出问题，堆栈信息可能非常令人费解，往往需要相对复杂的定位。这个 NPE 只是作为例子，实际产品代码中，可能是各种情况，比如获取配置失败之类的。在发现问题的时候，第一时间抛出，能够更加清晰地反映问题。</p>
+<p>我们可以修改一下判断一下fileName，让问题“throw early”，对应的异常信息就非常直观了。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">readPreferences</span><span class="params">(String filename)</span> </span>&#123;</span><br><span class="line">	Objects. requireNonNull(filename);</span><br><span class="line">	<span class="comment">//...perform other operations... </span></span><br><span class="line">	InputStream in = <span class="keyword">new</span> FileInputStream(filename);</span><br><span class="line">	 <span class="comment">//...read the preferences file...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>catch late</li>
+</ul>
+<p>至于“catch late”，其实是我们经常苦恼的问题，捕获异常后，需要怎么处理呢？最差的处理方式，就是我前面提到的“生吞异常”，本质上其实是掩盖问题。如果实在不知道如何处理，<strong>可以选择保留原有异常的 cause 信息，直接再抛出或者构建新的异常抛出去。</strong> 在更高层面，因为有了清晰的（业务）逻辑，往往会更清楚合适的处理方式是什么。</p>
+<ul>
+<li><p>有的时候，我们会根据需要自定义异常，这个时候除了保证提供足够的信息，还有两点需要考虑：</p>
+<ol>
+<li><p>是否需要定义成 Checked Exception，因为这种类型设计的 <strong>初衷更是为了从异常情况恢复</strong>，作为异常设计者，我们往往有充足信息进行分类。</p>
+</li>
+<li><p>在保证诊断信息足够的同时，也要<strong>考虑避免包含敏感信息</strong>，因为那样可能导致潜在的安全问题。</p>
+<ul>
+<li>如果我们看 Java 的标准类库，你可能注意到类似 <code>java.net.ConnectException</code>，出错信息是类似 <code>“ Connection refused (Connection refused)”</code>，而<u>不包含具体的机器名、IP、端口等，一个重要考量就是信息安全。</u>类似的情况在日志中也有，比如，用户数据一般是不可以输出到日志里面的。</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>业界有一种争论（甚至可以算是某种程度的共识），Java 语言的 Checked Exception 也许是个设计错误，反对者列举了几点：</p>
+<ul>
+<li><p><u>Checked Exception 的假设是我们捕获了异常，然后恢复程序。但是，其实我们大多数情况下，根本就不可能恢复。Checked Exception 的使用，已经大大偏离了最初的设计目的。</u>（当然，很多人也觉得没有必要矫枉过正，因为确实有一些异常，比如和环境相关的 IO、网络等，其实是存在可恢复性的，而且 Java 已经通过业界的海量实践，证明了其构建高质量软件的能力。）</p>
+</li>
+<li><p><strong>Checked Exception 不兼容 functional 编程</strong>，如果你写过 Lambda/Stream 代码，相信深有体会。</p>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="Checked-Exception-不兼容-functional-编程"><a href="#Checked-Exception-不兼容-functional-编程" class="headerlink" title="Checked Exception 不兼容 functional 编程"></a>Checked Exception 不兼容 functional 编程</h4><p>至于Checked Exception 不兼容 functional 编程可以简单说明一下</p>
+<p><img src="/md_images/jk_java/3.png" alt=""></p>
+<ul>
+<li><p>当我们在使用 Java 8 的 Lambda 表达式时，表达式内容需要抛出异常，也许还会想当然的让当前方法再往外抛来解决编译问题,如上图所示，但还是提示IO异常 <code>Unhandled exception: java.io.FileNotFoundException</code>。</p>
+</li>
+<li><p>但是 Lambda 本身就是一个功能性接口方法的实现，所以把上面图片的代码还原为匿名类的方式</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">foo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Stream.of(<span class="string">"a"</span>, <span class="string">"b"</span>).forEach(<span class="keyword">new</span> Consumer&lt;String&gt;() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">accept</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">new</span> FileInputStream(s).close();</span><br><span class="line">        &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>那怎样解决这个 <code>check exception</code> 呢？如果需要抛异常只能在 <code>accept()</code> 方法来向外层抛异常，正是因为 <code>Consumer</code> 定义的 <code>accept()</code> 方法定义不抛异常，所以只能try/catch起来。 这种情况似乎只能这样把 checked exception 转换为 unchecked exception 了。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">new</span> FileInputStream(s).close();</span><br><span class="line">&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">    <span class="comment">//这是我加的，可以在这里抛出一个 unchecked 异常，如</span></span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"file not found"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果不想要捕获异常再转换为 <code>unchecked exception</code> 的话，那就不能用 Java 8 内置的 <code>Consumer</code> 接口了，需要有一个声明抛出 <code>Exception</code> 的  <code>accept()</code> 方法的 <code>Consumer</code>. 比如下面的定义的 <code>MyConsumer</code>, 它的 <code>accept()</code> 方法抛出异常，代码如下：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line">    <span class="class"><span class="keyword">interface</span> <span class="title">MyConsumer</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">accept</span><span class="params">(String s)</span> <span class="keyword">throws</span> Exception</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">foo</span><span class="params">(String f, MyConsumer consumer)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    consumer.accept(f);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">client</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">    foo(<span class="string">"a"</span>, s -&gt; <span class="keyword">new</span> FileInputStream(s).close());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>上面的 foo() 和 client() 方法就可以声明抛出由 new FileInputStream() 产生的异常，而不需要进行异常转换。</p>
+<ul>
+<li>想了解更详情可以前往浏览：<a href="https://yanbin.blog/java8-lambda-and-checked-exception/" target="_blank" rel="noopener">https://yanbin.blog/java8-lambda-and-checked-exception/</a></li>
+</ul>
+<hr>
+<h3 id="性能角度"><a href="#性能角度" class="headerlink" title="性能角度"></a>性能角度</h3><p>我们从性能角度来审视一下 Java 的异常处理机制，这里有两个可能会相对昂贵的地方：</p>
+<ol>
+<li><p><strong>try-catch 代码段会产生额外的性能开销</strong>，或者换个角度说，它往往会影响 JVM 对代码进行优化，所以<strong>建议仅捕获有必要的代码段</strong>，尽量不要一个大的 try 包住整段的代码；与此同时，利用异常控制代码流程，也不是一个好主意，远比我们通常意义上的条件语句（if/else、switch）要低效。</p>
+</li>
+<li><p><strong>Java 每实例化一个 Exception，都会对当时的栈进行快照</strong>，这是一个相对比较重的操作。如果发生的非常频繁，这个开销可就不能被忽略了。</p>
+</li>
+</ol>
+<p>所以，对于部分追求极致性能的底层类库，有种方式是尝试创建不进行栈快照的 Exception。这本身也存在争议，因为这样做的假设在于，我创建异常时知道未来是否需要堆栈。问题是，实际上可能吗？小范围或许可能，但是在大规模项目中，这么做可能不是个理智的选择。如果需要堆栈，但又没有收集这些信息，在复杂情况下，尤其是类似微服务这种分布式系统，这会大大增加诊断的难度。</p>
+<p><u>当我们的服务出现反应变慢、吞吐量下降的时候，检查发生最频繁的 Exception 也是一种思路。</u></p>
+
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>本文作者:  </strong>Kuanger
+          </li>
+          <li class="post-copyright-link">
+          <strong>本文链接:  </strong>
+          <a href="/2018/12/28/backend/java_基础/Exception和Error的区别/" target="_blank" title="Exception和Error的区别">http://yoursite.com/2018/12/28/backend/java_基础/Exception和Error的区别/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>版权声明:   </strong>
+            本博客所有文章除特别声明外，均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            许可协议。转载请注明出处
+          </li>
+         
+        </ul>
+<div>
+</div></div>
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/12/29/backend/java_基础/谈谈 final、finally、 finalize 有什么不同/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          谈谈 final、finally、 finalize 有什么不同
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/12/27/backend/java_基础/谈谈对Java平台的理解/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">谈谈对Java平台的理解</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#典型回答"><span class="nav-number">1.</span> <span class="nav-text">典型回答</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NoClassDefFoundError-和-ClassNotFoundException-有什么区别"><span class="nav-number">2.</span> <span class="nav-text">NoClassDefFoundError 和 ClassNotFoundException 有什么区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意事项"><span class="nav-number">3.</span> <span class="nav-text">注意事项</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#尽量捕获特定异常"><span class="nav-number">3.1.</span> <span class="nav-text">尽量捕获特定异常</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#不要生吞（swallow）异常"><span class="nav-number">3.2.</span> <span class="nav-text">不要生吞（swallow）异常</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#完整正确输出异常错误打印"><span class="nav-number">3.3.</span> <span class="nav-text">完整正确输出异常错误打印</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Throw-early-catch-late-原则"><span class="nav-number">3.4.</span> <span class="nav-text">Throw early, catch late 原则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Checked-Exception-不兼容-functional-编程"><span class="nav-number">3.5.</span> <span class="nav-text">Checked Exception 不兼容 functional 编程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#性能角度"><span class="nav-number">4.</span> <span class="nav-text">性能角度</span></a></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <!-- <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>-->
+	      <p id="copyRightEn">Copyright &copy; 2018 - 2018 Kuanger All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				访客数 : <span id="busuanzi_value_site_uv"></span> |  
+				访问量 : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Better than yesterday
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 Kuanger All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>

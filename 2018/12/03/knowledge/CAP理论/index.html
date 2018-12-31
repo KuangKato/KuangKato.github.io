@@ -12,22 +12,22 @@
   
   
   
-  <meta name="description" content="本文约1500字符，阅读时间约3分钟 – about 3 min read  前言对于分布式概念就不详细介绍了，分布式简单理解就是：一个业务分拆多个子业务，部署在不同的服务器上。  一般来说，一个子业务我们称为节点。   Content 首先，我们来看一下CAP分别代表的是什么意思：  C：数据一致性(consistency)  所有节点拥有数据的最新版本   A：可用性(availabilit">
+  <meta name="description" content="前言对于分布式概念就不详细介绍了，分布式简单理解就是：一个业务分拆多个子业务，部署在不同的服务器上。  一般来说，一个子业务我们称为节点。   Content 首先，我们来看一下CAP分别代表的是什么意思：  C：数据一致性(consistency)  所有节点拥有数据的最新版本   A：可用性(availability)  数据具备高可用性   P：分区容错性(partition-toleran">
 <meta name="keywords" content="CAP理论">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CAP理论">
 <meta property="og:url" content="http://yoursite.com/2018/12/03/knowledge/CAP理论/index.html">
 <meta property="og:site_name" content="Better than yesterday">
-<meta property="og:description" content="本文约1500字符，阅读时间约3分钟 – about 3 min read  前言对于分布式概念就不详细介绍了，分布式简单理解就是：一个业务分拆多个子业务，部署在不同的服务器上。  一般来说，一个子业务我们称为节点。   Content 首先，我们来看一下CAP分别代表的是什么意思：  C：数据一致性(consistency)  所有节点拥有数据的最新版本   A：可用性(availabilit">
+<meta property="og:description" content="前言对于分布式概念就不详细介绍了，分布式简单理解就是：一个业务分拆多个子业务，部署在不同的服务器上。  一般来说，一个子业务我们称为节点。   Content 首先，我们来看一下CAP分别代表的是什么意思：  C：数据一致性(consistency)  所有节点拥有数据的最新版本   A：可用性(availability)  数据具备高可用性   P：分区容错性(partition-toleran">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/md_images/p4/1.jpg">
 <meta property="og:image" content="http://yoursite.com/md_images/p4/2.jpg">
 <meta property="og:image" content="http://yoursite.com/md_images/p4/3.jpg">
 <meta property="og:image" content="http://yoursite.com/md_images/p4/4.jpg">
-<meta property="og:updated_time" content="2018-12-05T08:54:36.049Z">
+<meta property="og:updated_time" content="2018-12-30T11:35:20.314Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CAP理论">
-<meta name="twitter:description" content="本文约1500字符，阅读时间约3分钟 – about 3 min read  前言对于分布式概念就不详细介绍了，分布式简单理解就是：一个业务分拆多个子业务，部署在不同的服务器上。  一般来说，一个子业务我们称为节点。   Content 首先，我们来看一下CAP分别代表的是什么意思：  C：数据一致性(consistency)  所有节点拥有数据的最新版本   A：可用性(availabilit">
+<meta name="twitter:description" content="前言对于分布式概念就不详细介绍了，分布式简单理解就是：一个业务分拆多个子业务，部署在不同的服务器上。  一般来说，一个子业务我们称为节点。   Content 首先，我们来看一下CAP分别代表的是什么意思：  C：数据一致性(consistency)  所有节点拥有数据的最新版本   A：可用性(availability)  数据具备高可用性   P：分区容错性(partition-toleran">
 <meta name="twitter:image" content="http://yoursite.com/md_images/p4/1.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Better than yesterday" type="application/atom+xml">
@@ -177,6 +177,30 @@
     </h1>
   
 
+		    
+        <!-- 开始添加字数统计-->
+        
+          <div style="margin-top:10px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">920字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">3分</span>
+      </span>
+    </span>
+</div>
+
+          
+        
       </header>
     
     <div class="article-meta">
@@ -198,10 +222,7 @@
     </div>
     <!-- <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>本文约1500字符，阅读时间约3分钟 – about 3 min read</p>
-</blockquote>
-<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>对于分布式概念就不详细介绍了，分布式简单理解就是：<strong>一个业务分拆多个子业务，部署在不同的服务器上</strong>。</p>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>对于分布式概念就不详细介绍了，分布式简单理解就是：<strong>一个业务分拆多个子业务，部署在不同的服务器上</strong>。</p>
 <ul>
 <li>一般来说，一个子业务我们称为节点。</li>
 </ul>
@@ -301,10 +322,7 @@
       
         
         
-          <blockquote>
-<p>本文约1500字符，阅读时间约3分钟 – about 3 min read</p>
-</blockquote>
-<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>对于分布式概念就不详细介绍了，分布式简单理解就是：<strong>一个业务分拆多个子业务，部署在不同的服务器上</strong>。</p>
+          <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>对于分布式概念就不详细介绍了，分布式简单理解就是：<strong>一个业务分拆多个子业务，部署在不同的服务器上</strong>。</p>
 <ul>
 <li>一般来说，一个子业务我们称为节点。</li>
 </ul>

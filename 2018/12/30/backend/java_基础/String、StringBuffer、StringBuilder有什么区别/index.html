@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="jGpOWJy4VY">
+  
+  <title>string、stringbuffer、stringbuilder有什么区别 | Better than yesterday</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Kuanger">
+  
+  
+  
+  
+  <meta name="description" content="典型回答 String 是 Java 语言非常基础和重要的类，提供了构造和管理字符串的各种基本逻辑。它是典型的 Immutable 类，被声明成为 final class，所有属性也都是 final 的。也由于它的不可变性，类似拼接、裁剪字符串等动作，都会产生新的 String 对象。由于字符串操作的普遍性，所以相关操作的效率往往对应用性能有明显影响。  StringBuffer 是为解决上面提到">
+<meta name="keywords" content="java,java基础,string">
+<meta property="og:type" content="article">
+<meta property="og:title" content="String、StringBuffer、StringBuilder有什么区别">
+<meta property="og:url" content="http://yoursite.com/2018/12/30/backend/java_基础/String、StringBuffer、StringBuilder有什么区别/index.html">
+<meta property="og:site_name" content="Better than yesterday">
+<meta property="og:description" content="典型回答 String 是 Java 语言非常基础和重要的类，提供了构造和管理字符串的各种基本逻辑。它是典型的 Immutable 类，被声明成为 final class，所有属性也都是 final 的。也由于它的不可变性，类似拼接、裁剪字符串等动作，都会产生新的 String 对象。由于字符串操作的普遍性，所以相关操作的效率往往对应用性能有明显影响。  StringBuffer 是为解决上面提到">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-29T16:05:06.672Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="String、StringBuffer、StringBuilder有什么区别">
+<meta name="twitter:description" content="典型回答 String 是 Java 语言非常基础和重要的类，提供了构造和管理字符串的各种基本逻辑。它是典型的 Immutable 类，被声明成为 final class，所有属性也都是 final 的。也由于它的不可变性，类似拼接、裁剪字符串等动作，都会产生新的 String 对象。由于字符串操作的普遍性，所以相关操作的效率往往对应用性能有明显影响。  StringBuffer 是为解决上面提到">
+  
+    <link rel="alternate" href="/atom.xml" title="Better than yesterday" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css">
+  
+
+  
+  
+  
+
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;" href="#" data-toggle="modal" data-target="#myModal">
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">首页</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">归档</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">分类</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">标签</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">关于</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="">
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(无标题)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </ul></div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-backend/java_基础/String、StringBuffer、StringBuilder有什么区别" style="width: 75%; float:left;" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      String、StringBuffer、StringBuilder有什么区别
+    </h1>
+  
+
+		    
+        <!-- 开始添加字数统计-->
+        
+          <div style="margin-top:10px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">3k字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">11分</span>
+      </span>
+    </span>
+</div>
+
+          
+        
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/12/30/backend/java_基础/String、StringBuffer、StringBuilder有什么区别/" class="article-date">
+	  <time datetime="2018-12-29T16:00:00.000Z" itemprop="datePublished">2018-12-30</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/java/">java</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		阅读量<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <!-- <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="典型回答"><a href="#典型回答" class="headerlink" title="典型回答"></a>典型回答</h3><ul>
+<li><p>String 是 Java 语言非常基础和重要的类，提供了构造和管理字符串的各种基本逻辑。它是典型的 <code>Immutable 类</code>，被声明成为 final class，所有属性也都是 final 的。也由于它的不可变性，类似拼接、裁剪字符串等动作，都会产生新的 String 对象。由于字符串操作的普遍性，所以相关操作的效率往往对应用性能有明显影响。</p>
+</li>
+<li><p>StringBuffer 是为解决上面提到拼接产生太多中间对象的问题而提供的一个类，我们可以用 append 或者 add 方法，把字符串添加到已有序列的末尾或者指定位置。StringBuffer 本质是一个线程安全的可修改字符序列，它保证了线程安全，也随之带来了额外的性能开销，线程是安全的。</p>
+</li>
+<li><p>StringBuilder 是 Java 1.5 中新增的，在能力上和 StringBuffer 没有本质区别，但是它去掉了线程安全的部分，有效减小了开销，是绝大部分情况下进行字符串拼接的首选。</p>
+</li>
+</ul>
+<a id="more"></a>
+<hr>
+<h3 id="String"><a href="#String" class="headerlink" title="String"></a>String</h3><h4 id="String的创建机理"><a href="#String的创建机理" class="headerlink" title="String的创建机理"></a>String的创建机理</h4><p>由于String在Java世界中使用过于频繁，Java为了避免在一个系统中产生大量的String对象，引入了<strong>字符串常量池</strong>。</p>
+<ul>
+<li><p>其运行机制是：</p>
+<ol>
+<li>创建一个字符串时，首先检查池中是否有值相同的字符串对象，如果有则不需要创建直接从池中刚查找到的对象引用；</li>
+<li>如果没有则新建字符串对象，返回对象引用，并且将新创建的对象放入池中。</li>
+<li>但是，通过new方法创建的String对象是不检查字符串池的，而是直接在堆区或栈区创建一个新的对象，也不会把对象放入池中。上述原则只适用于通过直接量给String对象引用赋值的情况。</li>
+</ol>
+<ul>
+<li><p>举例：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String str1 = <span class="string">"123"</span>; <span class="comment">//通过直接量赋值方式，放入字符串常量池</span></span><br><span class="line">String str2 = <span class="keyword">new</span> String(“<span class="number">123</span>”);<span class="comment">//通过new方式赋值方式，不放入字符串常量池</span></span><br></pre></td></tr></table></figure>
+<p>注意：String提供了 <code>intern()</code> 方法。调用该方法时，如果常量池中包括了一个等于此String对象的字符串（由equals方法确定），则返回池中的字符串。否则，将此String对象添加到池中，并且返回此池中对象的引用。</p>
+</li>
+<li><p><code>==</code> 的比较</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">    String a = <span class="string">"123"</span>;</span><br><span class="line">    String b = <span class="string">"123"</span>;</span><br><span class="line">    String c = <span class="keyword">new</span> String(<span class="string">"123"</span>);</span><br><span class="line">    System.out.println(a==b);<span class="comment">//true</span></span><br><span class="line">    System.out.println(a==c);<span class="comment">//false</span></span><br><span class="line">    String d = c.intern();<span class="comment">//把堆内存的值放进常量池返回一个string</span></span><br><span class="line">    System.out.println(a==d);<span class="comment">//true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="String的特性"><a href="#String的特性" class="headerlink" title="String的特性"></a>String的特性</h4><ol>
+<li><p><code>不可变 (Immutable)</code>。是指String对象一旦生成，则不能再对它进行改变。不可变的主要作用在于当一个对象需要被多线程共享，并且访问频繁时，可以省略同步和锁等待的时间，从而大幅度提高系统性能。不可变模式是一个可以提高多线程程序的性能，降低多线程程序复杂度的设计模式。</p>
+</li>
+<li><p><code>针对常量池的优化</code>。当2个String对象拥有相同的值时，他们只引用常量池中的同一个拷贝。当同一个字符串反复出现时，这个技术可以大幅度节省内存空间。</p>
+</li>
+</ol>
+<hr>
+<h3 id="StringBuffer-StringBuilder"><a href="#StringBuffer-StringBuilder" class="headerlink" title="StringBuffer/StringBuilder"></a>StringBuffer/StringBuilder</h3><ul>
+<li><p>为了实现修改字符序列的目的，StringBuffer 和 StringBuilder 底层都是利用可修改的（char，JDK 9 以后是 byte）数组，二者都继承了 AbstractStringBuilder，里面包含了基本操作，区别仅在于最终的方法是否加了 synchronized。</p>
+</li>
+<li><p>另外，这个内部数组应该创建成多大的呢？如果太小，拼接的时候可能要重新创建足够大的数组；如果太大，又会浪费空间。目前的实现是，构建时初始字符串长度加 16（这意味着，如果没有构建对象时输入最初的字符串，那么初始值就是 16）。</p>
+<ul>
+<li>我们如果确定拼接会发生非常多次，而且大概是可预计的，那么最好就可以<strong>指定合适的大小，避免很多次扩容的开销</strong>。扩容会产生多重开销，因为要抛弃原有数组，创建新的（可以简单认为是倍数）数组，还要进行 <code>arraycopy。</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="全部拼接操作是应该都用-StringBuilder-实现吗？"><a href="#全部拼接操作是应该都用-StringBuilder-实现吗？" class="headerlink" title="全部拼接操作是应该都用 StringBuilder 实现吗？"></a>全部拼接操作是应该都用 StringBuilder 实现吗？</h4><p>在没有线程安全问题的情况下，全部拼接操作是应该都用 StringBuilder 实现吗？毕竟这样书写的代码，还是要多敲很多字的，可读性也不理想，下面的对比非常明显。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">String strByBuilder  = <span class="keyword">new</span></span><br><span class="line">StringBuilder().append(<span class="string">"aa"</span>).append(<span class="string">"bb"</span>).append(<span class="string">"cc"</span>).append(<span class="string">"dd"</span>).toString();</span><br><span class="line">             </span><br><span class="line">String strByConcat = <span class="string">"aa"</span> + <span class="string">"bb"</span> + <span class="string">"cc"</span> + <span class="string">"dd"</span>;</span><br></pre></td></tr></table></figure>
+<p>其实，在通常情况下，没有必要过于担心，要相信 Java 还是非常智能的。我们来做个实验，把下面一段代码，利用不同版本的 JDK 编译，然后再反编译，例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringConcat</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String myStr = <span class="string">"aa"</span> + <span class="string">"bb"</span> + <span class="string">"cc"</span> + <span class="string">"dd"</span>;   </span><br><span class="line">        System.out.println(<span class="string">"My String:"</span> + myStr);   </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>先编译再反编译，比如使用不同版本的 JDK：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$&#123;JAVA_HOME&#125;/bin/javac StringConcat.java</span><br><span class="line">$&#123;JAVA_HOME&#125;/bin/javap -v StringConcat.class</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>JDK 8 的输出片段是：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">0: ldc           #2                  // String aabbccdd</span><br><span class="line"><span class="number">2</span>: astore_1</span><br><span class="line">3: getstatic     #3                  // Field java/lang/System.out:Ljava/io/PrintStream;</span><br><span class="line">6: new           #4                  // class java/lang/StringBuilder</span><br><span class="line"><span class="number">9</span>: dup</span><br><span class="line">10: invokespecial #5                  // Method java/lang/StringBuilder."&lt;init&gt;":()V</span><br><span class="line">13: ldc           #6                  // String My String:</span><br><span class="line">15: invokevirtual #7                  // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;</span><br><span class="line"><span class="number">18</span>: aload_1</span><br><span class="line">19: invokevirtual #7                  // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;</span><br><span class="line">22: invokevirtual #8                  // Method java/lang/StringBuilder.toString:()Ljava/lang/String;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>而在 JDK 9 中，反编译的结果就非常简单了，片段是：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">0: ldc           #2                  // String aabbccdd</span><br><span class="line"><span class="number">2</span>: astore_1</span><br><span class="line">3: getstatic     #3                  // Field java/lang/System.out:Ljava/io/PrintStream;</span><br><span class="line"><span class="number">6</span>: aload_1</span><br><span class="line">7: invokedynamic #4,  0              // InvokeDynamic #0:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ol>
+<li>在 JDK 8 中，字符串拼接操作会自动被 javac 转换为 StringBuilder 操作</li>
+<li>而在 JDK 9 里面则是因为 Java 9 为了更加统一字符串操作优化，提供了 <code>StringConcatFactory</code>，作为一个统一的入口。</li>
+</ol>
+<p><u>javac 自动生成的代码，虽然未必是最优化的，但普通场景也足够了，你可以酌情选择。</u></p>
+<hr>
+<h3 id="字符串缓存"><a href="#字符串缓存" class="headerlink" title="字符串缓存"></a>字符串缓存</h3><p>我们粗略统计过，把常见应用进行 <code>堆转储（Dump Heap）</code>，然后分析对象组成，会发现<strong>平均 25% 的对象是字符串，并且其中约半数是重复的</strong>。如果能避免创建重复字符串，可以有效降低内存消耗和对象创建开销。</p>
+<ul>
+<li><p>提供 <code>intern()</code> 方法把字符串放进常量池缓存</p>
+<ul>
+<li>String 在 Java 6 以后提供了 <code>intern()</code> 方法，目的是提示 JVM 把相应字符串缓存起来，以备重复使用。在我们创建字符串对象并调用 <code>intern()</code> 方法的时候，如果已经有缓存的字符串，就会返回缓存里的实例，否则将其缓存起来。一般来说，JVM 会将所有的类似“abc”这样的文本字符串，或者字符串常量之类缓存起来。</li>
+</ul>
+</li>
+</ul>
+<p>一般使用 Java 6 这种历史版本，并不推荐大量使用 intern，因为被缓存的字符串是存在所谓 <code>PermGen</code> 里的，也就是 <strong>臭名昭著的“永久代”</strong>，这个空间是很有限的，也基本不会被 <code>FullGC 之外的垃圾收集照顾到</code>。所以，如果使用不当，<code>OOM 就会光顾</code>。</p>
+<h4 id="针对intern的勉强解决和问题"><a href="#针对intern的勉强解决和问题" class="headerlink" title="针对intern的勉强解决和问题"></a>针对intern的勉强解决和问题</h4><ul>
+<li><p>在后续版本中，这个缓存被放置在堆中，这样就极大避免了永久代占满的问题，甚至永久代在 JDK 8 中被 <strong>MetaSpace（元数据区）替代了</strong>。</p>
+<ul>
+<li><p>而且，默认缓存大小也在不断地扩大中，从最初的 1009，到 7u40 以后被修改为 60013。你可以使用下面的参数直接打印具体数字，可以拿自己的 JDK 立刻试验一下。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-XX:+PrintStringTableStatistics</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>你也可以使用下面的 JVM 参数手动调整大小，但是绝大部分情况下并不需要调整，除非你确定它的大小已经影响了操作效率。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-XX:StringTableSize=N</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>问题:</p>
+<ul>
+<li>Intern 是一种<strong>显式地排重机制</strong>，但是它也有一定的副作用，<u>因为需要开发者写代码时明确调用，一是不方便，每一个都显式调用是非常麻烦的</u>；另外就是我们很难保证效率，应用开发阶段很难清楚地预计字符串的重复情况，有人认为这是一种污染代码的实践。</li>
+</ul>
+</li>
+</ul>
+<h4 id="更好的解决使用G1-GC-下的字符串排重"><a href="#更好的解决使用G1-GC-下的字符串排重" class="headerlink" title="更好的解决使用G1 GC 下的字符串排重"></a>更好的解决使用G1 GC 下的字符串排重</h4><p>在 Oracle JDK 8u20 之后，推出了一个新的特性，也就是 <strong>G1 GC 下的字符串排重</strong>。它是通过将相同数据的字符串指向同一份数据来做到的，是 JVM 底层的改变，并不需要 Java 类库做什么修改。</p>
+<p>注意这个功能目前是默认关闭的，你需要使用下面参数开启，并且记得指定使用 G1 GC：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-XX:+UseStringDeduplication</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>前面说到的几个方面，只是 Java 底层对字符串各种优化的一角，在运行时，字符串的一些基础操作会直接利用 <code>JVM 内部的 Intrinsic 机制</code>，往往运行的就是特殊优化的本地代码，而根本就不是 Java 代码生成的字节码。</p>
+<ul>
+<li><p><code>Intrinsic</code> 可以简单理解为，是一种利用 <strong>native 方式 hard-coded 的逻辑</strong>，算是一种特别的内联，很多优化还是需要直接使用特定的 CPU 指令，具体可以看相关源码，搜索“string”以查找相关 <code>Intrinsic</code> 定义。当然，你也可以在启动实验应用时，使用下面参数，了解 intrinsic 发生的状态。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-XX:+PrintCompilation -XX:+UnlockDiagnosticVMOptions -XX:+PrintInlining</span><br><span class="line">    // 样例输出片段    </span><br><span class="line">        180    3       3       java.lang.String::charAt (25 bytes)  </span><br><span class="line">                                @ 1   java.lang.String::isLatin1 (19 bytes)   </span><br><span class="line">                                ...  </span><br><span class="line">                                @ 7 java.lang.StringUTF16::getChar (60 bytes) intrinsic</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<p>可以看出，仅仅是字符串一个实现，就需要 Java 平台工程师和科学家付出如此大且默默无闻的努力，我们得到的很多便利都是来源于此。</p>
+<hr>
+<h4 id="String自身的演化"><a href="#String自身的演化" class="headerlink" title="String自身的演化"></a>String自身的演化</h4><p>对于 Java 的字符串，在历史版本中，它是使用 char 数组来存数据的，这样非常直接。但是 Java 中的 char 是两个 bytes 大小，拉丁语系语言的字符，根本就不需要太宽的 char，这样无区别的实现就造成了一定的浪费。密度是编程语言平台永恒的话题，因为归根结底绝大部分任务是要来操作数据的。</p>
+<p>在 Java 9 中，我们引入了 <strong>Compact Strings 的设计</strong>，对字符串进行了大刀阔斧的改进。<strong>将数据存储方式从 char 数组，改变为一个 byte 数组加上一个标识编码的所谓 coder</strong>，并且将相关字符串操作类都进行了修改。另外，所有相关的 <code>Intrinsic</code> 之类也都进行了重写，以保证没有任何性能损失。</p>
+<p>虽然底层实现发生了这么大的改变，但是 Java 字符串的行为并没有任何大的变化，所以这个特性对于绝大部分应用来说是透明的，绝大部分情况不需要修改已有代码。</p>
+<ul>
+<li><p>理论上的问题:</p>
+<ul>
+<li><p>在极端情况下，字符串也出现了一些能力退化，比如<strong>最大字符串的大小</strong>。你可以思考下，原来 char 数组的实现，字符串的最大长度就是数组本身的长度限制，但是替换成 byte 数组，同样数组长度下，存储能力是退化了一倍的！还好这是存在于理论中的极限，还没有发现现实应用受此影响。</p>
+<ul>
+<li><p>byte是字节数据类型、有符号型的、占1个字节、大小范围为-128——127</p>
+</li>
+<li><p>char是字符数据类型、无符号型的、占2个字节(unicode码)、大小范围为0-65535</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>在通用的性能测试和产品实验中，我们能非常明显地看到紧凑字符串带来的优势，即<strong>更小的内存占用、更快的操作速度</strong>。</p>
+
+      
+    </div> -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+        
+          <h3 id="典型回答"><a href="#典型回答" class="headerlink" title="典型回答"></a>典型回答</h3><ul>
+<li><p>String 是 Java 语言非常基础和重要的类，提供了构造和管理字符串的各种基本逻辑。它是典型的 <code>Immutable 类</code>，被声明成为 final class，所有属性也都是 final 的。也由于它的不可变性，类似拼接、裁剪字符串等动作，都会产生新的 String 对象。由于字符串操作的普遍性，所以相关操作的效率往往对应用性能有明显影响。</p>
+</li>
+<li><p>StringBuffer 是为解决上面提到拼接产生太多中间对象的问题而提供的一个类，我们可以用 append 或者 add 方法，把字符串添加到已有序列的末尾或者指定位置。StringBuffer 本质是一个线程安全的可修改字符序列，它保证了线程安全，也随之带来了额外的性能开销，线程是安全的。</p>
+</li>
+<li><p>StringBuilder 是 Java 1.5 中新增的，在能力上和 StringBuffer 没有本质区别，但是它去掉了线程安全的部分，有效减小了开销，是绝大部分情况下进行字符串拼接的首选。</p>
+</li>
+</ul>
+<a id="more"></a>
+<hr>
+<h3 id="String"><a href="#String" class="headerlink" title="String"></a>String</h3><h4 id="String的创建机理"><a href="#String的创建机理" class="headerlink" title="String的创建机理"></a>String的创建机理</h4><p>由于String在Java世界中使用过于频繁，Java为了避免在一个系统中产生大量的String对象，引入了<strong>字符串常量池</strong>。</p>
+<ul>
+<li><p>其运行机制是：</p>
+<ol>
+<li>创建一个字符串时，首先检查池中是否有值相同的字符串对象，如果有则不需要创建直接从池中刚查找到的对象引用；</li>
+<li>如果没有则新建字符串对象，返回对象引用，并且将新创建的对象放入池中。</li>
+<li>但是，通过new方法创建的String对象是不检查字符串池的，而是直接在堆区或栈区创建一个新的对象，也不会把对象放入池中。上述原则只适用于通过直接量给String对象引用赋值的情况。</li>
+</ol>
+<ul>
+<li><p>举例：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String str1 = <span class="string">"123"</span>; <span class="comment">//通过直接量赋值方式，放入字符串常量池</span></span><br><span class="line">String str2 = <span class="keyword">new</span> String(“<span class="number">123</span>”);<span class="comment">//通过new方式赋值方式，不放入字符串常量池</span></span><br></pre></td></tr></table></figure>
+<p>注意：String提供了 <code>intern()</code> 方法。调用该方法时，如果常量池中包括了一个等于此String对象的字符串（由equals方法确定），则返回池中的字符串。否则，将此String对象添加到池中，并且返回此池中对象的引用。</p>
+</li>
+<li><p><code>==</code> 的比较</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">    String a = <span class="string">"123"</span>;</span><br><span class="line">    String b = <span class="string">"123"</span>;</span><br><span class="line">    String c = <span class="keyword">new</span> String(<span class="string">"123"</span>);</span><br><span class="line">    System.out.println(a==b);<span class="comment">//true</span></span><br><span class="line">    System.out.println(a==c);<span class="comment">//false</span></span><br><span class="line">    String d = c.intern();<span class="comment">//把堆内存的值放进常量池返回一个string</span></span><br><span class="line">    System.out.println(a==d);<span class="comment">//true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="String的特性"><a href="#String的特性" class="headerlink" title="String的特性"></a>String的特性</h4><ol>
+<li><p><code>不可变 (Immutable)</code>。是指String对象一旦生成，则不能再对它进行改变。不可变的主要作用在于当一个对象需要被多线程共享，并且访问频繁时，可以省略同步和锁等待的时间，从而大幅度提高系统性能。不可变模式是一个可以提高多线程程序的性能，降低多线程程序复杂度的设计模式。</p>
+</li>
+<li><p><code>针对常量池的优化</code>。当2个String对象拥有相同的值时，他们只引用常量池中的同一个拷贝。当同一个字符串反复出现时，这个技术可以大幅度节省内存空间。</p>
+</li>
+</ol>
+<hr>
+<h3 id="StringBuffer-StringBuilder"><a href="#StringBuffer-StringBuilder" class="headerlink" title="StringBuffer/StringBuilder"></a>StringBuffer/StringBuilder</h3><ul>
+<li><p>为了实现修改字符序列的目的，StringBuffer 和 StringBuilder 底层都是利用可修改的（char，JDK 9 以后是 byte）数组，二者都继承了 AbstractStringBuilder，里面包含了基本操作，区别仅在于最终的方法是否加了 synchronized。</p>
+</li>
+<li><p>另外，这个内部数组应该创建成多大的呢？如果太小，拼接的时候可能要重新创建足够大的数组；如果太大，又会浪费空间。目前的实现是，构建时初始字符串长度加 16（这意味着，如果没有构建对象时输入最初的字符串，那么初始值就是 16）。</p>
+<ul>
+<li>我们如果确定拼接会发生非常多次，而且大概是可预计的，那么最好就可以<strong>指定合适的大小，避免很多次扩容的开销</strong>。扩容会产生多重开销，因为要抛弃原有数组，创建新的（可以简单认为是倍数）数组，还要进行 <code>arraycopy。</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="全部拼接操作是应该都用-StringBuilder-实现吗？"><a href="#全部拼接操作是应该都用-StringBuilder-实现吗？" class="headerlink" title="全部拼接操作是应该都用 StringBuilder 实现吗？"></a>全部拼接操作是应该都用 StringBuilder 实现吗？</h4><p>在没有线程安全问题的情况下，全部拼接操作是应该都用 StringBuilder 实现吗？毕竟这样书写的代码，还是要多敲很多字的，可读性也不理想，下面的对比非常明显。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">String strByBuilder  = <span class="keyword">new</span></span><br><span class="line">StringBuilder().append(<span class="string">"aa"</span>).append(<span class="string">"bb"</span>).append(<span class="string">"cc"</span>).append(<span class="string">"dd"</span>).toString();</span><br><span class="line">             </span><br><span class="line">String strByConcat = <span class="string">"aa"</span> + <span class="string">"bb"</span> + <span class="string">"cc"</span> + <span class="string">"dd"</span>;</span><br></pre></td></tr></table></figure>
+<p>其实，在通常情况下，没有必要过于担心，要相信 Java 还是非常智能的。我们来做个实验，把下面一段代码，利用不同版本的 JDK 编译，然后再反编译，例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringConcat</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String myStr = <span class="string">"aa"</span> + <span class="string">"bb"</span> + <span class="string">"cc"</span> + <span class="string">"dd"</span>;   </span><br><span class="line">        System.out.println(<span class="string">"My String:"</span> + myStr);   </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>先编译再反编译，比如使用不同版本的 JDK：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$&#123;JAVA_HOME&#125;/bin/javac StringConcat.java</span><br><span class="line">$&#123;JAVA_HOME&#125;/bin/javap -v StringConcat.class</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>JDK 8 的输出片段是：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">0: ldc           #2                  // String aabbccdd</span><br><span class="line"><span class="number">2</span>: astore_1</span><br><span class="line">3: getstatic     #3                  // Field java/lang/System.out:Ljava/io/PrintStream;</span><br><span class="line">6: new           #4                  // class java/lang/StringBuilder</span><br><span class="line"><span class="number">9</span>: dup</span><br><span class="line">10: invokespecial #5                  // Method java/lang/StringBuilder."&lt;init&gt;":()V</span><br><span class="line">13: ldc           #6                  // String My String:</span><br><span class="line">15: invokevirtual #7                  // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;</span><br><span class="line"><span class="number">18</span>: aload_1</span><br><span class="line">19: invokevirtual #7                  // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;</span><br><span class="line">22: invokevirtual #8                  // Method java/lang/StringBuilder.toString:()Ljava/lang/String;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>而在 JDK 9 中，反编译的结果就非常简单了，片段是：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">0: ldc           #2                  // String aabbccdd</span><br><span class="line"><span class="number">2</span>: astore_1</span><br><span class="line">3: getstatic     #3                  // Field java/lang/System.out:Ljava/io/PrintStream;</span><br><span class="line"><span class="number">6</span>: aload_1</span><br><span class="line">7: invokedynamic #4,  0              // InvokeDynamic #0:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ol>
+<li>在 JDK 8 中，字符串拼接操作会自动被 javac 转换为 StringBuilder 操作</li>
+<li>而在 JDK 9 里面则是因为 Java 9 为了更加统一字符串操作优化，提供了 <code>StringConcatFactory</code>，作为一个统一的入口。</li>
+</ol>
+<p><u>javac 自动生成的代码，虽然未必是最优化的，但普通场景也足够了，你可以酌情选择。</u></p>
+<hr>
+<h3 id="字符串缓存"><a href="#字符串缓存" class="headerlink" title="字符串缓存"></a>字符串缓存</h3><p>我们粗略统计过，把常见应用进行 <code>堆转储（Dump Heap）</code>，然后分析对象组成，会发现<strong>平均 25% 的对象是字符串，并且其中约半数是重复的</strong>。如果能避免创建重复字符串，可以有效降低内存消耗和对象创建开销。</p>
+<ul>
+<li><p>提供 <code>intern()</code> 方法把字符串放进常量池缓存</p>
+<ul>
+<li>String 在 Java 6 以后提供了 <code>intern()</code> 方法，目的是提示 JVM 把相应字符串缓存起来，以备重复使用。在我们创建字符串对象并调用 <code>intern()</code> 方法的时候，如果已经有缓存的字符串，就会返回缓存里的实例，否则将其缓存起来。一般来说，JVM 会将所有的类似“abc”这样的文本字符串，或者字符串常量之类缓存起来。</li>
+</ul>
+</li>
+</ul>
+<p>一般使用 Java 6 这种历史版本，并不推荐大量使用 intern，因为被缓存的字符串是存在所谓 <code>PermGen</code> 里的，也就是 <strong>臭名昭著的“永久代”</strong>，这个空间是很有限的，也基本不会被 <code>FullGC 之外的垃圾收集照顾到</code>。所以，如果使用不当，<code>OOM 就会光顾</code>。</p>
+<h4 id="针对intern的勉强解决和问题"><a href="#针对intern的勉强解决和问题" class="headerlink" title="针对intern的勉强解决和问题"></a>针对intern的勉强解决和问题</h4><ul>
+<li><p>在后续版本中，这个缓存被放置在堆中，这样就极大避免了永久代占满的问题，甚至永久代在 JDK 8 中被 <strong>MetaSpace（元数据区）替代了</strong>。</p>
+<ul>
+<li><p>而且，默认缓存大小也在不断地扩大中，从最初的 1009，到 7u40 以后被修改为 60013。你可以使用下面的参数直接打印具体数字，可以拿自己的 JDK 立刻试验一下。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-XX:+PrintStringTableStatistics</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>你也可以使用下面的 JVM 参数手动调整大小，但是绝大部分情况下并不需要调整，除非你确定它的大小已经影响了操作效率。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-XX:StringTableSize=N</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>问题:</p>
+<ul>
+<li>Intern 是一种<strong>显式地排重机制</strong>，但是它也有一定的副作用，<u>因为需要开发者写代码时明确调用，一是不方便，每一个都显式调用是非常麻烦的</u>；另外就是我们很难保证效率，应用开发阶段很难清楚地预计字符串的重复情况，有人认为这是一种污染代码的实践。</li>
+</ul>
+</li>
+</ul>
+<h4 id="更好的解决使用G1-GC-下的字符串排重"><a href="#更好的解决使用G1-GC-下的字符串排重" class="headerlink" title="更好的解决使用G1 GC 下的字符串排重"></a>更好的解决使用G1 GC 下的字符串排重</h4><p>在 Oracle JDK 8u20 之后，推出了一个新的特性，也就是 <strong>G1 GC 下的字符串排重</strong>。它是通过将相同数据的字符串指向同一份数据来做到的，是 JVM 底层的改变，并不需要 Java 类库做什么修改。</p>
+<p>注意这个功能目前是默认关闭的，你需要使用下面参数开启，并且记得指定使用 G1 GC：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-XX:+UseStringDeduplication</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>前面说到的几个方面，只是 Java 底层对字符串各种优化的一角，在运行时，字符串的一些基础操作会直接利用 <code>JVM 内部的 Intrinsic 机制</code>，往往运行的就是特殊优化的本地代码，而根本就不是 Java 代码生成的字节码。</p>
+<ul>
+<li><p><code>Intrinsic</code> 可以简单理解为，是一种利用 <strong>native 方式 hard-coded 的逻辑</strong>，算是一种特别的内联，很多优化还是需要直接使用特定的 CPU 指令，具体可以看相关源码，搜索“string”以查找相关 <code>Intrinsic</code> 定义。当然，你也可以在启动实验应用时，使用下面参数，了解 intrinsic 发生的状态。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-XX:+PrintCompilation -XX:+UnlockDiagnosticVMOptions -XX:+PrintInlining</span><br><span class="line">    // 样例输出片段    </span><br><span class="line">        180    3       3       java.lang.String::charAt (25 bytes)  </span><br><span class="line">                                @ 1   java.lang.String::isLatin1 (19 bytes)   </span><br><span class="line">                                ...  </span><br><span class="line">                                @ 7 java.lang.StringUTF16::getChar (60 bytes) intrinsic</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<p>可以看出，仅仅是字符串一个实现，就需要 Java 平台工程师和科学家付出如此大且默默无闻的努力，我们得到的很多便利都是来源于此。</p>
+<hr>
+<h4 id="String自身的演化"><a href="#String自身的演化" class="headerlink" title="String自身的演化"></a>String自身的演化</h4><p>对于 Java 的字符串，在历史版本中，它是使用 char 数组来存数据的，这样非常直接。但是 Java 中的 char 是两个 bytes 大小，拉丁语系语言的字符，根本就不需要太宽的 char，这样无区别的实现就造成了一定的浪费。密度是编程语言平台永恒的话题，因为归根结底绝大部分任务是要来操作数据的。</p>
+<p>在 Java 9 中，我们引入了 <strong>Compact Strings 的设计</strong>，对字符串进行了大刀阔斧的改进。<strong>将数据存储方式从 char 数组，改变为一个 byte 数组加上一个标识编码的所谓 coder</strong>，并且将相关字符串操作类都进行了修改。另外，所有相关的 <code>Intrinsic</code> 之类也都进行了重写，以保证没有任何性能损失。</p>
+<p>虽然底层实现发生了这么大的改变，但是 Java 字符串的行为并没有任何大的变化，所以这个特性对于绝大部分应用来说是透明的，绝大部分情况不需要修改已有代码。</p>
+<ul>
+<li><p>理论上的问题:</p>
+<ul>
+<li><p>在极端情况下，字符串也出现了一些能力退化，比如<strong>最大字符串的大小</strong>。你可以思考下，原来 char 数组的实现，字符串的最大长度就是数组本身的长度限制，但是替换成 byte 数组，同样数组长度下，存储能力是退化了一倍的！还好这是存在于理论中的极限，还没有发现现实应用受此影响。</p>
+<ul>
+<li><p>byte是字节数据类型、有符号型的、占1个字节、大小范围为-128——127</p>
+</li>
+<li><p>char是字符数据类型、无符号型的、占2个字节(unicode码)、大小范围为0-65535</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>在通用的性能测试和产品实验中，我们能非常明显地看到紧凑字符串带来的优势，即<strong>更小的内存占用、更快的操作速度</strong>。</p>
+
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>本文作者:  </strong>Kuanger
+          </li>
+          <li class="post-copyright-link">
+          <strong>本文链接:  </strong>
+          <a href="/2018/12/30/backend/java_基础/String、StringBuffer、StringBuilder有什么区别/" target="_blank" title="String、StringBuffer、StringBuilder有什么区别">http://yoursite.com/2018/12/30/backend/java_基础/String、StringBuffer、StringBuilder有什么区别/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>版权声明:   </strong>
+            本博客所有文章除特别声明外，均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            许可协议。转载请注明出处
+          </li>
+         
+        </ul>
+<div>
+</div></div>
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/string/">string</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/12/30/backend/java_基础/fail-fast和fail-safe/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          fail-fast和fail-safe
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/12/30/backend/java_基础/值传递和引用传递/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">值传递和引用传递</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#典型回答"><span class="nav-number">1.</span> <span class="nav-text">典型回答</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#String"><span class="nav-number">2.</span> <span class="nav-text">String</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#String的创建机理"><span class="nav-number">2.1.</span> <span class="nav-text">String的创建机理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#String的特性"><span class="nav-number">2.2.</span> <span class="nav-text">String的特性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#StringBuffer-StringBuilder"><span class="nav-number">3.</span> <span class="nav-text">StringBuffer/StringBuilder</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#全部拼接操作是应该都用-StringBuilder-实现吗？"><span class="nav-number">3.1.</span> <span class="nav-text">全部拼接操作是应该都用 StringBuilder 实现吗？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串缓存"><span class="nav-number">4.</span> <span class="nav-text">字符串缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#针对intern的勉强解决和问题"><span class="nav-number">4.1.</span> <span class="nav-text">针对intern的勉强解决和问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更好的解决使用G1-GC-下的字符串排重"><span class="nav-number">4.2.</span> <span class="nav-text">更好的解决使用G1 GC 下的字符串排重</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#String自身的演化"><span class="nav-number">4.3.</span> <span class="nav-text">String自身的演化</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <!-- <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>-->
+	      <p id="copyRightEn">Copyright &copy; 2018 - 2018 Kuanger All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				访客数 : <span id="busuanzi_value_site_uv"></span> |  
+				访问量 : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Better than yesterday
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 Kuanger All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>

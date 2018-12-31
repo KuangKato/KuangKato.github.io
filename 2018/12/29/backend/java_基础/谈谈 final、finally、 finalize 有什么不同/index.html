@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="jGpOWJy4VY">
+  
+  <title>谈谈 final、finally、 finalize 有什么不同 | Better than yesterday</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Kuanger">
+  
+  
+  
+  
+  <meta name="description" content="典型回答 final 可以用来修饰类、方法、变量，分别有不同的意义，final 修饰的 class 代表不可以继承扩展，final 的变量是不可以修改的，而 final 的方法也是不可以重写的（override）。  finally则是 Java 保证重点代码一定要被执行的一种机制。我们可以使用 try-finally 或者 try-catch-finally 来进行类似关闭 JDBC 连接、保证">
+<meta name="keywords" content="java,java基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="谈谈 final、finally、 finalize 有什么不同">
+<meta property="og:url" content="http://yoursite.com/2018/12/29/backend/java_基础/谈谈 final、finally、 finalize 有什么不同/index.html">
+<meta property="og:site_name" content="Better than yesterday">
+<meta property="og:description" content="典型回答 final 可以用来修饰类、方法、变量，分别有不同的意义，final 修饰的 class 代表不可以继承扩展，final 的变量是不可以修改的，而 final 的方法也是不可以重写的（override）。  finally则是 Java 保证重点代码一定要被执行的一种机制。我们可以使用 try-finally 或者 try-catch-finally 来进行类似关闭 JDBC 连接、保证">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-29T13:59:57.804Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="谈谈 final、finally、 finalize 有什么不同">
+<meta name="twitter:description" content="典型回答 final 可以用来修饰类、方法、变量，分别有不同的意义，final 修饰的 class 代表不可以继承扩展，final 的变量是不可以修改的，而 final 的方法也是不可以重写的（override）。  finally则是 Java 保证重点代码一定要被执行的一种机制。我们可以使用 try-finally 或者 try-catch-finally 来进行类似关闭 JDBC 连接、保证">
+  
+    <link rel="alternate" href="/atom.xml" title="Better than yesterday" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css">
+  
+
+  
+  
+  
+
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;" href="#" data-toggle="modal" data-target="#myModal">
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">首页</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">归档</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">分类</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">标签</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">关于</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="">
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(无标题)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </ul></div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-backend/java_基础/谈谈 final、finally、 finalize 有什么不同" style="width: 75%; float:left;" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      谈谈 final、finally、 finalize 有什么不同
+    </h1>
+  
+
+		    
+        <!-- 开始添加字数统计-->
+        
+          <div style="margin-top:10px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">1.7k字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">6分</span>
+      </span>
+    </span>
+</div>
+
+          
+        
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/12/29/backend/java_基础/谈谈 final、finally、 finalize 有什么不同/" class="article-date">
+	  <time datetime="2018-12-28T16:00:00.000Z" itemprop="datePublished">2018-12-29</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/java/">java</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		阅读量<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <!-- <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="典型回答"><a href="#典型回答" class="headerlink" title="典型回答"></a>典型回答</h3><ul>
+<li><p><code>final</code> 可以用来修饰类、方法、变量，分别有不同的意义，final 修饰的 class 代表不可以继承扩展，final 的变量是不可以修改的，而 final 的方法也是不可以<code>重写的（override）</code>。</p>
+</li>
+<li><p><code>finally</code>则是 Java 保证重点代码一定要被执行的一种机制。我们可以使用 <code>try-finally</code> 或者 <code>try-catch-finally</code> 来进行类似关闭 <code>JDBC 连接</code>、保证 <code>unlock 锁</code>等动作。</p>
+</li>
+<li><p>finalize 是基础类 <code>java.lang.Object</code> 的一个方法，它的设计目的是保证对象在被垃圾收集前完成特定资源的回收。finalize 机制现在已经不推荐使用，并且在 JDK 9 开始被标记为 <code>deprecated</code>。</p>
+<a id="more"></a>
+</li>
+</ul>
+<hr>
+<h3 id="语法、并发、性能、生命周期等"><a href="#语法、并发、性能、生命周期等" class="headerlink" title="语法、并发、性能、生命周期等"></a>语法、并发、性能、生命周期等</h3><h4 id="final"><a href="#final" class="headerlink" title="final"></a>final</h4><ul>
+<li><p>我们可以将方法或者类声明为 final，这样就可以明确告知别人，这些行为是不许修改的。</p>
+<blockquote>
+<p> 如果你关注过 Java 核心类库的定义或源码， 有没有发现 java.lang 包下面的很多类，相当一部分都被声明成为 final class？在第三方类库的一些基础类中同样如此，这可以有效避免 API 使用者更改基础功能，某种程度上，这是保证平台安全的必要手段。</p>
+</blockquote>
+</li>
+<li><p>使用 final 修饰参数或者变量，也可以清楚地避免意外赋值导致的编程错误，甚至，有人明确推荐将所有方法参数、本地变量、成员变量声明成 final。</p>
+</li>
+<li><p>final 变量产生了某种程度的 <code>不可变（immutable）</code> 的效果，所以，可以用于保护只读数据，尤其是在并发编程中，因为明确地不能再赋值 final 变量，有利于减少额外的同步开销，也可以省去一些防御性拷贝的必要。</p>
+<blockquote>
+<p>final 也许会有性能的好处，比如，利用 final 可能有助于 JVM 将方法进行内联，可以改善编译器进行条件编译的能力等等。坦白说，很多类似的结论都是基于假设得出的，比如现代高性能 JVM（如 HotSpot）判断内联未必依赖 final 的提示，要相信 JVM 还是非常智能的。</p>
+</blockquote>
+</li>
+</ul>
+<p>对于final的不可变（immutable）做个说明</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> List&lt;String&gt; strList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">strList.add(<span class="string">"Hello"</span>);</span><br><span class="line">strList.add(<span class="string">"world"</span>);  </span><br><span class="line">List&lt;String&gt; unmodifiableStrList = List.of(<span class="string">"hello"</span>, <span class="string">"world"</span>);</span><br><span class="line">unmodifiableStrList.add(<span class="string">"again"</span>);</span><br></pre></td></tr></table></figure>
+<p>final 只能约束 strList 这个引用不可以被赋值，但是 strList 对象行为不被 final 影响，添加元素等操作是完全正常的。如果我们真的希望对象本身是不可变的，那么需要相应的类支持不可变的行为。在上面这个例子中，<a href="http://openjdk.java.net/jeps/269" target="_blank" rel="noopener">List.of 方法</a>创建的本身就是不可变 List，最后那句 add 是会在运行时抛出异常的。</p>
+<ul>
+<li>还有一个地方值得说明，<strong>当 <code>内部类 (inner clas)</code> 访问局部变量的时候，是需要用final声明变量的，因为Java inner class实际会copy一份，不是去直接使用局部变量，final可以防止出现数据一致性问题。</strong></li>
+</ul>
+<h4 id="finally"><a href="#finally" class="headerlink" title="finally"></a>finally</h4><p>虽然说正常情况下finally是可以保证重点代码一定要被执行的一种机制，但他也有不执行的时候：</p>
+<ol>
+<li><p>程序退出</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">client</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// do something</span></span><br><span class="line">            System.exit(<span class="number">1</span>);</span><br><span class="line">        &#125; <span class="keyword">finally</span>&#123;</span><br><span class="line">            System.out.println(<span class="string">"Print from finally"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>system.exit（0）</code> : 正常退出，程序正常执行结束退出</li>
+<li><code>system.exit （1）</code> : 是非正常退出，就是说无论程序正在执行与否，都退出</li>
+</ul>
+</li>
+<li><p>无限循环</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">client</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// do something</span></span><br><span class="line">            <span class="keyword">while</span> (<span class="keyword">true</span>)&#123;</span><br><span class="line">                System.out.println(<span class="string">"loop"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">finally</span>&#123;</span><br><span class="line">            System.out.println(<span class="string">"Print from finally"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>线程被杀死</p>
+<ul>
+<li>当执行 try，finally 的线程被杀死时。finally 也无法执行。</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>所以 <strong>不要在 finally 中使用 return 语句。finally 总是执行，除非程序或者线程被中断。</strong></li>
+</ul>
+<h4 id="finalize"><a href="#finalize" class="headerlink" title="finalize"></a>finalize</h4><ul>
+<li>对于 finalize，我们要明确它是不推荐使用的，业界实践一再证明它不是个好的办法，在 Java 9 中，甚至明确将 <code>Object.finalize()</code>标记为  <code>deprecated</code> ！如果没有特别的原因，不要实现 <code>finalize</code>方法，也不要指望利用它来进行资源回收。</li>
+</ul>
+<p>为什么呢？简单说，你无法保证 finalize 什么时候执行，执行的是否符合预期。<strong>使用不当会影响性能，导致程序死锁、挂起等。</strong></p>
+<p>通常来说，利用上面的提到的 <code>try-with-resources</code> 或者 <code>try-finally</code> 机制，是非常好的 <u>回收资源的办法</u>。如果确实需要额外处理，可以考虑 Java 提供的 <strong>Cleaner 机制</strong> 或者其他替代方法。</p>
+<ul>
+<li>finalize 的执行是和垃圾收集关联在一起的，一旦实现了非空的 finalize 方法，就会导致相应对象回收呈现数量级上的变慢，有人专门做过 benchmark，大概是 40~50 倍的下降。</li>
+</ul>
+<ul>
+<li>因为，finalize 被设计成在对象<strong>被垃圾收集前</strong>调用，这就意味着实现了 finalize 方法的对象是个“特殊公民”，JVM 要对它进行额外处理。finalize 本质上成为了快速回收的阻碍者，可能导致你的对象经过多个垃圾收集周期才能被回收。</li>
+</ul>
+<p>有人也许会问，我用 <code>System.runFinalization()</code> 告诉 JVM 积极一点，是不是就可以了？也许有点用，但是问题在于，这还是<u>不可预测、不能保证的，所以本质上还是不能指望</u>。实践中，因为 finalize 拖慢垃圾收集，导致大量对象堆积，也是一种典型的导致 <code>OOM (OutOfMemoryError ) 的原因</code>。</p>
+<p>从另一个角度，我们要确保回收资源就是因为资源都是有限的，垃圾收集时间的不可预测，可能会极大加剧资源占用。这意味着对于消耗非常高频的资源，千万不要指望 finalize 去承担资源释放的主要职责，最多让 finalize 作为最后的“守门员”，况且它已经暴露了如此多的问题。推荐是：<strong>资源用完即显式释放，或者利用资源池来尽量重用</strong>。</p>
+<p><strong>finalize 还会掩盖资源回收时的出错信息</strong>，我们看下面一段 <code>JDK</code> 的源代码，截取自 <code>java.lang.ref.Finalizer</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">runFinalizer</span><span class="params">(JavaLangAccess jla)</span> </span>&#123;</span><br><span class="line"><span class="comment">//  ... 省略部分代码</span></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">   Object finalizee = <span class="keyword">this</span>.get(); </span><br><span class="line">   <span class="keyword">if</span> (finalizee != <span class="keyword">null</span> &amp;&amp; !(finalizee <span class="keyword">instanceof</span> java.lang.Enum)) &#123;</span><br><span class="line">      jla.invokeFinalize(finalizee);</span><br><span class="line">      <span class="comment">// Clear stack slot containing this variable, to decrease</span></span><br><span class="line">      <span class="comment">// the chances of false retention with a conservative GC</span></span><br><span class="line">      finalizee = <span class="keyword">null</span>;</span><br><span class="line">   &#125;</span><br><span class="line"> &#125; <span class="keyword">catch</span> (Throwable x) &#123; &#125;</span><br><span class="line">   <span class="keyword">super</span>.clear(); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里的<strong>Throwable 是被生吞了的！</strong>也就意味着一旦出现异常或者出错，你得不到任何有效信息。况且，Java 在 finalize 阶段也没有好的方式处理任何信息，不然更加不可预测。</p>
+
+      
+    </div> -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+        
+          <h3 id="典型回答"><a href="#典型回答" class="headerlink" title="典型回答"></a>典型回答</h3><ul>
+<li><p><code>final</code> 可以用来修饰类、方法、变量，分别有不同的意义，final 修饰的 class 代表不可以继承扩展，final 的变量是不可以修改的，而 final 的方法也是不可以<code>重写的（override）</code>。</p>
+</li>
+<li><p><code>finally</code>则是 Java 保证重点代码一定要被执行的一种机制。我们可以使用 <code>try-finally</code> 或者 <code>try-catch-finally</code> 来进行类似关闭 <code>JDBC 连接</code>、保证 <code>unlock 锁</code>等动作。</p>
+</li>
+<li><p>finalize 是基础类 <code>java.lang.Object</code> 的一个方法，它的设计目的是保证对象在被垃圾收集前完成特定资源的回收。finalize 机制现在已经不推荐使用，并且在 JDK 9 开始被标记为 <code>deprecated</code>。</p>
+<a id="more"></a>
+</li>
+</ul>
+<hr>
+<h3 id="语法、并发、性能、生命周期等"><a href="#语法、并发、性能、生命周期等" class="headerlink" title="语法、并发、性能、生命周期等"></a>语法、并发、性能、生命周期等</h3><h4 id="final"><a href="#final" class="headerlink" title="final"></a>final</h4><ul>
+<li><p>我们可以将方法或者类声明为 final，这样就可以明确告知别人，这些行为是不许修改的。</p>
+<blockquote>
+<p> 如果你关注过 Java 核心类库的定义或源码， 有没有发现 java.lang 包下面的很多类，相当一部分都被声明成为 final class？在第三方类库的一些基础类中同样如此，这可以有效避免 API 使用者更改基础功能，某种程度上，这是保证平台安全的必要手段。</p>
+</blockquote>
+</li>
+<li><p>使用 final 修饰参数或者变量，也可以清楚地避免意外赋值导致的编程错误，甚至，有人明确推荐将所有方法参数、本地变量、成员变量声明成 final。</p>
+</li>
+<li><p>final 变量产生了某种程度的 <code>不可变（immutable）</code> 的效果，所以，可以用于保护只读数据，尤其是在并发编程中，因为明确地不能再赋值 final 变量，有利于减少额外的同步开销，也可以省去一些防御性拷贝的必要。</p>
+<blockquote>
+<p>final 也许会有性能的好处，比如，利用 final 可能有助于 JVM 将方法进行内联，可以改善编译器进行条件编译的能力等等。坦白说，很多类似的结论都是基于假设得出的，比如现代高性能 JVM（如 HotSpot）判断内联未必依赖 final 的提示，要相信 JVM 还是非常智能的。</p>
+</blockquote>
+</li>
+</ul>
+<p>对于final的不可变（immutable）做个说明</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> List&lt;String&gt; strList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">strList.add(<span class="string">"Hello"</span>);</span><br><span class="line">strList.add(<span class="string">"world"</span>);  </span><br><span class="line">List&lt;String&gt; unmodifiableStrList = List.of(<span class="string">"hello"</span>, <span class="string">"world"</span>);</span><br><span class="line">unmodifiableStrList.add(<span class="string">"again"</span>);</span><br></pre></td></tr></table></figure>
+<p>final 只能约束 strList 这个引用不可以被赋值，但是 strList 对象行为不被 final 影响，添加元素等操作是完全正常的。如果我们真的希望对象本身是不可变的，那么需要相应的类支持不可变的行为。在上面这个例子中，<a href="http://openjdk.java.net/jeps/269" target="_blank" rel="noopener">List.of 方法</a>创建的本身就是不可变 List，最后那句 add 是会在运行时抛出异常的。</p>
+<ul>
+<li>还有一个地方值得说明，<strong>当 <code>内部类 (inner clas)</code> 访问局部变量的时候，是需要用final声明变量的，因为Java inner class实际会copy一份，不是去直接使用局部变量，final可以防止出现数据一致性问题。</strong></li>
+</ul>
+<h4 id="finally"><a href="#finally" class="headerlink" title="finally"></a>finally</h4><p>虽然说正常情况下finally是可以保证重点代码一定要被执行的一种机制，但他也有不执行的时候：</p>
+<ol>
+<li><p>程序退出</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">client</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// do something</span></span><br><span class="line">            System.exit(<span class="number">1</span>);</span><br><span class="line">        &#125; <span class="keyword">finally</span>&#123;</span><br><span class="line">            System.out.println(<span class="string">"Print from finally"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>system.exit（0）</code> : 正常退出，程序正常执行结束退出</li>
+<li><code>system.exit （1）</code> : 是非正常退出，就是说无论程序正在执行与否，都退出</li>
+</ul>
+</li>
+<li><p>无限循环</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">client</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// do something</span></span><br><span class="line">            <span class="keyword">while</span> (<span class="keyword">true</span>)&#123;</span><br><span class="line">                System.out.println(<span class="string">"loop"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">finally</span>&#123;</span><br><span class="line">            System.out.println(<span class="string">"Print from finally"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>线程被杀死</p>
+<ul>
+<li>当执行 try，finally 的线程被杀死时。finally 也无法执行。</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>所以 <strong>不要在 finally 中使用 return 语句。finally 总是执行，除非程序或者线程被中断。</strong></li>
+</ul>
+<h4 id="finalize"><a href="#finalize" class="headerlink" title="finalize"></a>finalize</h4><ul>
+<li>对于 finalize，我们要明确它是不推荐使用的，业界实践一再证明它不是个好的办法，在 Java 9 中，甚至明确将 <code>Object.finalize()</code>标记为  <code>deprecated</code> ！如果没有特别的原因，不要实现 <code>finalize</code>方法，也不要指望利用它来进行资源回收。</li>
+</ul>
+<p>为什么呢？简单说，你无法保证 finalize 什么时候执行，执行的是否符合预期。<strong>使用不当会影响性能，导致程序死锁、挂起等。</strong></p>
+<p>通常来说，利用上面的提到的 <code>try-with-resources</code> 或者 <code>try-finally</code> 机制，是非常好的 <u>回收资源的办法</u>。如果确实需要额外处理，可以考虑 Java 提供的 <strong>Cleaner 机制</strong> 或者其他替代方法。</p>
+<ul>
+<li>finalize 的执行是和垃圾收集关联在一起的，一旦实现了非空的 finalize 方法，就会导致相应对象回收呈现数量级上的变慢，有人专门做过 benchmark，大概是 40~50 倍的下降。</li>
+</ul>
+<ul>
+<li>因为，finalize 被设计成在对象<strong>被垃圾收集前</strong>调用，这就意味着实现了 finalize 方法的对象是个“特殊公民”，JVM 要对它进行额外处理。finalize 本质上成为了快速回收的阻碍者，可能导致你的对象经过多个垃圾收集周期才能被回收。</li>
+</ul>
+<p>有人也许会问，我用 <code>System.runFinalization()</code> 告诉 JVM 积极一点，是不是就可以了？也许有点用，但是问题在于，这还是<u>不可预测、不能保证的，所以本质上还是不能指望</u>。实践中，因为 finalize 拖慢垃圾收集，导致大量对象堆积，也是一种典型的导致 <code>OOM (OutOfMemoryError ) 的原因</code>。</p>
+<p>从另一个角度，我们要确保回收资源就是因为资源都是有限的，垃圾收集时间的不可预测，可能会极大加剧资源占用。这意味着对于消耗非常高频的资源，千万不要指望 finalize 去承担资源释放的主要职责，最多让 finalize 作为最后的“守门员”，况且它已经暴露了如此多的问题。推荐是：<strong>资源用完即显式释放，或者利用资源池来尽量重用</strong>。</p>
+<p><strong>finalize 还会掩盖资源回收时的出错信息</strong>，我们看下面一段 <code>JDK</code> 的源代码，截取自 <code>java.lang.ref.Finalizer</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">runFinalizer</span><span class="params">(JavaLangAccess jla)</span> </span>&#123;</span><br><span class="line"><span class="comment">//  ... 省略部分代码</span></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">   Object finalizee = <span class="keyword">this</span>.get(); </span><br><span class="line">   <span class="keyword">if</span> (finalizee != <span class="keyword">null</span> &amp;&amp; !(finalizee <span class="keyword">instanceof</span> java.lang.Enum)) &#123;</span><br><span class="line">      jla.invokeFinalize(finalizee);</span><br><span class="line">      <span class="comment">// Clear stack slot containing this variable, to decrease</span></span><br><span class="line">      <span class="comment">// the chances of false retention with a conservative GC</span></span><br><span class="line">      finalizee = <span class="keyword">null</span>;</span><br><span class="line">   &#125;</span><br><span class="line"> &#125; <span class="keyword">catch</span> (Throwable x) &#123; &#125;</span><br><span class="line">   <span class="keyword">super</span>.clear(); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里的<strong>Throwable 是被生吞了的！</strong>也就意味着一旦出现异常或者出错，你得不到任何有效信息。况且，Java 在 finalize 阶段也没有好的方式处理任何信息，不然更加不可预测。</p>
+
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>本文作者:  </strong>Kuanger
+          </li>
+          <li class="post-copyright-link">
+          <strong>本文链接:  </strong>
+          <a href="/2018/12/29/backend/java_基础/谈谈 final、finally、 finalize 有什么不同/" target="_blank" title="谈谈 final、finally、 finalize 有什么不同">http://yoursite.com/2018/12/29/backend/java_基础/谈谈 final、finally、 finalize 有什么不同/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>版权声明:   </strong>
+            本博客所有文章除特别声明外，均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            许可协议。转载请注明出处
+          </li>
+         
+        </ul>
+<div>
+</div></div>
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/12/29/backend/java_基础/强引用、软引用、弱引用、幻象引用有什么区别/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          强引用、软引用、弱引用、幻象引用有什么区别
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/12/28/backend/java_基础/Exception和Error的区别/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">Exception和Error的区别</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#典型回答"><span class="nav-number">1.</span> <span class="nav-text">典型回答</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#语法、并发、性能、生命周期等"><span class="nav-number">2.</span> <span class="nav-text">语法、并发、性能、生命周期等</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#final"><span class="nav-number">2.1.</span> <span class="nav-text">final</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#finally"><span class="nav-number">2.2.</span> <span class="nav-text">finally</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#finalize"><span class="nav-number">2.3.</span> <span class="nav-text">finalize</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <!-- <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>-->
+	      <p id="copyRightEn">Copyright &copy; 2018 - 2018 Kuanger All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				访客数 : <span id="busuanzi_value_site_uv"></span> |  
+				访问量 : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Better than yesterday
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 Kuanger All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>
