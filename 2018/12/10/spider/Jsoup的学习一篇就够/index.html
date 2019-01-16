@@ -16,7 +16,7 @@
 <meta name="keywords" content="spider,爬虫,jsoup">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Jsoup的学习一篇就够">
-<meta property="og:url" content="http://yoursite.com/2018/12/10/spider/Jsoup的学习一篇就够/index.html">
+<meta property="og:url" content="http://www.kuanger.top/2018/12/10/spider/Jsoup的学习一篇就够/index.html">
 <meta property="og:site_name" content="Better than yesterday">
 <meta property="og:description" content="摘要Jsoup是一款比较好的Java版HTML解析器。可直接解析某个URL地址、HTML文本内容。它提供了一套非常省力的API，可通过DOM，CSS以及类似于jQuery的操作方法来取出和操作数据。  由于工作原因，需要学习对页面的数据进行爬取，以下内容仅供学习demo，非商业用途。 学习途中查询了一些资料，也发现很多工具也可以实现，有兴趣可以前往了解 然后我发现jsoup可以对响应的html数据">
 <meta property="og:locale" content="zh-CN">
@@ -63,6 +63,8 @@
 
   
   
+  
+    <link rel="stylesheet" href="/css/vdonate.css">
   
 
 </head>
@@ -1198,6 +1200,19 @@
     </div>
     <footer class="article-footer">
       
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: '打赏支持', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: '/md_images/static/1.jpg',
+  alipayImage: '/md_images/static/2.jpg'
+});
+</script>
+      
       
       <div>
         <ul class="post-copyright">
@@ -1206,7 +1221,7 @@
           </li>
           <li class="post-copyright-link">
           <strong>本文链接:  </strong>
-          <a href="/2018/12/10/spider/Jsoup的学习一篇就够/" target="_blank" title="Jsoup的学习一篇就够">http://yoursite.com/2018/12/10/spider/Jsoup的学习一篇就够/</a>
+          <a href="/2018/12/10/spider/Jsoup的学习一篇就够/" target="_blank" title="Jsoup的学习一篇就够">http://www.kuanger.top/2018/12/10/spider/Jsoup的学习一篇就够/</a>
           </li>
           <li class="post-copyright-license">
             <strong>版权声明:   </strong>
@@ -1297,7 +1312,7 @@
   <div class="container">
       	<div class="row">
 	      <!-- <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>-->
-	      <p id="copyRightEn">Copyright &copy; 2018 - 2018 Kuanger All Rights Reserved.</p>
+	      <p id="copyRightEn">Copyright &copy; 2018 - 2019 Kuanger All Rights Reserved.</p>
 	      
 	      
     		<p class="busuanzi_uv">
@@ -1451,7 +1466,7 @@
             Better than yesterday
           </div>
           <div class="panel-body">
-            Copyright © 2018 Kuanger All Rights Reserved.
+            Copyright © 2019 Kuanger All Rights Reserved.
           </div>
         </div>
       </div>

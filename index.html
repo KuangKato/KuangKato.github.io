@@ -15,7 +15,7 @@
   <meta name="keywords" content="Kuanger的个人博客">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Better than yesterday">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:url" content="http://www.kuanger.top/index.html">
 <meta property="og:site_name" content="Better than yesterday">
 <meta property="og:locale" content="zh-CN">
 <meta name="twitter:card" content="summary">
@@ -57,6 +57,8 @@
 
   
   
+  
+    <link rel="stylesheet" href="/css/vdonate.css">
   
 
 </head>
@@ -238,6 +240,476 @@
         
           <section id="main" style="float:none;">
   
+    <article id="post-backend/规约/阿里巴巴Java开发手册中的开发规约之一(3)" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2019/01/14/backend/规约/阿里巴巴Java开发手册中的开发规约之一(3)/">阿里巴巴Java开发手册中的开发规约之一(3)</a>
+    </h1>
+  
+
+		    
+        <!-- 开始添加字数统计-->
+        
+          <div style="margin-top:10px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">1.3k字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">5分</span>
+      </span>
+    </span>
+</div>
+
+          
+        
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/01/14/backend/规约/阿里巴巴Java开发手册中的开发规约之一(3)/" class="article-date">
+	  <time datetime="2019-01-13T16:00:00.000Z" itemprop="datePublished">2019-01-14</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/java/">java</a>
+
+      
+    </div>
+    <!-- <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="包装类比较"><a href="#包装类比较" class="headerlink" title="包装类比较"></a>包装类比较</h3><ul>
+<li><p><strong>【强制】所有的相同类型的包装类对象之间值的比较，全部使用 equals 方法比较。</strong></p>
+<ul>
+<li>说明： 对于 Integer var=? <strong>在-128 至 127 之间的赋值</strong>， Integer 对象是在<br><code>IntegerCache.cache</code> 产生，会复用已有对象，这个区间内的 Integer 值可以直接使用 <code>==</code> 进行<br>判断，但是这个区间之外的所有数据，都会在堆上产生，并不会复用已有对象，这是一个大坑，<br>推荐使用 equals 方法进行判断。</li>
+</ul>
+</li>
+</ul>
+      
+    </div> -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="包装类比较"><a href="#包装类比较" class="headerlink" title="包装类比较"></a>包装类比较</h3><ul>
+<li><p><strong>【强制】所有的相同类型的包装类对象之间值的比较，全部使用 equals 方法比较。</strong></p>
+<ul>
+<li>说明： 对于 Integer var=? <strong>在-128 至 127 之间的赋值</strong>， Integer 对象是在<br><code>IntegerCache.cache</code> 产生，会复用已有对象，这个区间内的 Integer 值可以直接使用 <code>==</code> 进行<br>判断，但是这个区间之外的所有数据，都会在堆上产生，并不会复用已有对象，这是一个大坑，<br>推荐使用 equals 方法进行判断。</li>
+</ul>
+</li>
+</ul>
+        <p class="article-more-link">
+          <a href="/2019/01/14/backend/规约/阿里巴巴Java开发手册中的开发规约之一(3)/#more">阅读全文</a>
+        </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/规范/">规范</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-backend/java_基础/HashMap的源码分析" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2019/01/08/backend/java_基础/HashMap的源码分析/">HashMap的源码分析</a>
+    </h1>
+  
+
+		    
+        <!-- 开始添加字数统计-->
+        
+          <div style="margin-top:10px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">4.6k字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">20分</span>
+      </span>
+    </span>
+</div>
+
+          
+        
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/01/08/backend/java_基础/HashMap的源码分析/" class="article-date">
+	  <time datetime="2019-01-07T16:00:00.000Z" itemprop="datePublished">2019-01-08</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/java/">java</a>
+
+      
+    </div>
+    <!-- <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="HashMap-内部的结构"><a href="#HashMap-内部的结构" class="headerlink" title="HashMap 内部的结构"></a>HashMap 内部的结构</h3><p><strong>HashMap 它可以看作是 数组（Node&lt;K,V&gt;[] table） 和 链表 结合组成的复合结构，数组被分为一个个 桶（bucket），通过哈希值决定了键值对在这个数组的寻址；哈希值相同的键值对，则以链表形式存储，你可以参考下面的示意图。这里需要注意的是，如果链表大小超过阈值（TREEIFY_THRESHOLD, 8），图中的链表就会被改造为树形结构。</strong></p>
+<p><img src="/md_images/jk_java/9.png" alt=""></p>
+      
+    </div> -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="HashMap-内部的结构"><a href="#HashMap-内部的结构" class="headerlink" title="HashMap 内部的结构"></a>HashMap 内部的结构</h3><p><strong>HashMap 它可以看作是 数组（Node&lt;K,V&gt;[] table） 和 链表 结合组成的复合结构，数组被分为一个个 桶（bucket），通过哈希值决定了键值对在这个数组的寻址；哈希值相同的键值对，则以链表形式存储，你可以参考下面的示意图。这里需要注意的是，如果链表大小超过阈值（TREEIFY_THRESHOLD, 8），图中的链表就会被改造为树形结构。</strong></p>
+<p><img src="/md_images/jk_java/9.png" alt=""></p>
+        <p class="article-more-link">
+          <a href="/2019/01/08/backend/java_基础/HashMap的源码分析/#more">阅读全文</a>
+        </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-backend/java_基础/Map集合" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2019/01/05/backend/java_基础/Map集合/">Map集合</a>
+    </h1>
+  
+
+		    
+        <!-- 开始添加字数统计-->
+        
+          <div style="margin-top:10px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">1.7k字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">6分</span>
+      </span>
+    </span>
+</div>
+
+          
+        
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/01/05/backend/java_基础/Map集合/" class="article-date">
+	  <time datetime="2019-01-04T16:00:00.000Z" itemprop="datePublished">2019-01-05</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/java/">java</a>
+
+      
+    </div>
+    <!-- <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><p>Map 是广义 Java 集合框架中的另外一部分，Hashtable、HashMap、TreeMap 都是最常见的一些 Map 实现，是以<strong>键值对</strong>的形式存储和操作数据的容器类型。</p>
+<h3 id="典型回答"><a href="#典型回答" class="headerlink" title="典型回答"></a>典型回答</h3><ul>
+<li><p>Hashtable 是早期 Java 类库提供的一个 <a href="https://zh.wikipedia.org/wiki/%E5%93%88%E5%B8%8C%E8%A1%A8" target="_blank" rel="noopener">哈希表</a> 实现，本身是同步的，不支持 null 键和值，由于同步导致的性能开销，所以已经很少被推荐使用。</p>
+</li>
+<li><p>HashMap 是应用更加广泛的哈希表实现，行为上大致上与 HashTable 一致，主要区别在于 HashMap 不是同步的，支持 null 键和值等。通常情况下，HashMap 进行 put 或者 get 操作，可以达到常数时间的性能，所以<strong>它是绝大部分利用键值对存取场景的首选</strong>，比如，实现一个用户 ID 和用户信息对应的运行时存储结构。</p>
+</li>
+<li><p>TreeMap 则是基于红黑树的一种提供顺序访问的 Map，和 HashMap 不同，它的 get、put、remove 之类操作都是 O（log(n)）的时间复杂度，具体顺序可以由指定的 Comparator 来决定，或者根据键的自然顺序来判断。</p>
+</li>
+</ul>
+<blockquote>
+<p>HashMap 在并发环境可能出现 <a href="https://bugs.java.com/bugdatabase/view_bug.do?bug_id=6423457" target="_blank" rel="noopener">无限循环占用 CPU</a> 、size 不准确等诡异的问题。我认为这是一种典型的使用错误，因为 HashMap 明确声明不是线程安全的数据结构，如果忽略这一点，简单用在多线程场景里，难免会出现问题。</p>
+<p>理解导致这种错误的原因，也是深入理解并发程序运行的好办法。对于具体发生了什么，你可以参考这篇很久以前的 <a href="http://mailinator.blogspot.com/2009/06/beautiful-race-condition.html" target="_blank" rel="noopener">分析</a> 。</p>
+</blockquote>
+      
+    </div> -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><p>Map 是广义 Java 集合框架中的另外一部分，Hashtable、HashMap、TreeMap 都是最常见的一些 Map 实现，是以<strong>键值对</strong>的形式存储和操作数据的容器类型。</p>
+<h3 id="典型回答"><a href="#典型回答" class="headerlink" title="典型回答"></a>典型回答</h3><ul>
+<li><p>Hashtable 是早期 Java 类库提供的一个 <a href="https://zh.wikipedia.org/wiki/%E5%93%88%E5%B8%8C%E8%A1%A8" target="_blank" rel="noopener">哈希表</a> 实现，本身是同步的，不支持 null 键和值，由于同步导致的性能开销，所以已经很少被推荐使用。</p>
+</li>
+<li><p>HashMap 是应用更加广泛的哈希表实现，行为上大致上与 HashTable 一致，主要区别在于 HashMap 不是同步的，支持 null 键和值等。通常情况下，HashMap 进行 put 或者 get 操作，可以达到常数时间的性能，所以<strong>它是绝大部分利用键值对存取场景的首选</strong>，比如，实现一个用户 ID 和用户信息对应的运行时存储结构。</p>
+</li>
+<li><p>TreeMap 则是基于红黑树的一种提供顺序访问的 Map，和 HashMap 不同，它的 get、put、remove 之类操作都是 O（log(n)）的时间复杂度，具体顺序可以由指定的 Comparator 来决定，或者根据键的自然顺序来判断。</p>
+</li>
+</ul>
+<blockquote>
+<p>HashMap 在并发环境可能出现 <a href="https://bugs.java.com/bugdatabase/view_bug.do?bug_id=6423457" target="_blank" rel="noopener">无限循环占用 CPU</a> 、size 不准确等诡异的问题。我认为这是一种典型的使用错误，因为 HashMap 明确声明不是线程安全的数据结构，如果忽略这一点，简单用在多线程场景里，难免会出现问题。</p>
+<p>理解导致这种错误的原因，也是深入理解并发程序运行的好办法。对于具体发生了什么，你可以参考这篇很久以前的 <a href="http://mailinator.blogspot.com/2009/06/beautiful-race-condition.html" target="_blank" rel="noopener">分析</a> 。</p>
+</blockquote>
+        <p class="article-more-link">
+          <a href="/2019/01/05/backend/java_基础/Map集合/#more">阅读全文</a>
+        </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-backend/java_基础/Collection集合" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2019/01/04/backend/java_基础/Collection集合/">Collection集合</a>
+    </h1>
+  
+
+		    
+        <!-- 开始添加字数统计-->
+        
+          <div style="margin-top:10px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">599字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">2分</span>
+      </span>
+    </span>
+</div>
+
+          
+        
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/01/04/backend/java_基础/Collection集合/" class="article-date">
+	  <time datetime="2019-01-03T16:00:00.000Z" itemprop="datePublished">2019-01-04</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/java/">java</a>
+
+      
+    </div>
+    <!-- <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="集合框架"><a href="#集合框架" class="headerlink" title="集合框架"></a>集合框架</h3><p>没有 <code>java.util.concurrent</code> 下面的线程安全容器添加进来；也没有列出 <code>Map</code> 容器</p>
+<p><img src="/md_images/jk_java/6.png" alt=""></p>
+      
+    </div> -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="集合框架"><a href="#集合框架" class="headerlink" title="集合框架"></a>集合框架</h3><p>没有 <code>java.util.concurrent</code> 下面的线程安全容器添加进来；也没有列出 <code>Map</code> 容器</p>
+<p><img src="/md_images/jk_java/6.png" alt=""></p>
+        <p class="article-more-link">
+          <a href="/2019/01/04/backend/java_基础/Collection集合/#more">阅读全文</a>
+        </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-backend/java_基础/静态代理和动态代理" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2019/01/02/backend/java_基础/静态代理和动态代理/">静态代理和动态代理</a>
+    </h1>
+  
+
+		    
+        <!-- 开始添加字数统计-->
+        
+          <div style="margin-top:10px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">1.8k字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">6分</span>
+      </span>
+    </span>
+</div>
+
+          
+        
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/01/02/backend/java_基础/静态代理和动态代理/" class="article-date">
+	  <time datetime="2019-01-01T16:00:00.000Z" itemprop="datePublished">2019-01-02</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/java/">java</a>
+
+      
+    </div>
+    <!-- <div class="article-entry" itemprop="articleBody">
+      
+        <p>在某些情况下，一个客户不想或者不能直接引用一个对象，此时可以通过一个称之为 <strong>“代理”</strong> 的第三者来实现间接引用。代理对象可以在客户端和目标对象之间起到中介的作用，并且可以通过代理对象去掉客户不能看到的内容和服务或者添加客户需要的额外服务。</p>
+<blockquote>
+<p>代理模式(Proxy Pattern) ：给某一个对象提供一个代理，并由代理对象控制对原对象的引用。</p>
+</blockquote>
+<p>按照代理类的创建时期，代理类可分为两种，即动态代理类和静态代理类。</p>
+<ul>
+<li><p>静态代理类：由程序员创建或由特定工具自动生成源代码，再对其编译。在程序运行前，代理类的.class文件就已经存在了。</p>
+</li>
+<li><p>动态代理类：在程序运行时，运用反射机制动态创建而成。</p>
+</li>
+</ul>
+      
+    </div> -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在某些情况下，一个客户不想或者不能直接引用一个对象，此时可以通过一个称之为 <strong>“代理”</strong> 的第三者来实现间接引用。代理对象可以在客户端和目标对象之间起到中介的作用，并且可以通过代理对象去掉客户不能看到的内容和服务或者添加客户需要的额外服务。</p>
+<blockquote>
+<p>代理模式(Proxy Pattern) ：给某一个对象提供一个代理，并由代理对象控制对原对象的引用。</p>
+</blockquote>
+<p>按照代理类的创建时期，代理类可分为两种，即动态代理类和静态代理类。</p>
+<ul>
+<li><p>静态代理类：由程序员创建或由特定工具自动生成源代码，再对其编译。在程序运行前，代理类的.class文件就已经存在了。</p>
+</li>
+<li><p>动态代理类：在程序运行时，运用反射机制动态创建而成。</p>
+</li>
+</ul>
+        <p class="article-more-link">
+          <a href="/2019/01/02/backend/java_基础/静态代理和动态代理/#more">阅读全文</a>
+        </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
     <article id="post-backend/java_基础/Java反射机制" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div id="articleInner" class="article-inner">
     
@@ -406,102 +878,6 @@
 
 
   
-    <article id="post-backend/java_基础/String、StringBuffer、StringBuilder有什么区别" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/12/30/backend/java_基础/String、StringBuffer、StringBuilder有什么区别/">String、StringBuffer、StringBuilder有什么区别</a>
-    </h1>
-  
-
-		    
-        <!-- 开始添加字数统计-->
-        
-          <div style="margin-top:10px;">
-    <span class="post-time">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-keyboard-o"></i>
-        <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">3k字</span>
-      </span>
-    </span>
-
-    <span class="post-time">
-      &nbsp; | &nbsp;
-      <span class="post-meta-item-icon">
-        <i class="fa fa-hourglass-half"></i>
-        <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">11分</span>
-      </span>
-    </span>
-</div>
-
-          
-        
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/12/30/backend/java_基础/String、StringBuffer、StringBuilder有什么区别/" class="article-date">
-	  <time datetime="2018-12-29T16:00:00.000Z" itemprop="datePublished">2018-12-30</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/java/">java</a>
-
-      
-    </div>
-    <!-- <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="典型回答"><a href="#典型回答" class="headerlink" title="典型回答"></a>典型回答</h3><ul>
-<li><p>String 是 Java 语言非常基础和重要的类，提供了构造和管理字符串的各种基本逻辑。它是典型的 <code>Immutable 类</code>，被声明成为 final class，所有属性也都是 final 的。也由于它的不可变性，类似拼接、裁剪字符串等动作，都会产生新的 String 对象。由于字符串操作的普遍性，所以相关操作的效率往往对应用性能有明显影响。</p>
-</li>
-<li><p>StringBuffer 是为解决上面提到拼接产生太多中间对象的问题而提供的一个类，我们可以用 append 或者 add 方法，把字符串添加到已有序列的末尾或者指定位置。StringBuffer 本质是一个线程安全的可修改字符序列，它保证了线程安全，也随之带来了额外的性能开销，线程是安全的。</p>
-</li>
-<li><p>StringBuilder 是 Java 1.5 中新增的，在能力上和 StringBuffer 没有本质区别，但是它去掉了线程安全的部分，有效减小了开销，是绝大部分情况下进行字符串拼接的首选。</p>
-</li>
-</ul>
-      
-    </div> -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="典型回答"><a href="#典型回答" class="headerlink" title="典型回答"></a>典型回答</h3><ul>
-<li><p>String 是 Java 语言非常基础和重要的类，提供了构造和管理字符串的各种基本逻辑。它是典型的 <code>Immutable 类</code>，被声明成为 final class，所有属性也都是 final 的。也由于它的不可变性，类似拼接、裁剪字符串等动作，都会产生新的 String 对象。由于字符串操作的普遍性，所以相关操作的效率往往对应用性能有明显影响。</p>
-</li>
-<li><p>StringBuffer 是为解决上面提到拼接产生太多中间对象的问题而提供的一个类，我们可以用 append 或者 add 方法，把字符串添加到已有序列的末尾或者指定位置。StringBuffer 本质是一个线程安全的可修改字符序列，它保证了线程安全，也随之带来了额外的性能开销，线程是安全的。</p>
-</li>
-<li><p>StringBuilder 是 Java 1.5 中新增的，在能力上和 StringBuffer 没有本质区别，但是它去掉了线程安全的部分，有效减小了开销，是绝大部分情况下进行字符串拼接的首选。</p>
-</li>
-</ul>
-        <p class="article-more-link">
-          <a href="/2018/12/30/backend/java_基础/String、StringBuffer、StringBuilder有什么区别/#more">阅读全文</a>
-        </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/string/">string</a></li></ul>
-
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
     <article id="post-backend/java_基础/值传递和引用传递" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div id="articleInner" class="article-inner">
     
@@ -606,6 +982,102 @@
 
 
   
+    <article id="post-backend/java_基础/String、StringBuffer、StringBuilder有什么区别" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/12/30/backend/java_基础/String、StringBuffer、StringBuilder有什么区别/">String、StringBuffer、StringBuilder有什么区别</a>
+    </h1>
+  
+
+		    
+        <!-- 开始添加字数统计-->
+        
+          <div style="margin-top:10px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">3k字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">11分</span>
+      </span>
+    </span>
+</div>
+
+          
+        
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/12/30/backend/java_基础/String、StringBuffer、StringBuilder有什么区别/" class="article-date">
+	  <time datetime="2018-12-29T16:00:00.000Z" itemprop="datePublished">2018-12-30</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/java/">java</a>
+
+      
+    </div>
+    <!-- <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="典型回答"><a href="#典型回答" class="headerlink" title="典型回答"></a>典型回答</h3><ul>
+<li><p>String 是 Java 语言非常基础和重要的类，提供了构造和管理字符串的各种基本逻辑。它是典型的 <code>Immutable 类</code>，被声明成为 final class，所有属性也都是 final 的。也由于它的不可变性，类似拼接、裁剪字符串等动作，都会产生新的 String 对象。由于字符串操作的普遍性，所以相关操作的效率往往对应用性能有明显影响。</p>
+</li>
+<li><p>StringBuffer 是为解决上面提到拼接产生太多中间对象的问题而提供的一个类，我们可以用 append 或者 add 方法，把字符串添加到已有序列的末尾或者指定位置。StringBuffer 本质是一个线程安全的可修改字符序列，它保证了线程安全，也随之带来了额外的性能开销，线程是安全的。</p>
+</li>
+<li><p>StringBuilder 是 Java 1.5 中新增的，在能力上和 StringBuffer 没有本质区别，但是它去掉了线程安全的部分，有效减小了开销，是绝大部分情况下进行字符串拼接的首选。</p>
+</li>
+</ul>
+      
+    </div> -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="典型回答"><a href="#典型回答" class="headerlink" title="典型回答"></a>典型回答</h3><ul>
+<li><p>String 是 Java 语言非常基础和重要的类，提供了构造和管理字符串的各种基本逻辑。它是典型的 <code>Immutable 类</code>，被声明成为 final class，所有属性也都是 final 的。也由于它的不可变性，类似拼接、裁剪字符串等动作，都会产生新的 String 对象。由于字符串操作的普遍性，所以相关操作的效率往往对应用性能有明显影响。</p>
+</li>
+<li><p>StringBuffer 是为解决上面提到拼接产生太多中间对象的问题而提供的一个类，我们可以用 append 或者 add 方法，把字符串添加到已有序列的末尾或者指定位置。StringBuffer 本质是一个线程安全的可修改字符序列，它保证了线程安全，也随之带来了额外的性能开销，线程是安全的。</p>
+</li>
+<li><p>StringBuilder 是 Java 1.5 中新增的，在能力上和 StringBuffer 没有本质区别，但是它去掉了线程安全的部分，有效减小了开销，是绝大部分情况下进行字符串拼接的首选。</p>
+</li>
+</ul>
+        <p class="article-more-link">
+          <a href="/2018/12/30/backend/java_基础/String、StringBuffer、StringBuilder有什么区别/#more">阅读全文</a>
+        </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/string/">string</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
     <article id="post-backend/java_基础/强引用、软引用、弱引用、幻象引用有什么区别" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div id="articleInner" class="article-inner">
     
@@ -688,483 +1160,11 @@
 
 
   
-    <article id="post-backend/java_基础/谈谈 final、finally、 finalize 有什么不同" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/12/29/backend/java_基础/谈谈 final、finally、 finalize 有什么不同/">谈谈 final、finally、 finalize 有什么不同</a>
-    </h1>
-  
-
-		    
-        <!-- 开始添加字数统计-->
-        
-          <div style="margin-top:10px;">
-    <span class="post-time">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-keyboard-o"></i>
-        <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">1.7k字</span>
-      </span>
-    </span>
-
-    <span class="post-time">
-      &nbsp; | &nbsp;
-      <span class="post-meta-item-icon">
-        <i class="fa fa-hourglass-half"></i>
-        <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">6分</span>
-      </span>
-    </span>
-</div>
-
-          
-        
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/12/29/backend/java_基础/谈谈 final、finally、 finalize 有什么不同/" class="article-date">
-	  <time datetime="2018-12-28T16:00:00.000Z" itemprop="datePublished">2018-12-29</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/java/">java</a>
-
-      
-    </div>
-    <!-- <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="典型回答"><a href="#典型回答" class="headerlink" title="典型回答"></a>典型回答</h3><ul>
-<li><p><code>final</code> 可以用来修饰类、方法、变量，分别有不同的意义，final 修饰的 class 代表不可以继承扩展，final 的变量是不可以修改的，而 final 的方法也是不可以<code>重写的（override）</code>。</p>
-</li>
-<li><p><code>finally</code>则是 Java 保证重点代码一定要被执行的一种机制。我们可以使用 <code>try-finally</code> 或者 <code>try-catch-finally</code> 来进行类似关闭 <code>JDBC 连接</code>、保证 <code>unlock 锁</code>等动作。</p>
-</li>
-<li><p>finalize 是基础类 <code>java.lang.Object</code> 的一个方法，它的设计目的是保证对象在被垃圾收集前完成特定资源的回收。finalize 机制现在已经不推荐使用，并且在 JDK 9 开始被标记为 <code>deprecated</code>。</p>
-      
-    </div> -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="典型回答"><a href="#典型回答" class="headerlink" title="典型回答"></a>典型回答</h3><ul>
-<li><p><code>final</code> 可以用来修饰类、方法、变量，分别有不同的意义，final 修饰的 class 代表不可以继承扩展，final 的变量是不可以修改的，而 final 的方法也是不可以<code>重写的（override）</code>。</p>
-</li>
-<li><p><code>finally</code>则是 Java 保证重点代码一定要被执行的一种机制。我们可以使用 <code>try-finally</code> 或者 <code>try-catch-finally</code> 来进行类似关闭 <code>JDBC 连接</code>、保证 <code>unlock 锁</code>等动作。</p>
-</li>
-<li><p>finalize 是基础类 <code>java.lang.Object</code> 的一个方法，它的设计目的是保证对象在被垃圾收集前完成特定资源的回收。finalize 机制现在已经不推荐使用，并且在 JDK 9 开始被标记为 <code>deprecated</code>。</p>
-        <p class="article-more-link">
-          <a href="/2018/12/29/backend/java_基础/谈谈 final、finally、 finalize 有什么不同/#more">阅读全文</a>
-        </p>
-        
-      
-    </li></ul></div>
-    <footer class="article-footer">
-      
-      
-      
-      
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li></ul>
-
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-backend/java_基础/Exception和Error的区别" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/12/28/backend/java_基础/Exception和Error的区别/">Exception和Error的区别</a>
-    </h1>
-  
-
-		    
-        <!-- 开始添加字数统计-->
-        
-          <div style="margin-top:10px;">
-    <span class="post-time">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-keyboard-o"></i>
-        <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">3.1k字</span>
-      </span>
-    </span>
-
-    <span class="post-time">
-      &nbsp; | &nbsp;
-      <span class="post-meta-item-icon">
-        <i class="fa fa-hourglass-half"></i>
-        <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">11分</span>
-      </span>
-    </span>
-</div>
-
-          
-        
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/12/28/backend/java_基础/Exception和Error的区别/" class="article-date">
-	  <time datetime="2018-12-27T16:00:00.000Z" itemprop="datePublished">2018-12-28</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/java/">java</a>
-
-      
-    </div>
-    <!-- <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="典型回答"><a href="#典型回答" class="headerlink" title="典型回答"></a>典型回答</h3><p><code>Exception</code> 和 <code>Error</code> 都是继承了 Throwable 类，在 Java 中只有 <code>Throwable</code> 类型的实例才可以<code>被抛出（throw）</code> 或者<code>捕获（catch）</code>，它是异常处理机制的基本组成类型。</p>
-<ol>
-<li><p>Exception 和 Error 体现了 Java 平台设计者对不同异常情况的分类。</p>
-<ul>
-<li><p>Exception 是程序正常运行中，可以预料的意外情况，可能并且应该被捕获，进行相应处理。</p>
-</li>
-<li><p>Error 是指在正常情况下，不大可能出现的情况，绝大部分的 Error 都会导致程序（比如 JVM 自身）处于非正常的、不可恢复状态。既然是非正常情况，所以不便于也不需要捕获，常见的比如 OutOfMemoryError 之类，都是 Error 的子类。</p>
-</li>
-</ul>
-</li>
-</ol>
-      
-    </div> -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="典型回答"><a href="#典型回答" class="headerlink" title="典型回答"></a>典型回答</h3><p><code>Exception</code> 和 <code>Error</code> 都是继承了 Throwable 类，在 Java 中只有 <code>Throwable</code> 类型的实例才可以<code>被抛出（throw）</code> 或者<code>捕获（catch）</code>，它是异常处理机制的基本组成类型。</p>
-<ol>
-<li><p>Exception 和 Error 体现了 Java 平台设计者对不同异常情况的分类。</p>
-<ul>
-<li><p>Exception 是程序正常运行中，可以预料的意外情况，可能并且应该被捕获，进行相应处理。</p>
-</li>
-<li><p>Error 是指在正常情况下，不大可能出现的情况，绝大部分的 Error 都会导致程序（比如 JVM 自身）处于非正常的、不可恢复状态。既然是非正常情况，所以不便于也不需要捕获，常见的比如 OutOfMemoryError 之类，都是 Error 的子类。</p>
-</li>
-</ul>
-</li>
-</ol>
-        <p class="article-more-link">
-          <a href="/2018/12/28/backend/java_基础/Exception和Error的区别/#more">阅读全文</a>
-        </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li></ul>
-
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-backend/java_基础/谈谈对Java平台的理解" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/12/27/backend/java_基础/谈谈对Java平台的理解/">谈谈对Java平台的理解</a>
-    </h1>
-  
-
-		    
-        <!-- 开始添加字数统计-->
-        
-          <div style="margin-top:10px;">
-    <span class="post-time">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-keyboard-o"></i>
-        <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">1.8k字</span>
-      </span>
-    </span>
-
-    <span class="post-time">
-      &nbsp; | &nbsp;
-      <span class="post-meta-item-icon">
-        <i class="fa fa-hourglass-half"></i>
-        <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">6分</span>
-      </span>
-    </span>
-</div>
-
-          
-        
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/12/27/backend/java_基础/谈谈对Java平台的理解/" class="article-date">
-	  <time datetime="2018-12-26T16:00:00.000Z" itemprop="datePublished">2018-12-27</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/java/">java</a><a class="article-category-link" href="/categories/java/JVM/">JVM</a>
-
-      
-    </div>
-    <!-- <div class="article-entry" itemprop="articleBody">
-      
-        <p><br></p>
-<blockquote class="pullquote left"><p>知其然而不知其所以然</p>
-</blockquote>
-<p>如果谈起对Java的理解，对于这类笼统的问题，或许会稍微紧张一下，有点知其然而不知其所以然的感觉，可能不知从何说起或者回答会有稍微片面，所以今天就点到线地整理一下对Java的理解。</p>
-      
-    </div> -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><br></p>
-<blockquote class="pullquote left"><p>知其然而不知其所以然</p>
-</blockquote>
-<p>如果谈起对Java的理解，对于这类笼统的问题，或许会稍微紧张一下，有点知其然而不知其所以然的感觉，可能不知从何说起或者回答会有稍微片面，所以今天就点到线地整理一下对Java的理解。</p>
-        <p class="article-more-link">
-          <a href="/2018/12/27/backend/java_基础/谈谈对Java平台的理解/#more">阅读全文</a>
-        </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JVM/">JVM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li></ul>
-
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-backend/java_基础/阿里巴巴Java开发手册中的开发规约之一(2)" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/12/25/backend/java_基础/阿里巴巴Java开发手册中的开发规约之一(2)/">阿里巴巴Java开发手册中的开发规约之一(2)</a>
-    </h1>
-  
-
-		    
-        <!-- 开始添加字数统计-->
-        
-          <div style="margin-top:10px;">
-    <span class="post-time">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-keyboard-o"></i>
-        <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">755字</span>
-      </span>
-    </span>
-
-    <span class="post-time">
-      &nbsp; | &nbsp;
-      <span class="post-meta-item-icon">
-        <i class="fa fa-hourglass-half"></i>
-        <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">2分</span>
-      </span>
-    </span>
-</div>
-
-          
-        
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/12/25/backend/java_基础/阿里巴巴Java开发手册中的开发规约之一(2)/" class="article-date">
-	  <time datetime="2018-12-24T16:00:00.000Z" itemprop="datePublished">2018-12-25</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/java/">java</a>
-
-      
-    </div>
-    <!-- <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="阿里巴巴Java开发手册中开发规约之一"><a href="#阿里巴巴Java开发手册中开发规约之一" class="headerlink" title="阿里巴巴Java开发手册中开发规约之一"></a>阿里巴巴Java开发手册中开发规约之一</h3><ul>
-<li>关于基本类型与包装类型的使用标准：</li>
-</ul>
-<ol>
-<li>【强制】所有的POJO类属性比如使用包装数据类型。</li>
-<li>【强制】RPC方法的返回值和参数必须使用包装数据类型。</li>
-<li>【推荐】所有的局部变量使用的基本数据类型。</li>
-</ol>
-<p><img src="/md_images/alibaba/2.jpg" alt=""></p>
-      
-    </div> -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="阿里巴巴Java开发手册中开发规约之一"><a href="#阿里巴巴Java开发手册中开发规约之一" class="headerlink" title="阿里巴巴Java开发手册中开发规约之一"></a>阿里巴巴Java开发手册中开发规约之一</h3><ul>
-<li>关于基本类型与包装类型的使用标准：</li>
-</ul>
-<ol>
-<li>【强制】所有的POJO类属性比如使用包装数据类型。</li>
-<li>【强制】RPC方法的返回值和参数必须使用包装数据类型。</li>
-<li>【推荐】所有的局部变量使用的基本数据类型。</li>
-</ol>
-<p><img src="/md_images/alibaba/2.jpg" alt=""></p>
-        <p class="article-more-link">
-          <a href="/2018/12/25/backend/java_基础/阿里巴巴Java开发手册中的开发规约之一(2)/#more">阅读全文</a>
-        </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/规范/">规范</a></li></ul>
-
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-backend/java_基础/阿里巴巴Java开发手册中的开发规约之一(1)" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/12/24/backend/java_基础/阿里巴巴Java开发手册中的开发规约之一(1)/">阿里巴巴Java开发手册中的开发规约之一(1)</a>
-    </h1>
-  
-
-		    
-        <!-- 开始添加字数统计-->
-        
-          <div style="margin-top:10px;">
-    <span class="post-time">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-keyboard-o"></i>
-        <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">1.4k字</span>
-      </span>
-    </span>
-
-    <span class="post-time">
-      &nbsp; | &nbsp;
-      <span class="post-meta-item-icon">
-        <i class="fa fa-hourglass-half"></i>
-        <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">5分</span>
-      </span>
-    </span>
-</div>
-
-          
-        
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/12/24/backend/java_基础/阿里巴巴Java开发手册中的开发规约之一(1)/" class="article-date">
-	  <time datetime="2018-12-23T16:00:00.000Z" itemprop="datePublished">2018-12-24</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/java/">java</a>
-
-      
-    </div>
-    <!-- <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="阿里巴巴Java开发手册中的开发规约之一"><a href="#阿里巴巴Java开发手册中的开发规约之一" class="headerlink" title="阿里巴巴Java开发手册中的开发规约之一"></a>阿里巴巴Java开发手册中的开发规约之一</h3><ul>
-<li>【强制】POJO类中布尔类型的变量，都不要加<code>is</code>，否则部分框架解析会引起序列化错误。<ul>
-<li>反例： 定义为基本数据类型<code>boolean isSuccess</code>；的属性，他的方法也是<code>isSuccess()</code>， RPC框架在反向解析的时候，“以为”对应的属性名是<code>success</code>，导致属性获取不到，进而抛出异常</li>
-</ul>
-</li>
-</ul>
-      
-    </div> -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="阿里巴巴Java开发手册中的开发规约之一"><a href="#阿里巴巴Java开发手册中的开发规约之一" class="headerlink" title="阿里巴巴Java开发手册中的开发规约之一"></a>阿里巴巴Java开发手册中的开发规约之一</h3><ul>
-<li>【强制】POJO类中布尔类型的变量，都不要加<code>is</code>，否则部分框架解析会引起序列化错误。<ul>
-<li>反例： 定义为基本数据类型<code>boolean isSuccess</code>；的属性，他的方法也是<code>isSuccess()</code>， RPC框架在反向解析的时候，“以为”对应的属性名是<code>success</code>，导致属性获取不到，进而抛出异常</li>
-</ul>
-</li>
-</ul>
-        <p class="article-more-link">
-          <a href="/2018/12/24/backend/java_基础/阿里巴巴Java开发手册中的开发规约之一(1)/#more">阅读全文</a>
-        </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/规范/">规范</a></li></ul>
-
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
 
 
   <nav id="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">下一页 &raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">下一页 &raquo;</a>
   </nav>
 
 </section>
@@ -1179,7 +1179,7 @@
   <div class="container">
       	<div class="row">
 	      <!-- <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>-->
-	      <p id="copyRightEn">Copyright &copy; 2018 - 2018 Kuanger All Rights Reserved.</p>
+	      <p id="copyRightEn">Copyright &copy; 2018 - 2019 Kuanger All Rights Reserved.</p>
 	      
 	      
     		<p class="busuanzi_uv">
@@ -1333,7 +1333,7 @@
             Better than yesterday
           </div>
           <div class="panel-body">
-            Copyright © 2018 Kuanger All Rights Reserved.
+            Copyright © 2019 Kuanger All Rights Reserved.
           </div>
         </div>
       </div>

@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="jGpOWJy4VY">
+  
+  <title>collection集合 | Better than yesterday</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Kuanger">
+  
+  
+  
+  
+  <meta name="description" content="集合框架没有 java.util.concurrent 下面的线程安全容器添加进来；也没有列出 Map 容器">
+<meta name="keywords" content="java,java基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Collection集合">
+<meta property="og:url" content="http://www.kuanger.top/2019/01/04/backend/java_基础/Collection集合/index.html">
+<meta property="og:site_name" content="Better than yesterday">
+<meta property="og:description" content="集合框架没有 java.util.concurrent 下面的线程安全容器添加进来；也没有列出 Map 容器">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://www.kuanger.top/md_images/jk_java/6.png">
+<meta property="og:updated_time" content="2019-01-10T16:01:28.386Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Collection集合">
+<meta name="twitter:description" content="集合框架没有 java.util.concurrent 下面的线程安全容器添加进来；也没有列出 Map 容器">
+<meta name="twitter:image" content="http://www.kuanger.top/md_images/jk_java/6.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Better than yesterday" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css">
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css">
+  
+
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;" href="#" data-toggle="modal" data-target="#myModal">
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">首页</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">归档</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">分类</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">标签</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">关于</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="">
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(无标题)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </ul></div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-backend/java_基础/Collection集合" style="width: 75%; float:left;" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      Collection集合
+    </h1>
+  
+
+		    
+        <!-- 开始添加字数统计-->
+        
+          <div style="margin-top:10px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">599字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">2分</span>
+      </span>
+    </span>
+</div>
+
+          
+        
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/01/04/backend/java_基础/Collection集合/" class="article-date">
+	  <time datetime="2019-01-03T16:00:00.000Z" itemprop="datePublished">2019-01-04</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/java/">java</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		阅读量<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <!-- <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="集合框架"><a href="#集合框架" class="headerlink" title="集合框架"></a>集合框架</h3><p>没有 <code>java.util.concurrent</code> 下面的线程安全容器添加进来；也没有列出 <code>Map</code> 容器</p>
+<p><img src="/md_images/jk_java/6.png" alt=""></p>
+<a id="more"></a>
+<h3 id="线型数据结构的集合"><a href="#线型数据结构的集合" class="headerlink" title="线型数据结构的集合"></a>线型数据结构的集合</h3><p><strong>Vector、ArrayList、LinkedList均为线型的数据结构。</strong></p>
+<h4 id="区别："><a href="#区别：" class="headerlink" title="区别："></a>区别：</h4><h5 id="底层实现方式"><a href="#底层实现方式" class="headerlink" title="底层实现方式"></a>底层实现方式</h5><p><strong>ArrayList</strong> 内部用<strong>数组</strong>来实现；<strong>LinkedList</strong> 内部采用<strong>双向链表</strong>实现；<strong>Vector</strong> 内部用<strong>数组</strong>实现。</p>
+<h5 id="读写机制"><a href="#读写机制" class="headerlink" title="读写机制"></a>读写机制</h5><ol>
+<li><p>ArrayList </p>
+<ul>
+<li><p>在执行<strong>插入</strong>元素是超过当前数组预定义的最大值时，数组需要扩容，扩容过程需要调用底层 <code>System.arraycopy()方法</code> 进行大量的数组复制操作，扩容是增加50%的容量；</p>
+</li>
+<li><p>在<strong>删除</strong>元素时并不会减少数组的容量（如果需要缩小数组容量，可以调用 <code>trimToSize()方法</code> ）；</p>
+</li>
+<li>在查找元素时要<strong>遍历</strong>数组，对于非null的元素采取equals的方式寻找。</li>
+</ul>
+</li>
+<li><p>LinkedList</p>
+<ul>
+<li>在插入元素时，须创建一个新的Entry对象，并更新相应元素的前后元素的引用；在查找元素时，需遍历链表；</li>
+<li>在删除元素时，要遍历链表，找到要删除的元素，然后从链表上将此元素删除即可。</li>
+</ul>
+</li>
+<li><p>Vector与ArrayList仅在插入元素时容量扩充机制不一致。</p>
+<ul>
+<li>对于Vector，默认创建一个大小为10的Object数组，并将capacityIncrement设置为0；当插入元素数组大小不够时，如果capacityIncrement大于0，则将Object数组的大小扩大为现有size+capacityIncrement；如果capacityIncrement&lt;=0,则将Object数组的大小扩大为 <strong>现有大小的2倍</strong>(也就是扩容1倍)。</li>
+</ul>
+</li>
+</ol>
+<h5 id="读写效率"><a href="#读写效率" class="headerlink" title="读写效率"></a>读写效率</h5><ul>
+<li><p>ArrayList对元素的增加和删除都会引起数组的内存分配空间动态发生变化。因此，对其进行<strong>插入和删除速度较慢，但检索速度很快。</strong></p>
+</li>
+<li><p>LinkedList由于基于链表方式存放数据，<strong>增加和删除元素的速度较快，但是检索速度较慢。</strong></p>
+</li>
+</ul>
+<h5 id="线程安全性"><a href="#线程安全性" class="headerlink" title="线程安全性"></a>线程安全性</h5><p>ArrayList、LinkedList为非线程安全；Vector是基于 <code>synchronized</code> 实现的线程安全的ArrayList。</p>
+<p><strong>需要注意的是</strong>：单线程应尽量使用ArrayList，Vector因为同步会有性能损耗；即使在多线程环境下，我们可以利用 <strong>Collections</strong> 这个类中为我们提供的 <code>synchronizedList(List list)方法</code> 返回一个线程安全的同步列表对象。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//API</span></span><br><span class="line"><span class="keyword">static</span> &lt;T&gt; <span class="function">List&lt;T&gt; <span class="title">synchronizedList</span><span class="params">(List&lt;T&gt; list)</span></span></span><br><span class="line"><span class="function"><span class="comment">//举例</span></span></span><br><span class="line"><span class="function">List list </span>= Collections.synchronizedList(<span class="keyword">new</span> ArrayList());</span><br></pre></td></tr></table></figure>
+<hr>
+
+      
+    </div> -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+        
+          <h3 id="集合框架"><a href="#集合框架" class="headerlink" title="集合框架"></a>集合框架</h3><p>没有 <code>java.util.concurrent</code> 下面的线程安全容器添加进来；也没有列出 <code>Map</code> 容器</p>
+<p><img src="/md_images/jk_java/6.png" alt=""></p>
+<a id="more"></a>
+<h3 id="线型数据结构的集合"><a href="#线型数据结构的集合" class="headerlink" title="线型数据结构的集合"></a>线型数据结构的集合</h3><p><strong>Vector、ArrayList、LinkedList均为线型的数据结构。</strong></p>
+<h4 id="区别："><a href="#区别：" class="headerlink" title="区别："></a>区别：</h4><h5 id="底层实现方式"><a href="#底层实现方式" class="headerlink" title="底层实现方式"></a>底层实现方式</h5><p><strong>ArrayList</strong> 内部用<strong>数组</strong>来实现；<strong>LinkedList</strong> 内部采用<strong>双向链表</strong>实现；<strong>Vector</strong> 内部用<strong>数组</strong>实现。</p>
+<h5 id="读写机制"><a href="#读写机制" class="headerlink" title="读写机制"></a>读写机制</h5><ol>
+<li><p>ArrayList </p>
+<ul>
+<li><p>在执行<strong>插入</strong>元素是超过当前数组预定义的最大值时，数组需要扩容，扩容过程需要调用底层 <code>System.arraycopy()方法</code> 进行大量的数组复制操作，扩容是增加50%的容量；</p>
+</li>
+<li><p>在<strong>删除</strong>元素时并不会减少数组的容量（如果需要缩小数组容量，可以调用 <code>trimToSize()方法</code> ）；</p>
+</li>
+<li>在查找元素时要<strong>遍历</strong>数组，对于非null的元素采取equals的方式寻找。</li>
+</ul>
+</li>
+<li><p>LinkedList</p>
+<ul>
+<li>在插入元素时，须创建一个新的Entry对象，并更新相应元素的前后元素的引用；在查找元素时，需遍历链表；</li>
+<li>在删除元素时，要遍历链表，找到要删除的元素，然后从链表上将此元素删除即可。</li>
+</ul>
+</li>
+<li><p>Vector与ArrayList仅在插入元素时容量扩充机制不一致。</p>
+<ul>
+<li>对于Vector，默认创建一个大小为10的Object数组，并将capacityIncrement设置为0；当插入元素数组大小不够时，如果capacityIncrement大于0，则将Object数组的大小扩大为现有size+capacityIncrement；如果capacityIncrement&lt;=0,则将Object数组的大小扩大为 <strong>现有大小的2倍</strong>(也就是扩容1倍)。</li>
+</ul>
+</li>
+</ol>
+<h5 id="读写效率"><a href="#读写效率" class="headerlink" title="读写效率"></a>读写效率</h5><ul>
+<li><p>ArrayList对元素的增加和删除都会引起数组的内存分配空间动态发生变化。因此，对其进行<strong>插入和删除速度较慢，但检索速度很快。</strong></p>
+</li>
+<li><p>LinkedList由于基于链表方式存放数据，<strong>增加和删除元素的速度较快，但是检索速度较慢。</strong></p>
+</li>
+</ul>
+<h5 id="线程安全性"><a href="#线程安全性" class="headerlink" title="线程安全性"></a>线程安全性</h5><p>ArrayList、LinkedList为非线程安全；Vector是基于 <code>synchronized</code> 实现的线程安全的ArrayList。</p>
+<p><strong>需要注意的是</strong>：单线程应尽量使用ArrayList，Vector因为同步会有性能损耗；即使在多线程环境下，我们可以利用 <strong>Collections</strong> 这个类中为我们提供的 <code>synchronizedList(List list)方法</code> 返回一个线程安全的同步列表对象。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//API</span></span><br><span class="line"><span class="keyword">static</span> &lt;T&gt; <span class="function">List&lt;T&gt; <span class="title">synchronizedList</span><span class="params">(List&lt;T&gt; list)</span></span></span><br><span class="line"><span class="function"><span class="comment">//举例</span></span></span><br><span class="line"><span class="function">List list </span>= Collections.synchronizedList(<span class="keyword">new</span> ArrayList());</span><br></pre></td></tr></table></figure>
+<hr>
+
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: '打赏支持', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: '/md_images/static/1.jpg',
+  alipayImage: '/md_images/static/2.jpg'
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>本文作者:  </strong>Kuanger
+          </li>
+          <li class="post-copyright-link">
+          <strong>本文链接:  </strong>
+          <a href="/2019/01/04/backend/java_基础/Collection集合/" target="_blank" title="Collection集合">http://www.kuanger.top/2019/01/04/backend/java_基础/Collection集合/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>版权声明:   </strong>
+            本博客所有文章除特别声明外，均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            许可协议。转载请注明出处
+          </li>
+         
+        </ul>
+<div>
+</div></div>
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/01/05/backend/java_基础/Map集合/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          Map集合
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/01/02/backend/java_基础/静态代理和动态代理/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">静态代理和动态代理</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#集合框架"><span class="nav-number">1.</span> <span class="nav-text">集合框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线型数据结构的集合"><span class="nav-number">2.</span> <span class="nav-text">线型数据结构的集合</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#区别："><span class="nav-number">2.1.</span> <span class="nav-text">区别：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#底层实现方式"><span class="nav-number">2.1.1.</span> <span class="nav-text">底层实现方式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#读写机制"><span class="nav-number">2.1.2.</span> <span class="nav-text">读写机制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#读写效率"><span class="nav-number">2.1.3.</span> <span class="nav-text">读写效率</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#线程安全性"><span class="nav-number">2.1.4.</span> <span class="nav-text">线程安全性</span></a></li></ol></li></ol></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <!-- <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>-->
+	      <p id="copyRightEn">Copyright &copy; 2018 - 2019 Kuanger All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				访客数 : <span id="busuanzi_value_site_uv"></span> |  
+				访问量 : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Better than yesterday
+          </div>
+          <div class="panel-body">
+            Copyright © 2019 Kuanger All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>

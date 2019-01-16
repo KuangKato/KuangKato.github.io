@@ -16,27 +16,27 @@
 <meta name="keywords" content="Redis">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis的学习_基础数据结构（二）(可能是最完善的整理)">
-<meta property="og:url" content="http://yoursite.com/2018/12/05/redis/Redis的学习_基础数据结构（二）/index.html">
+<meta property="og:url" content="http://www.kuanger.top/2018/12/05/redis/Redis的学习_基础数据结构（二）/index.html">
 <meta property="og:site_name" content="Better than yesterday">
 <meta property="og:description" content="Redis 基础数据结构Redis 有 5 种基础数据结构，分别为：  string (字符串) list (列表) hash (哈希) set (集合) zset (有序集合)  Redis 所有的数据结构都是以唯一的 key 字符串作为名称，然后通过这个唯一 key 值来获取相应的 value 数据。不同类型的数据结构的差异就在于 value 的结构不一样。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/md_images/p5/1.gif">
-<meta property="og:image" content="http://yoursite.com/md_images/p5/2.jpg">
-<meta property="og:image" content="http://yoursite.com/md_images/p5/4.jpg">
-<meta property="og:image" content="http://yoursite.com/md_images/p5/3.gif">
-<meta property="og:image" content="http://yoursite.com/md_images/p5/5.jpg">
-<meta property="og:image" content="http://yoursite.com/md_images/p5/6.jpg">
-<meta property="og:image" content="http://yoursite.com/md_images/p5/7.jpg">
-<meta property="og:image" content="http://yoursite.com/md_images/p5/8.gif">
-<meta property="og:image" content="http://yoursite.com/md_images/p5/9.gif">
-<meta property="og:image" content="http://yoursite.com/md_images/p5/10.gif">
-<meta property="og:image" content="http://yoursite.com/md_images/p5/11.jpg">
-<meta property="og:image" content="http://yoursite.com/md_images/p5/12.jpg">
+<meta property="og:image" content="http://www.kuanger.top/md_images/p5/1.gif">
+<meta property="og:image" content="http://www.kuanger.top/md_images/p5/2.jpg">
+<meta property="og:image" content="http://www.kuanger.top/md_images/p5/4.jpg">
+<meta property="og:image" content="http://www.kuanger.top/md_images/p5/3.gif">
+<meta property="og:image" content="http://www.kuanger.top/md_images/p5/5.jpg">
+<meta property="og:image" content="http://www.kuanger.top/md_images/p5/6.jpg">
+<meta property="og:image" content="http://www.kuanger.top/md_images/p5/7.jpg">
+<meta property="og:image" content="http://www.kuanger.top/md_images/p5/8.gif">
+<meta property="og:image" content="http://www.kuanger.top/md_images/p5/9.gif">
+<meta property="og:image" content="http://www.kuanger.top/md_images/p5/10.gif">
+<meta property="og:image" content="http://www.kuanger.top/md_images/p5/11.jpg">
+<meta property="og:image" content="http://www.kuanger.top/md_images/p5/12.jpg">
 <meta property="og:updated_time" content="2018-12-30T11:35:09.383Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis的学习_基础数据结构（二）(可能是最完善的整理)">
 <meta name="twitter:description" content="Redis 基础数据结构Redis 有 5 种基础数据结构，分别为：  string (字符串) list (列表) hash (哈希) set (集合) zset (有序集合)  Redis 所有的数据结构都是以唯一的 key 字符串作为名称，然后通过这个唯一 key 值来获取相应的 value 数据。不同类型的数据结构的差异就在于 value 的结构不一样。">
-<meta name="twitter:image" content="http://yoursite.com/md_images/p5/1.gif">
+<meta name="twitter:image" content="http://www.kuanger.top/md_images/p5/1.gif">
   
     <link rel="alternate" href="/atom.xml" title="Better than yesterday" type="application/atom+xml">
   
@@ -76,6 +76,8 @@
 
   
   
+  
+    <link rel="stylesheet" href="/css/vdonate.css">
   
 
 </head>
@@ -625,6 +627,19 @@
     </div>
     <footer class="article-footer">
       
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: '打赏支持', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: '/md_images/static/1.jpg',
+  alipayImage: '/md_images/static/2.jpg'
+});
+</script>
+      
       
       <div>
         <ul class="post-copyright">
@@ -633,7 +648,7 @@
           </li>
           <li class="post-copyright-link">
           <strong>本文链接:  </strong>
-          <a href="/2018/12/05/redis/Redis的学习_基础数据结构（二）/" target="_blank" title="Redis的学习_基础数据结构（二）(可能是最完善的整理)">http://yoursite.com/2018/12/05/redis/Redis的学习_基础数据结构（二）/</a>
+          <a href="/2018/12/05/redis/Redis的学习_基础数据结构（二）/" target="_blank" title="Redis的学习_基础数据结构（二）(可能是最完善的整理)">http://www.kuanger.top/2018/12/05/redis/Redis的学习_基础数据结构（二）/</a>
           </li>
           <li class="post-copyright-license">
             <strong>版权声明:   </strong>
@@ -724,7 +739,7 @@
   <div class="container">
       	<div class="row">
 	      <!-- <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>-->
-	      <p id="copyRightEn">Copyright &copy; 2018 - 2018 Kuanger All Rights Reserved.</p>
+	      <p id="copyRightEn">Copyright &copy; 2018 - 2019 Kuanger All Rights Reserved.</p>
 	      
 	      
     		<p class="busuanzi_uv">
@@ -878,7 +893,7 @@
             Better than yesterday
           </div>
           <div class="panel-body">
-            Copyright © 2018 Kuanger All Rights Reserved.
+            Copyright © 2019 Kuanger All Rights Reserved.
           </div>
         </div>
       </div>
