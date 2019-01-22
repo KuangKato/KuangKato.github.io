@@ -13,7 +13,7 @@
   
   
   <meta name="description" content="HashMap 内部的结构HashMap 它可以看作是 数组（Node&amp;lt;K,V&amp;gt;[] table） 和 链表 结合组成的复合结构，数组被分为一个个 桶（bucket），通过哈希值决定了键值对在这个数组的寻址；哈希值相同的键值对，则以链表形式存储，你可以参考下面的示意图。这里需要注意的是，如果链表大小超过阈值（TREEIFY_THRESHOLD, 8），图中的链表就会被改造为树形结构。">
-<meta name="keywords" content="java,java基础">
+<meta name="keywords" content="java,hashMap,java基础">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HashMap的源码分析">
 <meta property="og:url" content="http://www.kuanger.top/2019/01/08/backend/java_基础/HashMap的源码分析/index.html">
@@ -22,7 +22,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://www.kuanger.top/md_images/jk_java/9.png">
 <meta property="og:image" content="http://www.kuanger.top/md_images/jk_java/10.png">
-<meta property="og:updated_time" content="2019-01-16T15:40:03.388Z">
+<meta property="og:updated_time" content="2019-01-22T13:00:45.916Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HashMap的源码分析">
 <meta name="twitter:description" content="HashMap 内部的结构HashMap 它可以看作是 数组（Node&amp;lt;K,V&amp;gt;[] table） 和 链表 结合组成的复合结构，数组被分为一个个 桶（bucket），通过哈希值决定了键值对在这个数组的寻址；哈希值相同的键值对，则以链表形式存储，你可以参考下面的示意图。这里需要注意的是，如果链表大小超过阈值（TREEIFY_THRESHOLD, 8），图中的链表就会被改造为树形结构。">
@@ -438,7 +438,7 @@ var a = new Donate({
       
       
         
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hashMap/">hashMap</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li></ul>
 
       
 
@@ -448,11 +448,11 @@ var a = new Donate({
     
 <nav id="article-nav">
   
-    <a href="/2019/01/14/backend/规约/阿里巴巴Java开发手册中的开发规约之一(3)/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/01/20/backend/java_基础/ConcurrentHashMap源码分析/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">上一篇</strong>
       <div class="article-nav-title">
         
-          阿里巴巴Java开发手册中的开发规约之一(3)
+          ConcurrentHashMap的源码分析
         
       </div>
     </a>

@@ -12,18 +12,18 @@
   
   
   
-  <meta name="description" content="典型回答 String 是 Java 语言非常基础和重要的类，提供了构造和管理字符串的各种基本逻辑。它是典型的 Immutable 类，被声明成为 final class，所有属性也都是 final 的。也由于它的不可变性，类似拼接、裁剪字符串等动作，都会产生新的 String 对象。由于字符串操作的普遍性，所以相关操作的效率往往对应用性能有明显影响。  StringBuffer 是为解决上面提到">
+  <meta name="description" content="典型区别 String 是 Java 语言非常基础和重要的类，提供了构造和管理字符串的各种基本逻辑。它是典型的 Immutable 类，被声明成为 final class，所有属性也都是 final 的。也由于它的不可变性，类似拼接、裁剪字符串等动作，都会产生新的 String 对象。由于字符串操作的普遍性，所以相关操作的效率往往对应用性能有明显影响。  StringBuffer 是为解决上面提到">
 <meta name="keywords" content="java,java基础,string">
 <meta property="og:type" content="article">
 <meta property="og:title" content="String、StringBuffer、StringBuilder有什么区别">
 <meta property="og:url" content="http://www.kuanger.top/2018/12/30/backend/java_基础/String、StringBuffer、StringBuilder有什么区别/index.html">
 <meta property="og:site_name" content="Better than yesterday">
-<meta property="og:description" content="典型回答 String 是 Java 语言非常基础和重要的类，提供了构造和管理字符串的各种基本逻辑。它是典型的 Immutable 类，被声明成为 final class，所有属性也都是 final 的。也由于它的不可变性，类似拼接、裁剪字符串等动作，都会产生新的 String 对象。由于字符串操作的普遍性，所以相关操作的效率往往对应用性能有明显影响。  StringBuffer 是为解决上面提到">
+<meta property="og:description" content="典型区别 String 是 Java 语言非常基础和重要的类，提供了构造和管理字符串的各种基本逻辑。它是典型的 Immutable 类，被声明成为 final class，所有属性也都是 final 的。也由于它的不可变性，类似拼接、裁剪字符串等动作，都会产生新的 String 对象。由于字符串操作的普遍性，所以相关操作的效率往往对应用性能有明显影响。  StringBuffer 是为解决上面提到">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-12-29T16:05:06.672Z">
+<meta property="og:updated_time" content="2019-01-16T16:01:21.035Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="String、StringBuffer、StringBuilder有什么区别">
-<meta name="twitter:description" content="典型回答 String 是 Java 语言非常基础和重要的类，提供了构造和管理字符串的各种基本逻辑。它是典型的 Immutable 类，被声明成为 final class，所有属性也都是 final 的。也由于它的不可变性，类似拼接、裁剪字符串等动作，都会产生新的 String 对象。由于字符串操作的普遍性，所以相关操作的效率往往对应用性能有明显影响。  StringBuffer 是为解决上面提到">
+<meta name="twitter:description" content="典型区别 String 是 Java 语言非常基础和重要的类，提供了构造和管理字符串的各种基本逻辑。它是典型的 Immutable 类，被声明成为 final class，所有属性也都是 final 的。也由于它的不可变性，类似拼接、裁剪字符串等动作，都会产生新的 String 对象。由于字符串操作的普遍性，所以相关操作的效率往往对应用性能有明显影响。  StringBuffer 是为解决上面提到">
   
     <link rel="alternate" href="/atom.xml" title="Better than yesterday" type="application/atom+xml">
   
@@ -219,7 +219,7 @@
     </div>
     <!-- <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="典型回答"><a href="#典型回答" class="headerlink" title="典型回答"></a>典型回答</h3><ul>
+        <h3 id="典型区别"><a href="#典型区别" class="headerlink" title="典型区别"></a>典型区别</h3><ul>
 <li><p>String 是 Java 语言非常基础和重要的类，提供了构造和管理字符串的各种基本逻辑。它是典型的 <code>Immutable 类</code>，被声明成为 final class，所有属性也都是 final 的。也由于它的不可变性，类似拼接、裁剪字符串等动作，都会产生新的 String 对象。由于字符串操作的普遍性，所以相关操作的效率往往对应用性能有明显影响。</p>
 </li>
 <li><p>StringBuffer 是为解决上面提到拼接产生太多中间对象的问题而提供的一个类，我们可以用 append 或者 add 方法，把字符串添加到已有序列的末尾或者指定位置。StringBuffer 本质是一个线程安全的可修改字符序列，它保证了线程安全，也随之带来了额外的性能开销，线程是安全的。</p>
@@ -349,7 +349,7 @@
       
         
         
-          <h3 id="典型回答"><a href="#典型回答" class="headerlink" title="典型回答"></a>典型回答</h3><ul>
+          <h3 id="典型区别"><a href="#典型区别" class="headerlink" title="典型区别"></a>典型区别</h3><ul>
 <li><p>String 是 Java 语言非常基础和重要的类，提供了构造和管理字符串的各种基本逻辑。它是典型的 <code>Immutable 类</code>，被声明成为 final class，所有属性也都是 final 的。也由于它的不可变性，类似拼接、裁剪字符串等动作，都会产生新的 String 对象。由于字符串操作的普遍性，所以相关操作的效率往往对应用性能有明显影响。</p>
 </li>
 <li><p>StringBuffer 是为解决上面提到拼接产生太多中间对象的问题而提供的一个类，我们可以用 append 或者 add 方法，把字符串添加到已有序列的末尾或者指定位置。StringBuffer 本质是一个线程安全的可修改字符序列，它保证了线程安全，也随之带来了额外的性能开销，线程是安全的。</p>
@@ -549,19 +549,19 @@ var a = new Donate({
     
 <nav id="article-nav">
   
-    <a href="/2018/12/30/backend/java_基础/值传递和引用传递/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/12/30/backend/java_基础/fail-fast和fail-safe/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">上一篇</strong>
       <div class="article-nav-title">
         
-          值传递和引用传递
+          fail-fast和fail-safe
         
       </div>
     </a>
   
   
-    <a href="/2018/12/29/backend/java_基础/强引用、软引用、弱引用、幻象引用有什么区别/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2018/12/30/backend/java_基础/值传递和引用传递/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">强引用、软引用、弱引用、幻象引用有什么区别</div>
+      <div class="article-nav-title">值传递和引用传递</div>
     </a>
   
 </nav>
@@ -575,7 +575,7 @@ var a = new Donate({
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#典型回答"><span class="nav-number">1.</span> <span class="nav-text">典型回答</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#String"><span class="nav-number">2.</span> <span class="nav-text">String</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#String的创建机理"><span class="nav-number">2.1.</span> <span class="nav-text">String的创建机理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#String的特性"><span class="nav-number">2.2.</span> <span class="nav-text">String的特性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#StringBuffer-StringBuilder"><span class="nav-number">3.</span> <span class="nav-text">StringBuffer/StringBuilder</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#全部拼接操作是应该都用-StringBuilder-实现吗？"><span class="nav-number">3.1.</span> <span class="nav-text">全部拼接操作是应该都用 StringBuilder 实现吗？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串缓存"><span class="nav-number">4.</span> <span class="nav-text">字符串缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#针对intern的勉强解决和问题"><span class="nav-number">4.1.</span> <span class="nav-text">针对intern的勉强解决和问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更好的解决使用G1-GC-下的字符串排重"><span class="nav-number">4.2.</span> <span class="nav-text">更好的解决使用G1 GC 下的字符串排重</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#String自身的演化"><span class="nav-number">4.3.</span> <span class="nav-text">String自身的演化</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#典型区别"><span class="nav-number">1.</span> <span class="nav-text">典型区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#String"><span class="nav-number">2.</span> <span class="nav-text">String</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#String的创建机理"><span class="nav-number">2.1.</span> <span class="nav-text">String的创建机理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#String的特性"><span class="nav-number">2.2.</span> <span class="nav-text">String的特性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#StringBuffer-StringBuilder"><span class="nav-number">3.</span> <span class="nav-text">StringBuffer/StringBuilder</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#全部拼接操作是应该都用-StringBuilder-实现吗？"><span class="nav-number">3.1.</span> <span class="nav-text">全部拼接操作是应该都用 StringBuilder 实现吗？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串缓存"><span class="nav-number">4.</span> <span class="nav-text">字符串缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#针对intern的勉强解决和问题"><span class="nav-number">4.1.</span> <span class="nav-text">针对intern的勉强解决和问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更好的解决使用G1-GC-下的字符串排重"><span class="nav-number">4.2.</span> <span class="nav-text">更好的解决使用G1 GC 下的字符串排重</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#String自身的演化"><span class="nav-number">4.3.</span> <span class="nav-text">String自身的演化</span></a></li></ol></li></ol>
     
     </div>
   </aside>

@@ -143,7 +143,7 @@
         <script>
           $('section.awSlider .carousel').carousel({
               pause: '',
-              interval: 5000
+              interval: 8000
           });
           var startImage = $('section.awSlider .item.active > img').attr('src');
           $('section.awSlider .carousel').on('slid.bs.carousel', function () {
@@ -240,7 +240,7 @@
         
           <section id="main" style="float:none;">
   
-    <article id="post-backend/规约/阿里巴巴Java开发手册中的开发规约之一(3)" class="article article-type-post" itemscope="" itemprop="blogPost">
+    <article id="post-backend/java_基础/ConcurrentHashMap源码分析" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div id="articleInner" class="article-inner">
     
     
@@ -248,7 +248,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2019/01/14/backend/规约/阿里巴巴Java开发手册中的开发规约之一(3)/">阿里巴巴Java开发手册中的开发规约之一(3)</a>
+      <a class="article-title" href="/2019/01/20/backend/java_基础/ConcurrentHashMap源码分析/">ConcurrentHashMap的源码分析</a>
     </h1>
   
 
@@ -260,7 +260,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">1.3k字</span>
+        <span class="post-count">4.6k字</span>
       </span>
     </span>
 
@@ -269,7 +269,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-hourglass-half"></i>
         <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">5分</span>
+        <span class="post-count">20分</span>
       </span>
     </span>
 </div>
@@ -280,8 +280,8 @@
     
     <div class="article-meta">
       
-	<a href="/2019/01/14/backend/规约/阿里巴巴Java开发手册中的开发规约之一(3)/" class="article-date">
-	  <time datetime="2019-01-13T16:00:00.000Z" itemprop="datePublished">2019-01-14</time>
+	<a href="/2019/01/20/backend/java_基础/ConcurrentHashMap源码分析/" class="article-date">
+	  <time datetime="2019-01-19T16:00:00.000Z" itemprop="datePublished">2019-01-20</time>
 	</a>
 
       
@@ -291,26 +291,16 @@
     </div>
     <!-- <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="包装类比较"><a href="#包装类比较" class="headerlink" title="包装类比较"></a>包装类比较</h3><ul>
-<li><p><strong>【强制】所有的相同类型的包装类对象之间值的比较，全部使用 equals 方法比较。</strong></p>
-<ul>
-<li>说明： 对于 Integer var=? <strong>在-128 至 127 之间的赋值</strong>， Integer 对象是在<br><code>IntegerCache.cache</code> 产生，会复用已有对象，这个区间内的 Integer 值可以直接使用 <code>==</code> 进行<br>判断，但是这个区间之外的所有数据，都会在堆上产生，并不会复用已有对象，这是一个大坑，<br>推荐使用 equals 方法进行判断。</li>
-</ul>
-</li>
-</ul>
+        <h3 id="为什么要使用ConcurrentHashMap"><a href="#为什么要使用ConcurrentHashMap" class="headerlink" title="为什么要使用ConcurrentHashMap"></a>为什么要使用ConcurrentHashMap</h3><p>HashMap线程不安全，而Hashtable是线程安全，因为他很直接使用了 <strong><code>synchronized</code></strong> 进行了方法同步，正因此当插入数据的时候不能进行读取（相当于把整个Hashtable都锁住了，全表锁），当多线程并发的情况下，都要竞争同一把锁，导致效率极其低下。</p>
+<p>除了 Hashtable 等同步容器，还提供了所谓的 <strong><code>同步包装器（Synchronized Wrapper）</code></strong> ，我们可以调用 Collections 工具类提供的包装方法，来获取一个同步的包装容器（如 Collections.synchronizedMap），但是它们都是利用非常粗粒度的同步方式，在高并发情况下，性能比较低下。而在JDK1.5后为了改进Hashtable的痛点，ConcurrentHashMap应运而生。</p>
       
     </div> -->
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="包装类比较"><a href="#包装类比较" class="headerlink" title="包装类比较"></a>包装类比较</h3><ul>
-<li><p><strong>【强制】所有的相同类型的包装类对象之间值的比较，全部使用 equals 方法比较。</strong></p>
-<ul>
-<li>说明： 对于 Integer var=? <strong>在-128 至 127 之间的赋值</strong>， Integer 对象是在<br><code>IntegerCache.cache</code> 产生，会复用已有对象，这个区间内的 Integer 值可以直接使用 <code>==</code> 进行<br>判断，但是这个区间之外的所有数据，都会在堆上产生，并不会复用已有对象，这是一个大坑，<br>推荐使用 equals 方法进行判断。</li>
-</ul>
-</li>
-</ul>
+        <h3 id="为什么要使用ConcurrentHashMap"><a href="#为什么要使用ConcurrentHashMap" class="headerlink" title="为什么要使用ConcurrentHashMap"></a>为什么要使用ConcurrentHashMap</h3><p>HashMap线程不安全，而Hashtable是线程安全，因为他很直接使用了 <strong><code>synchronized</code></strong> 进行了方法同步，正因此当插入数据的时候不能进行读取（相当于把整个Hashtable都锁住了，全表锁），当多线程并发的情况下，都要竞争同一把锁，导致效率极其低下。</p>
+<p>除了 Hashtable 等同步容器，还提供了所谓的 <strong><code>同步包装器（Synchronized Wrapper）</code></strong> ，我们可以调用 Collections 工具类提供的包装方法，来获取一个同步的包装容器（如 Collections.synchronizedMap），但是它们都是利用非常粗粒度的同步方式，在高并发情况下，性能比较低下。而在JDK1.5后为了改进Hashtable的痛点，ConcurrentHashMap应运而生。</p>
         <p class="article-more-link">
-          <a href="/2019/01/14/backend/规约/阿里巴巴Java开发手册中的开发规约之一(3)/#more">阅读全文</a>
+          <a href="/2019/01/20/backend/java_基础/ConcurrentHashMap源码分析/#more">阅读全文</a>
         </p>
         
       
@@ -321,7 +311,7 @@
       
       
         
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/规范/">规范</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hashMap/">hashMap</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li></ul>
 
       
 
@@ -405,7 +395,7 @@
       
       
         
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hashMap/">hashMap</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li></ul>
 
       
 
@@ -470,7 +460,7 @@
     <!-- <div class="article-entry" itemprop="articleBody">
       
         <h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><p>Map 是广义 Java 集合框架中的另外一部分，Hashtable、HashMap、TreeMap 都是最常见的一些 Map 实现，是以<strong>键值对</strong>的形式存储和操作数据的容器类型。</p>
-<h3 id="典型回答"><a href="#典型回答" class="headerlink" title="典型回答"></a>典型回答</h3><ul>
+<h3 id="典型区别"><a href="#典型区别" class="headerlink" title="典型区别"></a>典型区别</h3><ul>
 <li><p>Hashtable 是早期 Java 类库提供的一个 <a href="https://zh.wikipedia.org/wiki/%E5%93%88%E5%B8%8C%E8%A1%A8" target="_blank" rel="noopener">哈希表</a> 实现，本身是同步的，不支持 null 键和值，由于同步导致的性能开销，所以已经很少被推荐使用。</p>
 </li>
 <li><p>HashMap 是应用更加广泛的哈希表实现，行为上大致上与 HashTable 一致，主要区别在于 HashMap 不是同步的，支持 null 键和值等。通常情况下，HashMap 进行 put 或者 get 操作，可以达到常数时间的性能，所以<strong>它是绝大部分利用键值对存取场景的首选</strong>，比如，实现一个用户 ID 和用户信息对应的运行时存储结构。</p>
@@ -487,7 +477,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><p>Map 是广义 Java 集合框架中的另外一部分，Hashtable、HashMap、TreeMap 都是最常见的一些 Map 实现，是以<strong>键值对</strong>的形式存储和操作数据的容器类型。</p>
-<h3 id="典型回答"><a href="#典型回答" class="headerlink" title="典型回答"></a>典型回答</h3><ul>
+<h3 id="典型区别"><a href="#典型区别" class="headerlink" title="典型区别"></a>典型区别</h3><ul>
 <li><p>Hashtable 是早期 Java 类库提供的一个 <a href="https://zh.wikipedia.org/wiki/%E5%93%88%E5%B8%8C%E8%A1%A8" target="_blank" rel="noopener">哈希表</a> 实现，本身是同步的，不支持 null 键和值，由于同步导致的性能开销，所以已经很少被推荐使用。</p>
 </li>
 <li><p>HashMap 是应用更加广泛的哈希表实现，行为上大致上与 HashTable 一致，主要区别在于 HashMap 不是同步的，支持 null 键和值等。通常情况下，HashMap 进行 put 或者 get 操作，可以达到常数时间的性能，所以<strong>它是绝大部分利用键值对存取场景的首选</strong>，比如，实现一个用户 ID 和用户信息对应的运行时存储结构。</p>
@@ -511,7 +501,7 @@
       
       
         
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hashMap/">hashMap</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li></ul>
 
       
 
@@ -878,6 +868,102 @@
 
 
   
+    <article id="post-backend/java_基础/String、StringBuffer、StringBuilder有什么区别" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/12/30/backend/java_基础/String、StringBuffer、StringBuilder有什么区别/">String、StringBuffer、StringBuilder有什么区别</a>
+    </h1>
+  
+
+		    
+        <!-- 开始添加字数统计-->
+        
+          <div style="margin-top:10px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">3k字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">11分</span>
+      </span>
+    </span>
+</div>
+
+          
+        
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/12/30/backend/java_基础/String、StringBuffer、StringBuilder有什么区别/" class="article-date">
+	  <time datetime="2018-12-29T16:00:00.000Z" itemprop="datePublished">2018-12-30</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/java/">java</a>
+
+      
+    </div>
+    <!-- <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="典型区别"><a href="#典型区别" class="headerlink" title="典型区别"></a>典型区别</h3><ul>
+<li><p>String 是 Java 语言非常基础和重要的类，提供了构造和管理字符串的各种基本逻辑。它是典型的 <code>Immutable 类</code>，被声明成为 final class，所有属性也都是 final 的。也由于它的不可变性，类似拼接、裁剪字符串等动作，都会产生新的 String 对象。由于字符串操作的普遍性，所以相关操作的效率往往对应用性能有明显影响。</p>
+</li>
+<li><p>StringBuffer 是为解决上面提到拼接产生太多中间对象的问题而提供的一个类，我们可以用 append 或者 add 方法，把字符串添加到已有序列的末尾或者指定位置。StringBuffer 本质是一个线程安全的可修改字符序列，它保证了线程安全，也随之带来了额外的性能开销，线程是安全的。</p>
+</li>
+<li><p>StringBuilder 是 Java 1.5 中新增的，在能力上和 StringBuffer 没有本质区别，但是它去掉了线程安全的部分，有效减小了开销，是绝大部分情况下进行字符串拼接的首选。</p>
+</li>
+</ul>
+      
+    </div> -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="典型区别"><a href="#典型区别" class="headerlink" title="典型区别"></a>典型区别</h3><ul>
+<li><p>String 是 Java 语言非常基础和重要的类，提供了构造和管理字符串的各种基本逻辑。它是典型的 <code>Immutable 类</code>，被声明成为 final class，所有属性也都是 final 的。也由于它的不可变性，类似拼接、裁剪字符串等动作，都会产生新的 String 对象。由于字符串操作的普遍性，所以相关操作的效率往往对应用性能有明显影响。</p>
+</li>
+<li><p>StringBuffer 是为解决上面提到拼接产生太多中间对象的问题而提供的一个类，我们可以用 append 或者 add 方法，把字符串添加到已有序列的末尾或者指定位置。StringBuffer 本质是一个线程安全的可修改字符序列，它保证了线程安全，也随之带来了额外的性能开销，线程是安全的。</p>
+</li>
+<li><p>StringBuilder 是 Java 1.5 中新增的，在能力上和 StringBuffer 没有本质区别，但是它去掉了线程安全的部分，有效减小了开销，是绝大部分情况下进行字符串拼接的首选。</p>
+</li>
+</ul>
+        <p class="article-more-link">
+          <a href="/2018/12/30/backend/java_基础/String、StringBuffer、StringBuilder有什么区别/#more">阅读全文</a>
+        </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/string/">string</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
     <article id="post-backend/java_基础/值传递和引用传递" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div id="articleInner" class="article-inner">
     
@@ -982,102 +1068,6 @@
 
 
   
-    <article id="post-backend/java_基础/String、StringBuffer、StringBuilder有什么区别" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/12/30/backend/java_基础/String、StringBuffer、StringBuilder有什么区别/">String、StringBuffer、StringBuilder有什么区别</a>
-    </h1>
-  
-
-		    
-        <!-- 开始添加字数统计-->
-        
-          <div style="margin-top:10px;">
-    <span class="post-time">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-keyboard-o"></i>
-        <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">3k字</span>
-      </span>
-    </span>
-
-    <span class="post-time">
-      &nbsp; | &nbsp;
-      <span class="post-meta-item-icon">
-        <i class="fa fa-hourglass-half"></i>
-        <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">11分</span>
-      </span>
-    </span>
-</div>
-
-          
-        
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/12/30/backend/java_基础/String、StringBuffer、StringBuilder有什么区别/" class="article-date">
-	  <time datetime="2018-12-29T16:00:00.000Z" itemprop="datePublished">2018-12-30</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/java/">java</a>
-
-      
-    </div>
-    <!-- <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="典型回答"><a href="#典型回答" class="headerlink" title="典型回答"></a>典型回答</h3><ul>
-<li><p>String 是 Java 语言非常基础和重要的类，提供了构造和管理字符串的各种基本逻辑。它是典型的 <code>Immutable 类</code>，被声明成为 final class，所有属性也都是 final 的。也由于它的不可变性，类似拼接、裁剪字符串等动作，都会产生新的 String 对象。由于字符串操作的普遍性，所以相关操作的效率往往对应用性能有明显影响。</p>
-</li>
-<li><p>StringBuffer 是为解决上面提到拼接产生太多中间对象的问题而提供的一个类，我们可以用 append 或者 add 方法，把字符串添加到已有序列的末尾或者指定位置。StringBuffer 本质是一个线程安全的可修改字符序列，它保证了线程安全，也随之带来了额外的性能开销，线程是安全的。</p>
-</li>
-<li><p>StringBuilder 是 Java 1.5 中新增的，在能力上和 StringBuffer 没有本质区别，但是它去掉了线程安全的部分，有效减小了开销，是绝大部分情况下进行字符串拼接的首选。</p>
-</li>
-</ul>
-      
-    </div> -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="典型回答"><a href="#典型回答" class="headerlink" title="典型回答"></a>典型回答</h3><ul>
-<li><p>String 是 Java 语言非常基础和重要的类，提供了构造和管理字符串的各种基本逻辑。它是典型的 <code>Immutable 类</code>，被声明成为 final class，所有属性也都是 final 的。也由于它的不可变性，类似拼接、裁剪字符串等动作，都会产生新的 String 对象。由于字符串操作的普遍性，所以相关操作的效率往往对应用性能有明显影响。</p>
-</li>
-<li><p>StringBuffer 是为解决上面提到拼接产生太多中间对象的问题而提供的一个类，我们可以用 append 或者 add 方法，把字符串添加到已有序列的末尾或者指定位置。StringBuffer 本质是一个线程安全的可修改字符序列，它保证了线程安全，也随之带来了额外的性能开销，线程是安全的。</p>
-</li>
-<li><p>StringBuilder 是 Java 1.5 中新增的，在能力上和 StringBuffer 没有本质区别，但是它去掉了线程安全的部分，有效减小了开销，是绝大部分情况下进行字符串拼接的首选。</p>
-</li>
-</ul>
-        <p class="article-more-link">
-          <a href="/2018/12/30/backend/java_基础/String、StringBuffer、StringBuilder有什么区别/#more">阅读全文</a>
-        </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/string/">string</a></li></ul>
-
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
     <article id="post-backend/java_基础/强引用、软引用、弱引用、幻象引用有什么区别" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div id="articleInner" class="article-inner">
     
@@ -1129,12 +1119,12 @@
     </div>
     <!-- <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="典型回答"><a href="#典型回答" class="headerlink" title="典型回答"></a>典型回答</h3><p>不同的引用类型，分别有强引用（“Strong” Reference）、软引用（SoftReference）、弱引用（WeakReference）、幻象引用（PhantomReference），主要体现的是 <strong>对象不同的可达性（reachable）状态和对垃圾收集的影响</strong>。</p>
+        <h3 id="典型区别"><a href="#典型区别" class="headerlink" title="典型区别"></a>典型区别</h3><p>不同的引用类型，分别有强引用（“Strong” Reference）、软引用（SoftReference）、弱引用（WeakReference）、幻象引用（PhantomReference），主要体现的是 <strong>对象不同的可达性（reachable）状态和对垃圾收集的影响</strong>。</p>
       
     </div> -->
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="典型回答"><a href="#典型回答" class="headerlink" title="典型回答"></a>典型回答</h3><p>不同的引用类型，分别有强引用（“Strong” Reference）、软引用（SoftReference）、弱引用（WeakReference）、幻象引用（PhantomReference），主要体现的是 <strong>对象不同的可达性（reachable）状态和对垃圾收集的影响</strong>。</p>
+        <h3 id="典型区别"><a href="#典型区别" class="headerlink" title="典型区别"></a>典型区别</h3><p>不同的引用类型，分别有强引用（“Strong” Reference）、软引用（SoftReference）、弱引用（WeakReference）、幻象引用（PhantomReference），主要体现的是 <strong>对象不同的可达性（reachable）状态和对垃圾收集的影响</strong>。</p>
         <p class="article-more-link">
           <a href="/2018/12/29/backend/java_基础/强引用、软引用、弱引用、幻象引用有什么区别/#more">阅读全文</a>
         </p>

@@ -143,7 +143,7 @@
         <script>
           $('section.awSlider .carousel').carousel({
               pause: '',
-              interval: 5000
+              interval: 8000
           });
           var startImage = $('section.awSlider .item.active > img').attr('src');
           $('section.awSlider .carousel').on('slid.bs.carousel', function () {
@@ -291,7 +291,7 @@
     </div>
     <!-- <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="典型回答"><a href="#典型回答" class="headerlink" title="典型回答"></a>典型回答</h3><ul>
+        <h3 id="典型区别"><a href="#典型区别" class="headerlink" title="典型区别"></a>典型区别</h3><ul>
 <li><p><code>final</code> 可以用来修饰类、方法、变量，分别有不同的意义，final 修饰的 class 代表不可以继承扩展，final 的变量是不可以修改的，而 final 的方法也是不可以<code>重写的（override）</code>。</p>
 </li>
 <li><p><code>finally</code>则是 Java 保证重点代码一定要被执行的一种机制。我们可以使用 <code>try-finally</code> 或者 <code>try-catch-finally</code> 来进行类似关闭 <code>JDBC 连接</code>、保证 <code>unlock 锁</code>等动作。</p>
@@ -301,7 +301,7 @@
     </div> -->
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="典型回答"><a href="#典型回答" class="headerlink" title="典型回答"></a>典型回答</h3><ul>
+        <h3 id="典型区别"><a href="#典型区别" class="headerlink" title="典型区别"></a>典型区别</h3><ul>
 <li><p><code>final</code> 可以用来修饰类、方法、变量，分别有不同的意义，final 修饰的 class 代表不可以继承扩展，final 的变量是不可以修改的，而 final 的方法也是不可以<code>重写的（override）</code>。</p>
 </li>
 <li><p><code>finally</code>则是 Java 保证重点代码一定要被执行的一种机制。我们可以使用 <code>try-finally</code> 或者 <code>try-catch-finally</code> 来进行类似关闭 <code>JDBC 连接</code>、保证 <code>unlock 锁</code>等动作。</p>
@@ -383,7 +383,7 @@
     </div>
     <!-- <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="典型回答"><a href="#典型回答" class="headerlink" title="典型回答"></a>典型回答</h3><p><code>Exception</code> 和 <code>Error</code> 都是继承了 Throwable 类，在 Java 中只有 <code>Throwable</code> 类型的实例才可以<code>被抛出（throw）</code> 或者<code>捕获（catch）</code>，它是异常处理机制的基本组成类型。</p>
+        <h3 id="典型区别"><a href="#典型区别" class="headerlink" title="典型区别"></a>典型区别</h3><p><code>Exception</code> 和 <code>Error</code> 都是继承了 Throwable 类，在 Java 中只有 <code>Throwable</code> 类型的实例才可以<code>被抛出（throw）</code> 或者<code>捕获（catch）</code>，它是异常处理机制的基本组成类型。</p>
 <ol>
 <li><p>Exception 和 Error 体现了 Java 平台设计者对不同异常情况的分类。</p>
 <ul>
@@ -398,7 +398,7 @@
     </div> -->
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="典型回答"><a href="#典型回答" class="headerlink" title="典型回答"></a>典型回答</h3><p><code>Exception</code> 和 <code>Error</code> 都是继承了 Throwable 类，在 Java 中只有 <code>Throwable</code> 类型的实例才可以<code>被抛出（throw）</code> 或者<code>捕获（catch）</code>，它是异常处理机制的基本组成类型。</p>
+        <h3 id="典型区别"><a href="#典型区别" class="headerlink" title="典型区别"></a>典型区别</h3><p><code>Exception</code> 和 <code>Error</code> 都是继承了 Throwable 类，在 Java 中只有 <code>Throwable</code> 类型的实例才可以<code>被抛出（throw）</code> 或者<code>捕获（catch）</code>，它是异常处理机制的基本组成类型。</p>
 <ol>
 <li><p>Exception 和 Error 体现了 Java 平台设计者对不同异常情况的分类。</p>
 <ul>
@@ -510,6 +510,100 @@
       
         
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JVM/">JVM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-backend/规约/阿里巴巴Java开发手册中的开发规约之一(3)" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/12/26/backend/规约/阿里巴巴Java开发手册中的开发规约之一(3)/">阿里巴巴Java开发手册中的开发规约之一(3)</a>
+    </h1>
+  
+
+		    
+        <!-- 开始添加字数统计-->
+        
+          <div style="margin-top:10px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">1.3k字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">5分</span>
+      </span>
+    </span>
+</div>
+
+          
+        
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/12/26/backend/规约/阿里巴巴Java开发手册中的开发规约之一(3)/" class="article-date">
+	  <time datetime="2018-12-25T16:00:00.000Z" itemprop="datePublished">2018-12-26</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/java/">java</a>
+
+      
+    </div>
+    <!-- <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="包装类比较"><a href="#包装类比较" class="headerlink" title="包装类比较"></a>包装类比较</h3><ul>
+<li><p><strong>【强制】所有的相同类型的包装类对象之间值的比较，全部使用 equals 方法比较。</strong></p>
+<ul>
+<li>说明： 对于 Integer var=? <strong>在-128 至 127 之间的赋值</strong>， Integer 对象是在<br><code>IntegerCache.cache</code> 产生，会复用已有对象，这个区间内的 Integer 值可以直接使用 <code>==</code> 进行<br>判断，但是这个区间之外的所有数据，都会在堆上产生，并不会复用已有对象，这是一个大坑，<br>推荐使用 equals 方法进行判断。</li>
+</ul>
+</li>
+</ul>
+      
+    </div> -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="包装类比较"><a href="#包装类比较" class="headerlink" title="包装类比较"></a>包装类比较</h3><ul>
+<li><p><strong>【强制】所有的相同类型的包装类对象之间值的比较，全部使用 equals 方法比较。</strong></p>
+<ul>
+<li>说明： 对于 Integer var=? <strong>在-128 至 127 之间的赋值</strong>， Integer 对象是在<br><code>IntegerCache.cache</code> 产生，会复用已有对象，这个区间内的 Integer 值可以直接使用 <code>==</code> 进行<br>判断，但是这个区间之外的所有数据，都会在堆上产生，并不会复用已有对象，这是一个大坑，<br>推荐使用 equals 方法进行判断。</li>
+</ul>
+</li>
+</ul>
+        <p class="article-more-link">
+          <a href="/2018/12/26/backend/规约/阿里巴巴Java开发手册中的开发规约之一(3)/#more">阅读全文</a>
+        </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/规范/">规范</a></li></ul>
 
       
 
@@ -1053,90 +1147,6 @@
 <p><strong>Redis 所有的数据结构都是以唯一的 key 字符串作为名称，然后通过这个唯一 key 值来获取相应的 value 数据。不同类型的数据结构的差异就在于 value 的结构不一样。</strong></p>
         <p class="article-more-link">
           <a href="/2018/12/05/redis/Redis的学习_基础数据结构（二）/#more">阅读全文</a>
-        </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/">Redis</a></li></ul>
-
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-redis/Redis的学习_介绍（一）" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/12/04/redis/Redis的学习_介绍（一）/">Redis的学习_开篇（一）</a>
-    </h1>
-  
-
-		    
-        <!-- 开始添加字数统计-->
-        
-          <div style="margin-top:10px;">
-    <span class="post-time">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-keyboard-o"></i>
-        <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">381字</span>
-      </span>
-    </span>
-
-    <span class="post-time">
-      &nbsp; | &nbsp;
-      <span class="post-meta-item-icon">
-        <i class="fa fa-hourglass-half"></i>
-        <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">1分</span>
-      </span>
-    </span>
-</div>
-
-          
-        
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/12/04/redis/Redis的学习_介绍（一）/" class="article-date">
-	  <time datetime="2018-12-04T03:56:55.000Z" itemprop="datePublished">2018-12-04</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/Redis/">Redis</a>
-
-      
-    </div>
-    <!-- <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="/md_images/p4/4_5_5.jpg" alt=""></p>
-<h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>最近对 <strong>老钱</strong> 的 <strong>《Redis 深度历险：核心原理与应用实践》</strong>进行学习，并且一同做笔记，所以后续的Redis博客都是基于《Redis 深度历险：核心原理与应用实践》和其他的文著，再结合自己的所学到的进行结合，然后进行笔记记录，所以在此统一声明。</p>
-      
-    </div> -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="/md_images/p4/4_5_5.jpg" alt=""></p>
-<h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>最近对 <strong>老钱</strong> 的 <strong>《Redis 深度历险：核心原理与应用实践》</strong>进行学习，并且一同做笔记，所以后续的Redis博客都是基于《Redis 深度历险：核心原理与应用实践》和其他的文著，再结合自己的所学到的进行结合，然后进行笔记记录，所以在此统一声明。</p>
-        <p class="article-more-link">
-          <a href="/2018/12/04/redis/Redis的学习_介绍（一）/#more">阅读全文</a>
         </p>
         
       

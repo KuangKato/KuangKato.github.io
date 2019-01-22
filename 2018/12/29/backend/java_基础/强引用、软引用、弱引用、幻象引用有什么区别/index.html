@@ -12,19 +12,19 @@
   
   
   
-  <meta name="description" content="典型回答不同的引用类型，分别有强引用（“Strong” Reference）、软引用（SoftReference）、弱引用（WeakReference）、幻象引用（PhantomReference），主要体现的是 对象不同的可达性（reachable）状态和对垃圾收集的影响。">
+  <meta name="description" content="典型区别不同的引用类型，分别有强引用（“Strong” Reference）、软引用（SoftReference）、弱引用（WeakReference）、幻象引用（PhantomReference），主要体现的是 对象不同的可达性（reachable）状态和对垃圾收集的影响。">
 <meta name="keywords" content="java,java基础">
 <meta property="og:type" content="article">
 <meta property="og:title" content="强引用、软引用、弱引用、幻象引用有什么区别">
 <meta property="og:url" content="http://www.kuanger.top/2018/12/29/backend/java_基础/强引用、软引用、弱引用、幻象引用有什么区别/index.html">
 <meta property="og:site_name" content="Better than yesterday">
-<meta property="og:description" content="典型回答不同的引用类型，分别有强引用（“Strong” Reference）、软引用（SoftReference）、弱引用（WeakReference）、幻象引用（PhantomReference），主要体现的是 对象不同的可达性（reachable）状态和对垃圾收集的影响。">
+<meta property="og:description" content="典型区别不同的引用类型，分别有强引用（“Strong” Reference）、软引用（SoftReference）、弱引用（WeakReference）、幻象引用（PhantomReference），主要体现的是 对象不同的可达性（reachable）状态和对垃圾收集的影响。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://www.kuanger.top/md_images/jk_java/4.png">
-<meta property="og:updated_time" content="2018-12-29T16:00:37.878Z">
+<meta property="og:updated_time" content="2019-01-16T16:01:27.763Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="强引用、软引用、弱引用、幻象引用有什么区别">
-<meta name="twitter:description" content="典型回答不同的引用类型，分别有强引用（“Strong” Reference）、软引用（SoftReference）、弱引用（WeakReference）、幻象引用（PhantomReference），主要体现的是 对象不同的可达性（reachable）状态和对垃圾收集的影响。">
+<meta name="twitter:description" content="典型区别不同的引用类型，分别有强引用（“Strong” Reference）、软引用（SoftReference）、弱引用（WeakReference）、幻象引用（PhantomReference），主要体现的是 对象不同的可达性（reachable）状态和对垃圾收集的影响。">
 <meta name="twitter:image" content="http://www.kuanger.top/md_images/jk_java/4.png">
   
     <link rel="alternate" href="/atom.xml" title="Better than yesterday" type="application/atom+xml">
@@ -221,7 +221,7 @@
     </div>
     <!-- <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="典型回答"><a href="#典型回答" class="headerlink" title="典型回答"></a>典型回答</h3><p>不同的引用类型，分别有强引用（“Strong” Reference）、软引用（SoftReference）、弱引用（WeakReference）、幻象引用（PhantomReference），主要体现的是 <strong>对象不同的可达性（reachable）状态和对垃圾收集的影响</strong>。</p>
+        <h3 id="典型区别"><a href="#典型区别" class="headerlink" title="典型区别"></a>典型区别</h3><p>不同的引用类型，分别有强引用（“Strong” Reference）、软引用（SoftReference）、弱引用（WeakReference）、幻象引用（PhantomReference），主要体现的是 <strong>对象不同的可达性（reachable）状态和对垃圾收集的影响</strong>。</p>
 <a id="more"></a>
 <ol>
 <li><p>所谓 <strong>强引用（“Strong” Reference）</strong>，就是我们最常见的普通对象引用，只要还有强引用指向一个对象，就能表明对象还“活着”，垃圾收集器不会碰这种对象。对于一个普通的对象，如果没有其他的引用关系，<u>只要超过了引用的作用域或者显式地将相应（强）引用赋值为 null，就是可以被垃圾收集的了，当然具体回收时机还是要看垃圾收集策略。</u></p>
@@ -308,7 +308,7 @@
       
         
         
-          <h3 id="典型回答"><a href="#典型回答" class="headerlink" title="典型回答"></a>典型回答</h3><p>不同的引用类型，分别有强引用（“Strong” Reference）、软引用（SoftReference）、弱引用（WeakReference）、幻象引用（PhantomReference），主要体现的是 <strong>对象不同的可达性（reachable）状态和对垃圾收集的影响</strong>。</p>
+          <h3 id="典型区别"><a href="#典型区别" class="headerlink" title="典型区别"></a>典型区别</h3><p>不同的引用类型，分别有强引用（“Strong” Reference）、软引用（SoftReference）、弱引用（WeakReference）、幻象引用（PhantomReference），主要体现的是 <strong>对象不同的可达性（reachable）状态和对垃圾收集的影响</strong>。</p>
 <a id="more"></a>
 <ol>
 <li><p>所谓 <strong>强引用（“Strong” Reference）</strong>，就是我们最常见的普通对象引用，只要还有强引用指向一个对象，就能表明对象还“活着”，垃圾收集器不会碰这种对象。对于一个普通的对象，如果没有其他的引用关系，<u>只要超过了引用的作用域或者显式地将相应（强）引用赋值为 null，就是可以被垃圾收集的了，当然具体回收时机还是要看垃圾收集策略。</u></p>
@@ -465,11 +465,11 @@ var a = new Donate({
     
 <nav id="article-nav">
   
-    <a href="/2018/12/30/backend/java_基础/String、StringBuffer、StringBuilder有什么区别/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/12/30/backend/java_基础/值传递和引用传递/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">上一篇</strong>
       <div class="article-nav-title">
         
-          String、StringBuffer、StringBuilder有什么区别
+          值传递和引用传递
         
       </div>
     </a>
@@ -491,7 +491,7 @@ var a = new Donate({
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#典型回答"><span class="nav-number">1.</span> <span class="nav-text">典型回答</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对象可达性状态流转分析"><span class="nav-number">2.</span> <span class="nav-text">对象可达性状态流转分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引用队列（ReferenceQueue）使用"><span class="nav-number">3.</span> <span class="nav-text">引用队列（ReferenceQueue）使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Make-a-logo"><span class="nav-number">3.1.</span> <span class="nav-text">Make a logo</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#显式地影响软引用垃圾收集"><span class="nav-number">4.</span> <span class="nav-text">显式地影响软引用垃圾收集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#诊断-JVM-引用情况"><span class="nav-number">5.</span> <span class="nav-text">诊断 JVM 引用情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reachability-Fence"><span class="nav-number">6.</span> <span class="nav-text">Reachability Fence</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#典型区别"><span class="nav-number">1.</span> <span class="nav-text">典型区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对象可达性状态流转分析"><span class="nav-number">2.</span> <span class="nav-text">对象可达性状态流转分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引用队列（ReferenceQueue）使用"><span class="nav-number">3.</span> <span class="nav-text">引用队列（ReferenceQueue）使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Make-a-logo"><span class="nav-number">3.1.</span> <span class="nav-text">Make a logo</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#显式地影响软引用垃圾收集"><span class="nav-number">4.</span> <span class="nav-text">显式地影响软引用垃圾收集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#诊断-JVM-引用情况"><span class="nav-number">5.</span> <span class="nav-text">诊断 JVM 引用情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reachability-Fence"><span class="nav-number">6.</span> <span class="nav-text">Reachability Fence</span></a></li></ol>
     
     </div>
   </aside>
