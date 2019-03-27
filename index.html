@@ -240,6 +240,386 @@
         
           <section id="main" style="float:none;">
   
+    <article id="post-backend/java_基础/io/NIO相关基础篇（三）-- Zero-Copy 零拷贝" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2019/01/31/backend/java_基础/io/NIO相关基础篇（三）-- Zero-Copy 零拷贝/">NIO相关基础篇（三）-- Zero-Copy 零拷贝</a>
+    </h1>
+  
+
+		    
+        <!-- 开始添加字数统计-->
+        
+          <div style="margin-top:10px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">1k字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">3分</span>
+      </span>
+    </span>
+</div>
+
+          
+        
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/01/31/backend/java_基础/io/NIO相关基础篇（三）-- Zero-Copy 零拷贝/" class="article-date">
+	  <time datetime="2019-01-30T16:00:00.000Z" itemprop="datePublished">2019-01-31</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/java/">java</a>
+
+      
+    </div>
+    <!-- <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="什么叫Zero-copy"><a href="#什么叫Zero-copy" class="headerlink" title="什么叫Zero-copy"></a>什么叫Zero-copy</h3><p><strong>Zero-Copy</strong>的技术来去掉这些无谓的copy。利用程序用Zero-Copy来要求kernel直接把disk的data传输给socket,而不是通过利用程序传输。</p>
+      
+    </div> -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="什么叫Zero-copy"><a href="#什么叫Zero-copy" class="headerlink" title="什么叫Zero-copy"></a>什么叫Zero-copy</h3><p><strong>Zero-Copy</strong>的技术来去掉这些无谓的copy。利用程序用Zero-Copy来要求kernel直接把disk的data传输给socket,而不是通过利用程序传输。</p>
+        <p class="article-more-link">
+          <a href="/2019/01/31/backend/java_基础/io/NIO相关基础篇（三）-- Zero-Copy 零拷贝/#more">阅读全文</a>
+        </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IO/">IO</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-backend/java_基础/io/NIO相关基础篇（二）-- Linux 网络 IO模型" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2019/01/30/backend/java_基础/io/NIO相关基础篇（二）-- Linux 网络 IO模型/">NIO相关基础篇（二）-- Linux 网络 I/O模型</a>
+    </h1>
+  
+
+		    
+        <!-- 开始添加字数统计-->
+        
+          <div style="margin-top:10px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">1.6k字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">6分</span>
+      </span>
+    </span>
+</div>
+
+          
+        
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/01/30/backend/java_基础/io/NIO相关基础篇（二）-- Linux 网络 IO模型/" class="article-date">
+	  <time datetime="2019-01-29T16:00:00.000Z" itemprop="datePublished">2019-01-30</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/java/">java</a>
+
+      
+    </div>
+    <!-- <div class="article-entry" itemprop="articleBody">
+      
+        <p>我们都知道，为了OS的安全性等的考虑，<strong>进程是无法直接操作I/O设备的，其必须通过系统调用请求内核来协助完成I/O动作，而内核会为每个I/O设备维护一个buffer</strong>。</p>
+<p>如下图所示：</p>
+<p><img src="/md_images\jk_java/16.png" alt=""></p>
+<p><strong>整个请求过程为： 用户进程发起请求，内核接受到请求后，从I/O设备中获取数据到buffer中，再将buffer中的数据copy到用户进程的地址空间，该用户进程获取到数据后再响应客户端。</strong></p>
+<p>在整个请求过程中，数据输入至buffer需要时间，而从buffer复制数据至进程也需要时间。因此根据在这两段时间内等待方式的不同，I/O动作可以分为以下<strong>五种模式</strong>：</p>
+<ol>
+<li><p><strong>阻塞I/O (Blocking I/O)</strong></p>
+</li>
+<li><p><strong>非阻塞I/O (Non-Blocking I/O)</strong></p>
+</li>
+<li><p><strong>I/O复用（I/O Multiplexing)</strong></p>
+</li>
+<li><p><strong>信号驱动的I/O (Signal Driven I/O)</strong></p>
+</li>
+<li><p><strong>异步I/O (Asynchrnous I/O)</strong></p>
+</li>
+</ol>
+<blockquote>
+<p>本文最重要的参考文献是Richard Stevens的“UNIX® Network Programming Volume 1, Third Edition: The Sockets Networking ”，6.2节“I/O Models ”。</p>
+</blockquote>
+      
+    </div> -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>我们都知道，为了OS的安全性等的考虑，<strong>进程是无法直接操作I/O设备的，其必须通过系统调用请求内核来协助完成I/O动作，而内核会为每个I/O设备维护一个buffer</strong>。</p>
+<p>如下图所示：</p>
+<p><img src="/md_images\jk_java/16.png" alt=""></p>
+<p><strong>整个请求过程为： 用户进程发起请求，内核接受到请求后，从I/O设备中获取数据到buffer中，再将buffer中的数据copy到用户进程的地址空间，该用户进程获取到数据后再响应客户端。</strong></p>
+<p>在整个请求过程中，数据输入至buffer需要时间，而从buffer复制数据至进程也需要时间。因此根据在这两段时间内等待方式的不同，I/O动作可以分为以下<strong>五种模式</strong>：</p>
+<ol>
+<li><p><strong>阻塞I/O (Blocking I/O)</strong></p>
+</li>
+<li><p><strong>非阻塞I/O (Non-Blocking I/O)</strong></p>
+</li>
+<li><p><strong>I/O复用（I/O Multiplexing)</strong></p>
+</li>
+<li><p><strong>信号驱动的I/O (Signal Driven I/O)</strong></p>
+</li>
+<li><p><strong>异步I/O (Asynchrnous I/O)</strong></p>
+</li>
+</ol>
+<blockquote>
+<p>本文最重要的参考文献是Richard Stevens的“UNIX® Network Programming Volume 1, Third Edition: The Sockets Networking ”，6.2节“I/O Models ”。</p>
+</blockquote>
+        <p class="article-more-link">
+          <a href="/2019/01/30/backend/java_基础/io/NIO相关基础篇（二）-- Linux 网络 IO模型/#more">阅读全文</a>
+        </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IO/">IO</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-backend/java_基础/io/NIO相关基础篇（一）-- 空间概念" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2019/01/29/backend/java_基础/io/NIO相关基础篇（一）-- 空间概念/">NIO相关基础篇（一）-- 空间概念</a>
+    </h1>
+  
+
+		    
+        <!-- 开始添加字数统计-->
+        
+          <div style="margin-top:10px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">448字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">1分</span>
+      </span>
+    </span>
+</div>
+
+          
+        
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/01/29/backend/java_基础/io/NIO相关基础篇（一）-- 空间概念/" class="article-date">
+	  <time datetime="2019-01-28T16:00:00.000Z" itemprop="datePublished">2019-01-29</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/java/">java</a>
+
+      
+    </div>
+    <!-- <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="用户空间以及内核空间概念"><a href="#用户空间以及内核空间概念" class="headerlink" title="用户空间以及内核空间概念"></a>用户空间以及内核空间概念</h3><p>我们知道现在操作系统都是采用虚拟存储器，那么对32位操作系统而言，它的寻址空间（虚拟存储空间）为4G（2的32次方）。操心系统的核心是内核，独立于普通的应用程序，可以访问受保护的内存空间，也有访问底层硬件设备的所有权限。<strong>为了保证用户进程不能直接操作内核，保证内核的安全，操心系统将虚拟空间划分为两部分，一部分为内核空间，一部分为用户空间。</strong></p>
+      
+    </div> -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="用户空间以及内核空间概念"><a href="#用户空间以及内核空间概念" class="headerlink" title="用户空间以及内核空间概念"></a>用户空间以及内核空间概念</h3><p>我们知道现在操作系统都是采用虚拟存储器，那么对32位操作系统而言，它的寻址空间（虚拟存储空间）为4G（2的32次方）。操心系统的核心是内核，独立于普通的应用程序，可以访问受保护的内存空间，也有访问底层硬件设备的所有权限。<strong>为了保证用户进程不能直接操作内核，保证内核的安全，操心系统将虚拟空间划分为两部分，一部分为内核空间，一部分为用户空间。</strong></p>
+        <p class="article-more-link">
+          <a href="/2019/01/29/backend/java_基础/io/NIO相关基础篇（一）-- 空间概念/#more">阅读全文</a>
+        </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IO/">IO</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-backend/java_基础/io/IO总结" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2019/01/28/backend/java_基础/io/IO总结/">IO总结</a>
+    </h1>
+  
+
+		    
+        <!-- 开始添加字数统计-->
+        
+          <div style="margin-top:10px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">802字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">2分</span>
+      </span>
+    </span>
+</div>
+
+          
+        
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/01/28/backend/java_基础/io/IO总结/" class="article-date">
+	  <time datetime="2019-01-27T16:00:00.000Z" itemprop="datePublished">2019-01-28</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/java/">java</a>
+
+      
+    </div>
+    <!-- <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><p>传统的 java.io 包，它基于流模型实现，提供了我们最熟知的一些 IO 功能，比如 File 抽象、输入输出流等。交互方式是同步、阻塞的方式，也就是说，在读取输入流或者写入输出流时，在读、写动作完成之前，线程会一直阻塞在那里，它们之间的调用是可靠的线性顺序。</p>
+</li>
+<li><p>在 Java 1.4 中引入了 NIO 框架（java.nio 包），提供了 Channel、Selector、Buffer 等新的抽象，可以构建多路复用的、同步非阻塞 IO 程序，同时提供了更接近操作系统底层的高性能数据操作方式。</p>
+</li>
+<li><p>在 Java 7 中，NIO 有了进一步的改进，也就是 NIO 2，引入了异步非阻塞 IO 方式，也有很多人叫它 AIO（Asynchronous IO）。异步 IO 操作基于事件和回调机制，可以简单理解为，应用操作直接返回，而不会阻塞在那里，当后台处理完成，操作系统会通知相应线程进行后续工作。</p>
+</li>
+</ul>
+      
+    </div> -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><p>传统的 java.io 包，它基于流模型实现，提供了我们最熟知的一些 IO 功能，比如 File 抽象、输入输出流等。交互方式是同步、阻塞的方式，也就是说，在读取输入流或者写入输出流时，在读、写动作完成之前，线程会一直阻塞在那里，它们之间的调用是可靠的线性顺序。</p>
+</li>
+<li><p>在 Java 1.4 中引入了 NIO 框架（java.nio 包），提供了 Channel、Selector、Buffer 等新的抽象，可以构建多路复用的、同步非阻塞 IO 程序，同时提供了更接近操作系统底层的高性能数据操作方式。</p>
+</li>
+<li><p>在 Java 7 中，NIO 有了进一步的改进，也就是 NIO 2，引入了异步非阻塞 IO 方式，也有很多人叫它 AIO（Asynchronous IO）。异步 IO 操作基于事件和回调机制，可以简单理解为，应用操作直接返回，而不会阻塞在那里，当后台处理完成，操作系统会通知相应线程进行后续工作。</p>
+</li>
+</ul>
+        <p class="article-more-link">
+          <a href="/2019/01/28/backend/java_基础/io/IO总结/#more">阅读全文</a>
+        </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IO/">IO</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
     <article id="post-backend/java_基础/ConcurrentHashMap源码分析" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div id="articleInner" class="article-inner">
     
@@ -311,7 +691,7 @@
       
       
         
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hashMap/">hashMap</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hashMap/">hashMap</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/集合/">集合</a></li></ul>
 
       
 
@@ -395,7 +775,7 @@
       
       
         
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hashMap/">hashMap</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hashMap/">hashMap</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/集合/">集合</a></li></ul>
 
       
 
@@ -501,7 +881,7 @@
       
       
         
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hashMap/">hashMap</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hashMap/">hashMap</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/集合/">集合</a></li></ul>
 
       
 
@@ -585,7 +965,7 @@
       
       
         
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/集合/">集合</a></li></ul>
 
       
 
@@ -759,374 +1139,6 @@
         <p>反射机制是 Java 语言提供的一种基础功能，赋予程序在运行时自省（introspect，官方用语）的能力。通过反射我们可以直接操作类或者对象，比如获取某个对象的类定义，获取类声明的属性和方法，调用方法或者构造对象，甚至可以运行时修改类定义。</p>
         <p class="article-more-link">
           <a href="/2018/12/31/backend/java_基础/Java反射机制/#more">阅读全文</a>
-        </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li></ul>
-
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-backend/java_基础/fail-fast和fail-safe" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/12/30/backend/java_基础/fail-fast和fail-safe/">fail-fast和fail-safe</a>
-    </h1>
-  
-
-		    
-        <!-- 开始添加字数统计-->
-        
-          <div style="margin-top:10px;">
-    <span class="post-time">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-keyboard-o"></i>
-        <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">661字</span>
-      </span>
-    </span>
-
-    <span class="post-time">
-      &nbsp; | &nbsp;
-      <span class="post-meta-item-icon">
-        <i class="fa fa-hourglass-half"></i>
-        <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">2分</span>
-      </span>
-    </span>
-</div>
-
-          
-        
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/12/30/backend/java_基础/fail-fast和fail-safe/" class="article-date">
-	  <time datetime="2018-12-29T16:00:01.000Z" itemprop="datePublished">2018-12-30</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/java/">java</a>
-
-      
-    </div>
-    <!-- <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="fail-fast-快速失败"><a href="#fail-fast-快速失败" class="headerlink" title="fail-fast ( 快速失败 )"></a>fail-fast ( 快速失败 )</h3><ul>
-<li>在使用迭代器遍历一个集合对象时,比如增强for,如果遍历过程中对集合对象的内容进行了修改(增删改),会抛出<span style="color:rgb(235,75,100);"> <strong><code>ConcurrentModificationException</code></strong> </span>异常.</li>
-</ul>
-      
-    </div> -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="fail-fast-快速失败"><a href="#fail-fast-快速失败" class="headerlink" title="fail-fast ( 快速失败 )"></a>fail-fast ( 快速失败 )</h3><ul>
-<li>在使用迭代器遍历一个集合对象时,比如增强for,如果遍历过程中对集合对象的内容进行了修改(增删改),会抛出<span style="color:rgb(235,75,100);"> <strong><code>ConcurrentModificationException</code></strong> </span>异常.</li>
-</ul>
-        <p class="article-more-link">
-          <a href="/2018/12/30/backend/java_基础/fail-fast和fail-safe/#more">阅读全文</a>
-        </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li></ul>
-
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-backend/java_基础/String、StringBuffer、StringBuilder有什么区别" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/12/30/backend/java_基础/String、StringBuffer、StringBuilder有什么区别/">String、StringBuffer、StringBuilder有什么区别</a>
-    </h1>
-  
-
-		    
-        <!-- 开始添加字数统计-->
-        
-          <div style="margin-top:10px;">
-    <span class="post-time">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-keyboard-o"></i>
-        <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">3k字</span>
-      </span>
-    </span>
-
-    <span class="post-time">
-      &nbsp; | &nbsp;
-      <span class="post-meta-item-icon">
-        <i class="fa fa-hourglass-half"></i>
-        <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">11分</span>
-      </span>
-    </span>
-</div>
-
-          
-        
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/12/30/backend/java_基础/String、StringBuffer、StringBuilder有什么区别/" class="article-date">
-	  <time datetime="2018-12-29T16:00:00.000Z" itemprop="datePublished">2018-12-30</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/java/">java</a>
-
-      
-    </div>
-    <!-- <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="典型区别"><a href="#典型区别" class="headerlink" title="典型区别"></a>典型区别</h3><ul>
-<li><p>String 是 Java 语言非常基础和重要的类，提供了构造和管理字符串的各种基本逻辑。它是典型的 <code>Immutable 类</code>，被声明成为 final class，所有属性也都是 final 的。也由于它的不可变性，类似拼接、裁剪字符串等动作，都会产生新的 String 对象。由于字符串操作的普遍性，所以相关操作的效率往往对应用性能有明显影响。</p>
-</li>
-<li><p>StringBuffer 是为解决上面提到拼接产生太多中间对象的问题而提供的一个类，我们可以用 append 或者 add 方法，把字符串添加到已有序列的末尾或者指定位置。StringBuffer 本质是一个线程安全的可修改字符序列，它保证了线程安全，也随之带来了额外的性能开销，线程是安全的。</p>
-</li>
-<li><p>StringBuilder 是 Java 1.5 中新增的，在能力上和 StringBuffer 没有本质区别，但是它去掉了线程安全的部分，有效减小了开销，是绝大部分情况下进行字符串拼接的首选。</p>
-</li>
-</ul>
-      
-    </div> -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="典型区别"><a href="#典型区别" class="headerlink" title="典型区别"></a>典型区别</h3><ul>
-<li><p>String 是 Java 语言非常基础和重要的类，提供了构造和管理字符串的各种基本逻辑。它是典型的 <code>Immutable 类</code>，被声明成为 final class，所有属性也都是 final 的。也由于它的不可变性，类似拼接、裁剪字符串等动作，都会产生新的 String 对象。由于字符串操作的普遍性，所以相关操作的效率往往对应用性能有明显影响。</p>
-</li>
-<li><p>StringBuffer 是为解决上面提到拼接产生太多中间对象的问题而提供的一个类，我们可以用 append 或者 add 方法，把字符串添加到已有序列的末尾或者指定位置。StringBuffer 本质是一个线程安全的可修改字符序列，它保证了线程安全，也随之带来了额外的性能开销，线程是安全的。</p>
-</li>
-<li><p>StringBuilder 是 Java 1.5 中新增的，在能力上和 StringBuffer 没有本质区别，但是它去掉了线程安全的部分，有效减小了开销，是绝大部分情况下进行字符串拼接的首选。</p>
-</li>
-</ul>
-        <p class="article-more-link">
-          <a href="/2018/12/30/backend/java_基础/String、StringBuffer、StringBuilder有什么区别/#more">阅读全文</a>
-        </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/string/">string</a></li></ul>
-
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-backend/java_基础/值传递和引用传递" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/12/30/backend/java_基础/值传递和引用传递/">值传递和引用传递</a>
-    </h1>
-  
-
-		    
-        <!-- 开始添加字数统计-->
-        
-          <div style="margin-top:10px;">
-    <span class="post-time">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-keyboard-o"></i>
-        <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">502字</span>
-      </span>
-    </span>
-
-    <span class="post-time">
-      &nbsp; | &nbsp;
-      <span class="post-meta-item-icon">
-        <i class="fa fa-hourglass-half"></i>
-        <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">1分</span>
-      </span>
-    </span>
-</div>
-
-          
-        
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/12/30/backend/java_基础/值传递和引用传递/" class="article-date">
-	  <time datetime="2018-12-29T16:00:00.000Z" itemprop="datePublished">2018-12-30</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/java/">java</a>
-
-      
-    </div>
-    <!-- <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li><p><strong>值传递（pass by value）</strong></p>
-<ul>
-<li>是指在调用函数时将实际参数<strong>复制</strong>一份传递到函数中，这样在函数中如果对<strong>参数</strong>进行修改，将不会影响到实际参数。</li>
-</ul>
-</li>
-<li><p><strong>引用传递（pass by reference）</strong></p>
-<ul>
-<li>是指在调用函数时将实际参数的地址<strong>直接</strong>传递到函数中，那么在函数中对<strong>参数</strong>所进行的修改，将影响到实际参数。</li>
-</ul>
-</li>
-</ul>
-      
-    </div> -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li><p><strong>值传递（pass by value）</strong></p>
-<ul>
-<li>是指在调用函数时将实际参数<strong>复制</strong>一份传递到函数中，这样在函数中如果对<strong>参数</strong>进行修改，将不会影响到实际参数。</li>
-</ul>
-</li>
-<li><p><strong>引用传递（pass by reference）</strong></p>
-<ul>
-<li>是指在调用函数时将实际参数的地址<strong>直接</strong>传递到函数中，那么在函数中对<strong>参数</strong>所进行的修改，将影响到实际参数。</li>
-</ul>
-</li>
-</ul>
-        <p class="article-more-link">
-          <a href="/2018/12/30/backend/java_基础/值传递和引用传递/#more">阅读全文</a>
-        </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li></ul>
-
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-backend/java_基础/强引用、软引用、弱引用、幻象引用有什么区别" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/12/29/backend/java_基础/强引用、软引用、弱引用、幻象引用有什么区别/">强引用、软引用、弱引用、幻象引用有什么区别</a>
-    </h1>
-  
-
-		    
-        <!-- 开始添加字数统计-->
-        
-          <div style="margin-top:10px;">
-    <span class="post-time">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-keyboard-o"></i>
-        <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">3.4k字</span>
-      </span>
-    </span>
-
-    <span class="post-time">
-      &nbsp; | &nbsp;
-      <span class="post-meta-item-icon">
-        <i class="fa fa-hourglass-half"></i>
-        <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">12分</span>
-      </span>
-    </span>
-</div>
-
-          
-        
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/12/29/backend/java_基础/强引用、软引用、弱引用、幻象引用有什么区别/" class="article-date">
-	  <time datetime="2018-12-28T16:01:00.000Z" itemprop="datePublished">2018-12-29</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/java/">java</a>
-
-      
-    </div>
-    <!-- <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="典型区别"><a href="#典型区别" class="headerlink" title="典型区别"></a>典型区别</h3><p>不同的引用类型，分别有强引用（“Strong” Reference）、软引用（SoftReference）、弱引用（WeakReference）、幻象引用（PhantomReference），主要体现的是 <strong>对象不同的可达性（reachable）状态和对垃圾收集的影响</strong>。</p>
-      
-    </div> -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="典型区别"><a href="#典型区别" class="headerlink" title="典型区别"></a>典型区别</h3><p>不同的引用类型，分别有强引用（“Strong” Reference）、软引用（SoftReference）、弱引用（WeakReference）、幻象引用（PhantomReference），主要体现的是 <strong>对象不同的可达性（reachable）状态和对垃圾收集的影响</strong>。</p>
-        <p class="article-more-link">
-          <a href="/2018/12/29/backend/java_基础/强引用、软引用、弱引用、幻象引用有什么区别/#more">阅读全文</a>
         </p>
         
       

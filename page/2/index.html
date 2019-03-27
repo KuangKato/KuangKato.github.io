@@ -240,6 +240,374 @@
         
           <section id="main" style="float:none;">
   
+    <article id="post-backend/java_基础/fail-fast和fail-safe" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/12/30/backend/java_基础/fail-fast和fail-safe/">fail-fast和fail-safe</a>
+    </h1>
+  
+
+		    
+        <!-- 开始添加字数统计-->
+        
+          <div style="margin-top:10px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">661字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">2分</span>
+      </span>
+    </span>
+</div>
+
+          
+        
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/12/30/backend/java_基础/fail-fast和fail-safe/" class="article-date">
+	  <time datetime="2018-12-29T16:00:01.000Z" itemprop="datePublished">2018-12-30</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/java/">java</a>
+
+      
+    </div>
+    <!-- <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="fail-fast-快速失败"><a href="#fail-fast-快速失败" class="headerlink" title="fail-fast ( 快速失败 )"></a>fail-fast ( 快速失败 )</h3><ul>
+<li>在使用迭代器遍历一个集合对象时,比如增强for,如果遍历过程中对集合对象的内容进行了修改(增删改),会抛出<span style="color:rgb(235,75,100);"> <strong><code>ConcurrentModificationException</code></strong> </span>异常.</li>
+</ul>
+      
+    </div> -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="fail-fast-快速失败"><a href="#fail-fast-快速失败" class="headerlink" title="fail-fast ( 快速失败 )"></a>fail-fast ( 快速失败 )</h3><ul>
+<li>在使用迭代器遍历一个集合对象时,比如增强for,如果遍历过程中对集合对象的内容进行了修改(增删改),会抛出<span style="color:rgb(235,75,100);"> <strong><code>ConcurrentModificationException</code></strong> </span>异常.</li>
+</ul>
+        <p class="article-more-link">
+          <a href="/2018/12/30/backend/java_基础/fail-fast和fail-safe/#more">阅读全文</a>
+        </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-backend/java_基础/String、StringBuffer、StringBuilder有什么区别" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/12/30/backend/java_基础/String、StringBuffer、StringBuilder有什么区别/">String、StringBuffer、StringBuilder有什么区别</a>
+    </h1>
+  
+
+		    
+        <!-- 开始添加字数统计-->
+        
+          <div style="margin-top:10px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">3k字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">11分</span>
+      </span>
+    </span>
+</div>
+
+          
+        
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/12/30/backend/java_基础/String、StringBuffer、StringBuilder有什么区别/" class="article-date">
+	  <time datetime="2018-12-29T16:00:00.000Z" itemprop="datePublished">2018-12-30</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/java/">java</a>
+
+      
+    </div>
+    <!-- <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="典型区别"><a href="#典型区别" class="headerlink" title="典型区别"></a>典型区别</h3><ul>
+<li><p>String 是 Java 语言非常基础和重要的类，提供了构造和管理字符串的各种基本逻辑。它是典型的 <code>Immutable 类</code>，被声明成为 final class，所有属性也都是 final 的。也由于它的不可变性，类似拼接、裁剪字符串等动作，都会产生新的 String 对象。由于字符串操作的普遍性，所以相关操作的效率往往对应用性能有明显影响。</p>
+</li>
+<li><p>StringBuffer 是为解决上面提到拼接产生太多中间对象的问题而提供的一个类，我们可以用 append 或者 add 方法，把字符串添加到已有序列的末尾或者指定位置。StringBuffer 本质是一个线程安全的可修改字符序列，它保证了线程安全，也随之带来了额外的性能开销，线程是安全的。</p>
+</li>
+<li><p>StringBuilder 是 Java 1.5 中新增的，在能力上和 StringBuffer 没有本质区别，但是它去掉了线程安全的部分，有效减小了开销，是绝大部分情况下进行字符串拼接的首选。</p>
+</li>
+</ul>
+      
+    </div> -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="典型区别"><a href="#典型区别" class="headerlink" title="典型区别"></a>典型区别</h3><ul>
+<li><p>String 是 Java 语言非常基础和重要的类，提供了构造和管理字符串的各种基本逻辑。它是典型的 <code>Immutable 类</code>，被声明成为 final class，所有属性也都是 final 的。也由于它的不可变性，类似拼接、裁剪字符串等动作，都会产生新的 String 对象。由于字符串操作的普遍性，所以相关操作的效率往往对应用性能有明显影响。</p>
+</li>
+<li><p>StringBuffer 是为解决上面提到拼接产生太多中间对象的问题而提供的一个类，我们可以用 append 或者 add 方法，把字符串添加到已有序列的末尾或者指定位置。StringBuffer 本质是一个线程安全的可修改字符序列，它保证了线程安全，也随之带来了额外的性能开销，线程是安全的。</p>
+</li>
+<li><p>StringBuilder 是 Java 1.5 中新增的，在能力上和 StringBuffer 没有本质区别，但是它去掉了线程安全的部分，有效减小了开销，是绝大部分情况下进行字符串拼接的首选。</p>
+</li>
+</ul>
+        <p class="article-more-link">
+          <a href="/2018/12/30/backend/java_基础/String、StringBuffer、StringBuilder有什么区别/#more">阅读全文</a>
+        </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/string/">string</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-backend/java_基础/值传递和引用传递" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/12/30/backend/java_基础/值传递和引用传递/">值传递和引用传递</a>
+    </h1>
+  
+
+		    
+        <!-- 开始添加字数统计-->
+        
+          <div style="margin-top:10px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">502字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">1分</span>
+      </span>
+    </span>
+</div>
+
+          
+        
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/12/30/backend/java_基础/值传递和引用传递/" class="article-date">
+	  <time datetime="2018-12-29T16:00:00.000Z" itemprop="datePublished">2018-12-30</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/java/">java</a>
+
+      
+    </div>
+    <!-- <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><p><strong>值传递（pass by value）</strong></p>
+<ul>
+<li>是指在调用函数时将实际参数<strong>复制</strong>一份传递到函数中，这样在函数中如果对<strong>参数</strong>进行修改，将不会影响到实际参数。</li>
+</ul>
+</li>
+<li><p><strong>引用传递（pass by reference）</strong></p>
+<ul>
+<li>是指在调用函数时将实际参数的地址<strong>直接</strong>传递到函数中，那么在函数中对<strong>参数</strong>所进行的修改，将影响到实际参数。</li>
+</ul>
+</li>
+</ul>
+      
+    </div> -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><p><strong>值传递（pass by value）</strong></p>
+<ul>
+<li>是指在调用函数时将实际参数<strong>复制</strong>一份传递到函数中，这样在函数中如果对<strong>参数</strong>进行修改，将不会影响到实际参数。</li>
+</ul>
+</li>
+<li><p><strong>引用传递（pass by reference）</strong></p>
+<ul>
+<li>是指在调用函数时将实际参数的地址<strong>直接</strong>传递到函数中，那么在函数中对<strong>参数</strong>所进行的修改，将影响到实际参数。</li>
+</ul>
+</li>
+</ul>
+        <p class="article-more-link">
+          <a href="/2018/12/30/backend/java_基础/值传递和引用传递/#more">阅读全文</a>
+        </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-backend/java_基础/强引用、软引用、弱引用、幻象引用有什么区别" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/12/29/backend/java_基础/强引用、软引用、弱引用、幻象引用有什么区别/">强引用、软引用、弱引用、幻象引用有什么区别</a>
+    </h1>
+  
+
+		    
+        <!-- 开始添加字数统计-->
+        
+          <div style="margin-top:10px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">3.4k字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">12分</span>
+      </span>
+    </span>
+</div>
+
+          
+        
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/12/29/backend/java_基础/强引用、软引用、弱引用、幻象引用有什么区别/" class="article-date">
+	  <time datetime="2018-12-28T16:01:00.000Z" itemprop="datePublished">2018-12-29</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/java/">java</a>
+
+      
+    </div>
+    <!-- <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="典型区别"><a href="#典型区别" class="headerlink" title="典型区别"></a>典型区别</h3><p>不同的引用类型，分别有强引用（“Strong” Reference）、软引用（SoftReference）、弱引用（WeakReference）、幻象引用（PhantomReference），主要体现的是 <strong>对象不同的可达性（reachable）状态和对垃圾收集的影响</strong>。</p>
+      
+    </div> -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="典型区别"><a href="#典型区别" class="headerlink" title="典型区别"></a>典型区别</h3><p>不同的引用类型，分别有强引用（“Strong” Reference）、软引用（SoftReference）、弱引用（WeakReference）、幻象引用（PhantomReference），主要体现的是 <strong>对象不同的可达性（reachable）状态和对垃圾收集的影响</strong>。</p>
+        <p class="article-more-link">
+          <a href="/2018/12/29/backend/java_基础/强引用、软引用、弱引用、幻象引用有什么区别/#more">阅读全文</a>
+        </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
     <article id="post-backend/java_基础/谈谈 final、finally、 finalize 有什么不同" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div id="articleInner" class="article-inner">
     
@@ -794,370 +1162,6 @@
       
         
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/规范/">规范</a></li></ul>
-
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-backend/java_基础/实用的字符串格式化" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/12/19/backend/java_基础/实用的字符串格式化/">实用的字符串格式化</a>
-    </h1>
-  
-
-		    
-        <!-- 开始添加字数统计-->
-        
-          <div style="margin-top:10px;">
-    <span class="post-time">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-keyboard-o"></i>
-        <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">993字</span>
-      </span>
-    </span>
-
-    <span class="post-time">
-      &nbsp; | &nbsp;
-      <span class="post-meta-item-icon">
-        <i class="fa fa-hourglass-half"></i>
-        <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">4分</span>
-      </span>
-    </span>
-</div>
-
-          
-        
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/12/19/backend/java_基础/实用的字符串格式化/" class="article-date">
-	  <time datetime="2018-12-19T03:57:00.000Z" itemprop="datePublished">2018-12-19</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/java/">java</a>
-
-      
-    </div>
-    <!-- <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="String-format"><a href="#String-format" class="headerlink" title="String-format()"></a>String-format()</h2><p>String类的 <code>format()</code> 方法用于创建格式化的字符串以及连接多个字符串对象。熟悉C语言的同学应该记得C语言的sprintf()方法，两者有类似之处。format()方法有两种重载形式。</p>
-<ul>
-<li><p><code>format(String format, Object... args)</code> 新字符串使用本地语言环境，制定字符串格式和参数生成格式化的新字符串。</p>
-</li>
-<li><p><code>format(Locale locale, String format, Object... args)</code> 使用指定的语言环境，制定字符串格式和参数生成格式化的字符串。</p>
-</li>
-</ul>
-      
-    </div> -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="String-format"><a href="#String-format" class="headerlink" title="String-format()"></a>String-format()</h2><p>String类的 <code>format()</code> 方法用于创建格式化的字符串以及连接多个字符串对象。熟悉C语言的同学应该记得C语言的sprintf()方法，两者有类似之处。format()方法有两种重载形式。</p>
-<ul>
-<li><p><code>format(String format, Object... args)</code> 新字符串使用本地语言环境，制定字符串格式和参数生成格式化的新字符串。</p>
-</li>
-<li><p><code>format(Locale locale, String format, Object... args)</code> 使用指定的语言环境，制定字符串格式和参数生成格式化的字符串。</p>
-</li>
-</ul>
-        <p class="article-more-link">
-          <a href="/2018/12/19/backend/java_基础/实用的字符串格式化/#more">阅读全文</a>
-        </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/string/">string</a></li></ul>
-
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-spider/Jsoup的学习--(二)案例" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/12/11/spider/Jsoup的学习--(二)案例/">Jsoup的学习(二)_案例</a>
-    </h1>
-  
-
-		    
-        <!-- 开始添加字数统计-->
-        
-          <div style="margin-top:10px;">
-    <span class="post-time">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-keyboard-o"></i>
-        <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">849字</span>
-      </span>
-    </span>
-
-    <span class="post-time">
-      &nbsp; | &nbsp;
-      <span class="post-meta-item-icon">
-        <i class="fa fa-hourglass-half"></i>
-        <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">4分</span>
-      </span>
-    </span>
-</div>
-
-          
-        
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/12/11/spider/Jsoup的学习--(二)案例/" class="article-date">
-	  <time datetime="2018-12-11T03:57:00.000Z" itemprop="datePublished">2018-12-11</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/爬虫/">爬虫</a>
-
-      
-    </div>
-    <!-- <div class="article-entry" itemprop="articleBody">
-      
-        <p>需要学习对页面的数据进行爬取，以下内容仅供学习demo，非商业用途。</p>
-      
-    </div> -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>需要学习对页面的数据进行爬取，以下内容仅供学习demo，非商业用途。</p>
-        <p class="article-more-link">
-          <a href="/2018/12/11/spider/Jsoup的学习--(二)案例/#more">阅读全文</a>
-        </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jsoup/">jsoup</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spider/">spider</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫/">爬虫</a></li></ul>
-
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-spider/Jsoup的学习一篇就够" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/12/10/spider/Jsoup的学习一篇就够/">Jsoup的学习一篇就够</a>
-    </h1>
-  
-
-		    
-        <!-- 开始添加字数统计-->
-        
-          <div style="margin-top:10px;">
-    <span class="post-time">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-keyboard-o"></i>
-        <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">3.9k字</span>
-      </span>
-    </span>
-
-    <span class="post-time">
-      &nbsp; | &nbsp;
-      <span class="post-meta-item-icon">
-        <i class="fa fa-hourglass-half"></i>
-        <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">16分</span>
-      </span>
-    </span>
-</div>
-
-          
-        
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/12/10/spider/Jsoup的学习一篇就够/" class="article-date">
-	  <time datetime="2018-12-10T03:57:00.000Z" itemprop="datePublished">2018-12-10</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/爬虫/">爬虫</a>
-
-      
-    </div>
-    <!-- <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>Jsoup是一款比较好的Java版HTML解析器。可直接解析某个URL地址、HTML文本内容。它提供了一套非常省力的API，可通过DOM，CSS以及类似于jQuery的操作方法来取出和操作数据。</p>
-<ul>
-<li>由于工作原因，需要学习对页面的数据进行爬取，以下内容仅供学习demo，非商业用途。<ul>
-<li>学习途中查询了一些资料，也发现很多工具也可以实现，<a href="https://www.cnblogs.com/zhumengke/p/8847224.html" target="_blank" rel="noopener">有兴趣可以前往了解</a></li>
-<li>然后我发现jsoup可以对响应的html数据解析,于是对jsoup进行学习
-      
-    </div> -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>Jsoup是一款比较好的Java版HTML解析器。可直接解析某个URL地址、HTML文本内容。它提供了一套非常省力的API，可通过DOM，CSS以及类似于jQuery的操作方法来取出和操作数据。</p>
-<ul>
-<li>由于工作原因，需要学习对页面的数据进行爬取，以下内容仅供学习demo，非商业用途。<ul>
-<li>学习途中查询了一些资料，也发现很多工具也可以实现，<a href="https://www.cnblogs.com/zhumengke/p/8847224.html" target="_blank" rel="noopener">有兴趣可以前往了解</a></li>
-<li>然后我发现jsoup可以对响应的html数据解析,于是对jsoup进行学习
-        <p class="article-more-link">
-          <a href="/2018/12/10/spider/Jsoup的学习一篇就够/#more">阅读全文</a>
-        </p>
-        
-      
-    </li></ul></li></ul></div>
-    <footer class="article-footer">
-      
-      
-      
-      
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jsoup/">jsoup</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spider/">spider</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫/">爬虫</a></li></ul>
-
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-redis/Redis的学习_基础数据结构（二）" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/12/05/redis/Redis的学习_基础数据结构（二）/">Redis的学习_基础数据结构（二）(可能是最完善的整理)</a>
-    </h1>
-  
-
-		    
-        <!-- 开始添加字数统计-->
-        
-          <div style="margin-top:10px;">
-    <span class="post-time">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-keyboard-o"></i>
-        <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">4.9k字</span>
-      </span>
-    </span>
-
-    <span class="post-time">
-      &nbsp; | &nbsp;
-      <span class="post-meta-item-icon">
-        <i class="fa fa-hourglass-half"></i>
-        <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">19分</span>
-      </span>
-    </span>
-</div>
-
-          
-        
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/12/05/redis/Redis的学习_基础数据结构（二）/" class="article-date">
-	  <time datetime="2018-12-05T03:57:00.000Z" itemprop="datePublished">2018-12-05</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/Redis/">Redis</a>
-
-      
-    </div>
-    <!-- <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="Redis-基础数据结构"><a href="#Redis-基础数据结构" class="headerlink" title="Redis 基础数据结构"></a>Redis 基础数据结构</h3><p>Redis 有 5 种基础数据结构，分别为：</p>
-<ul>
-<li>string (字符串)</li>
-<li>list (列表)</li>
-<li>hash (哈希)</li>
-<li>set (集合)</li>
-<li>zset (有序集合)</li>
-</ul>
-<p><strong>Redis 所有的数据结构都是以唯一的 key 字符串作为名称，然后通过这个唯一 key 值来获取相应的 value 数据。不同类型的数据结构的差异就在于 value 的结构不一样。</strong></p>
-      
-    </div> -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="Redis-基础数据结构"><a href="#Redis-基础数据结构" class="headerlink" title="Redis 基础数据结构"></a>Redis 基础数据结构</h3><p>Redis 有 5 种基础数据结构，分别为：</p>
-<ul>
-<li>string (字符串)</li>
-<li>list (列表)</li>
-<li>hash (哈希)</li>
-<li>set (集合)</li>
-<li>zset (有序集合)</li>
-</ul>
-<p><strong>Redis 所有的数据结构都是以唯一的 key 字符串作为名称，然后通过这个唯一 key 值来获取相应的 value 数据。不同类型的数据结构的差异就在于 value 的结构不一样。</strong></p>
-        <p class="article-more-link">
-          <a href="/2018/12/05/redis/Redis的学习_基础数据结构（二）/#more">阅读全文</a>
-        </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/">Redis</a></li></ul>
 
       
 

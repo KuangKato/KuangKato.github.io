@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="jGpOWJy4VY">
+  
+  <title>nio相关基础篇（二）-- linux 网络 i/o模型 | Better than yesterday</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Kuanger">
+  
+  
+  
+  
+  <meta name="description" content="我们都知道，为了OS的安全性等的考虑，进程是无法直接操作I/O设备的，其必须通过系统调用请求内核来协助完成I/O动作，而内核会为每个I/O设备维护一个buffer。 如下图所示：  整个请求过程为： 用户进程发起请求，内核接受到请求后，从I/O设备中获取数据到buffer中，再将buffer中的数据copy到用户进程的地址空间，该用户进程获取到数据后再响应客户端。 在整个请求过程中，数据输入至bu">
+<meta name="keywords" content="java,java基础,IO">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NIO相关基础篇（二）-- Linux 网络 I&#x2F;O模型">
+<meta property="og:url" content="http://www.kuanger.top/2019/01/30/backend/java_基础/io/NIO相关基础篇（二）-- Linux 网络 IO模型/index.html">
+<meta property="og:site_name" content="Better than yesterday">
+<meta property="og:description" content="我们都知道，为了OS的安全性等的考虑，进程是无法直接操作I/O设备的，其必须通过系统调用请求内核来协助完成I/O动作，而内核会为每个I/O设备维护一个buffer。 如下图所示：  整个请求过程为： 用户进程发起请求，内核接受到请求后，从I/O设备中获取数据到buffer中，再将buffer中的数据copy到用户进程的地址空间，该用户进程获取到数据后再响应客户端。 在整个请求过程中，数据输入至bu">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://www.kuanger.top/md_images/jk_java/16.png">
+<meta property="og:image" content="http://www.kuanger.top/md_images/jk_java/17.png">
+<meta property="og:image" content="http://www.kuanger.top/md_images/jk_java/18.png">
+<meta property="og:image" content="http://www.kuanger.top/md_images/jk_java/19.png">
+<meta property="og:image" content="http://www.kuanger.top/md_images/jk_java/20.png">
+<meta property="og:image" content="http://www.kuanger.top/md_images/jk_java/21.png">
+<meta property="og:image" content="http://www.kuanger.top/md_images/jk_java/22.png">
+<meta property="og:image" content="http://www.kuanger.top/md_images/jk_java/23.png">
+<meta property="og:updated_time" content="2019-02-11T14:46:29.124Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NIO相关基础篇（二）-- Linux 网络 I&#x2F;O模型">
+<meta name="twitter:description" content="我们都知道，为了OS的安全性等的考虑，进程是无法直接操作I/O设备的，其必须通过系统调用请求内核来协助完成I/O动作，而内核会为每个I/O设备维护一个buffer。 如下图所示：  整个请求过程为： 用户进程发起请求，内核接受到请求后，从I/O设备中获取数据到buffer中，再将buffer中的数据copy到用户进程的地址空间，该用户进程获取到数据后再响应客户端。 在整个请求过程中，数据输入至bu">
+<meta name="twitter:image" content="http://www.kuanger.top/md_images/jk_java/16.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Better than yesterday" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css">
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css">
+  
+
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;" href="#" data-toggle="modal" data-target="#myModal">
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">首页</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">归档</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">分类</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">标签</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">关于</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="">
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(无标题)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </ul></div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-backend/java_基础/io/NIO相关基础篇（二）-- Linux 网络 IO模型" style="width: 75%; float:left;" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      NIO相关基础篇（二）-- Linux 网络 I/O模型
+    </h1>
+  
+
+		    
+        <!-- 开始添加字数统计-->
+        
+          <div style="margin-top:10px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">1.6k字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">6分</span>
+      </span>
+    </span>
+</div>
+
+          
+        
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/01/30/backend/java_基础/io/NIO相关基础篇（二）-- Linux 网络 IO模型/" class="article-date">
+	  <time datetime="2019-01-29T16:00:00.000Z" itemprop="datePublished">2019-01-30</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/java/">java</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		阅读量<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <!-- <div class="article-entry" itemprop="articleBody">
+      
+        <p>我们都知道，为了OS的安全性等的考虑，<strong>进程是无法直接操作I/O设备的，其必须通过系统调用请求内核来协助完成I/O动作，而内核会为每个I/O设备维护一个buffer</strong>。</p>
+<p>如下图所示：</p>
+<p><img src="/md_images\jk_java/16.png" alt=""></p>
+<p><strong>整个请求过程为： 用户进程发起请求，内核接受到请求后，从I/O设备中获取数据到buffer中，再将buffer中的数据copy到用户进程的地址空间，该用户进程获取到数据后再响应客户端。</strong></p>
+<p>在整个请求过程中，数据输入至buffer需要时间，而从buffer复制数据至进程也需要时间。因此根据在这两段时间内等待方式的不同，I/O动作可以分为以下<strong>五种模式</strong>：</p>
+<ol>
+<li><p><strong>阻塞I/O (Blocking I/O)</strong></p>
+</li>
+<li><p><strong>非阻塞I/O (Non-Blocking I/O)</strong></p>
+</li>
+<li><p><strong>I/O复用（I/O Multiplexing)</strong></p>
+</li>
+<li><p><strong>信号驱动的I/O (Signal Driven I/O)</strong></p>
+</li>
+<li><p><strong>异步I/O (Asynchrnous I/O)</strong></p>
+</li>
+</ol>
+<blockquote>
+<p>本文最重要的参考文献是Richard Stevens的“UNIX® Network Programming Volume 1, Third Edition: The Sockets Networking ”，6.2节“I/O Models ”。</p>
+</blockquote>
+<a id="more"></a>
+<p><strong>Important</strong> : </p>
+<ol>
+<li>等待数据准备 (Waiting for the data to be ready)</li>
+<li>将数据从内核拷贝到进程中 (Copying the data from the kernel to the process)</li>
+</ol>
+<hr>
+<h3 id="阻塞I-O-Blocking-I-O"><a href="#阻塞I-O-Blocking-I-O" class="headerlink" title="阻塞I/O (Blocking I/O)"></a>阻塞I/O (Blocking I/O)</h3><p>在linux中，默认情况下所有的socket都是blocking，一个典型的读操作流程大概是这样：</p>
+<p><img src="/md_images\jk_java/17.png" alt=""></p>
+<p>当用户进程调用了recvfrom这个系统调用，内核就开始了IO的第一个阶段：等待数据准备。对于network io来说，很多时候数据在一开始还没有到达（比如，还没有收到一个完整的UDP包），这个时候内核就要等待足够的数据到来。而在用户进程这边，整个进程会被阻塞。当内核一直等到数据准备好了，它就会将数据从内核中拷贝到用户内存，然后内核返回结果，用户进程才解除block的状态，重新运行起来。<br>所以，blocking IO的特点就是<strong>在IO执行的两个阶段（wait for data and copy data from kernel to user）都被block了。</strong></p>
+<hr>
+<h3 id="非阻塞I-O-Non-Blocking-I-O"><a href="#非阻塞I-O-Non-Blocking-I-O" class="headerlink" title="非阻塞I/O (Non-Blocking I/O)"></a>非阻塞I/O (Non-Blocking I/O)</h3><p>linux下，可以通过设置socket使其变为non-blocking。当对一个non-blocking socket执行读操作时，流程是这个样子：</p>
+<p><img src="/md_images\jk_java/18.png" alt=""></p>
+<p>当用户进程调用recvfrom时，系统不会阻塞用户进程，而是立刻返回一个ewouldblock错误，从用户进程角度讲 ，并不需要等待，而是马上就得到了一个结果。用户进程判断标志是ewouldblock时，就知道数据还没准备好，于是它就可以去做其他的事了，于是它可以再次发送recvfrom，一旦内核中的数据准备好了。并且又再次收到了用户进程的system call，那么它马上就将数据拷贝到了用户内存，然后返回。</p>
+<p><strong>当一个应用程序在一个循环里对一个非阻塞调用recvfrom，我们称为轮询</strong>。应用程序不断轮询内核，看看是否已经准备好了某些操作。这通常是<strong>浪费CPU时间</strong>，但这种模式偶尔会遇到。</p>
+<hr>
+<h3 id="I-O复用（I-O-Multiplexing"><a href="#I-O复用（I-O-Multiplexing" class="headerlink" title="I/O复用（I/O Multiplexing)"></a>I/O复用（I/O Multiplexing)</h3><p>IO multiplexing 即是 select，epoll，有些地方也称这种IO方式为event driven IO。我们都知道，<strong>select/epoll的好处就在于单个process就可以同时处理多个网络连接的IO。</strong> 它的基本原理就是select/epoll这个function会不断的轮询所负责的所有socket，当某个socket有数据到达了，就通知用户进程。它的流程如图：</p>
+<p><img src="/md_images\jk_java/19.png" alt=""></p>
+<p>当用户进程调用了select，那么整个进程会被block，而同时，内核会“监视”所有select负责的socket，当任何一个socket中的数据准备好了，select就会返回。这个时候用户进程再调用read操作，将数据从内核拷贝到用户进程。</p>
+<ul>
+<li>这个图和blocking IO的图其实并没有太大的不同，事实上，还更差一些。因为这里需要使用两个system call (select 和 recvfrom)，而blocking IO只调用了一个system call (recvfrom)。但是，<strong>用select的优势在于它可以同时处理多个connection。</strong></li>
+</ul>
+<ul>
+<li>所以，如果处理的连接数不是很高的话，使用select/epoll的web server不一定比使用multi-threading + blocking IO的web server性能更好，可能延迟还更大。select/epoll的优势并不是对于单个连接能处理得更快，而是在于能处理更多的连接。）</li>
+</ul>
+<p>在IO multiplexing Model中，实际中，对于每一个socket，一般都设置成为non-blocking，但是，如上图所示，整个用户的process其实是一直被block的。只不过process是被select这个函数block，而不是被socket IO给block。</p>
+<hr>
+<h3 id="信号驱动的I-O-Signal-Driven-I-O"><a href="#信号驱动的I-O-Signal-Driven-I-O" class="headerlink" title="信号驱动的I/O (Signal Driven I/O)"></a>信号驱动的I/O (Signal Driven I/O)</h3><p>由于signal driven IO在实际中并不常用，所以简单提下。</p>
+<p><img src="/md_images\jk_java/20.png" alt=""></p>
+<p>很明显可以看出用户进程不是阻塞的。首先用户进程建立SIGIO信号处理程序，并通过系统调用sigaction执行一个信号处理函数，这时用户进程便可以做其他的事了，一旦数据准备好，系统便为该进程生成一个SIGIO信号，去通知它数据已经准备好了，于是用户进程便调用recvfrom把数据从内核拷贝出来，并返回结果。</p>
+<hr>
+<h3 id="异步I-O"><a href="#异步I-O" class="headerlink" title="异步I/O"></a>异步I/O</h3><p>一般来说，这些函数通过告诉内核启动操作并在整个操作（包括内核的数据到缓冲区的副本）完成时通知我们。</p>
+<p>这个模型和前面的信号驱动I/O模型的主要区别是，<strong>在信号驱动的I/O中，内核告诉我们何时可以启动I/O操作，但是异步I/O时，内核告诉我们何时I/O操作完成。</strong></p>
+<p><img src="/md_images\jk_java/21.png" alt=""></p>
+<p>当用户进程向内核发起某个操作后，会立刻得到返回，并把所有的任务都交给内核去完成（包括将数据从内核拷贝到用户自己的缓冲区），内核完成之后，只需返回一个信号告诉用户进程已经完成就可以了。</p>
+<hr>
+<h3 id="5个I-O模型的对比"><a href="#5个I-O模型的对比" class="headerlink" title="5个I/O模型的对比"></a>5个I/O模型的对比</h3><p><img src="/md_images\jk_java/22.png" alt=""></p>
+<p><strong>结果表明：</strong>前四个模型之间的主要区别是第一阶段，四个模型的第二阶段是一样的：过程受阻在调用recvfrom当数据从内核拷贝到用户缓冲区。然而，异步I/O处理两个阶段，与前四个不同。</p>
+<p><strong>从同步、异步，以及阻塞、非阻塞两个维度来划分来看：</strong></p>
+<p><img src="/md_images\jk_java/23.png" alt=""></p>
+
+      
+    </div> -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+        
+          <p>我们都知道，为了OS的安全性等的考虑，<strong>进程是无法直接操作I/O设备的，其必须通过系统调用请求内核来协助完成I/O动作，而内核会为每个I/O设备维护一个buffer</strong>。</p>
+<p>如下图所示：</p>
+<p><img src="/md_images\jk_java/16.png" alt=""></p>
+<p><strong>整个请求过程为： 用户进程发起请求，内核接受到请求后，从I/O设备中获取数据到buffer中，再将buffer中的数据copy到用户进程的地址空间，该用户进程获取到数据后再响应客户端。</strong></p>
+<p>在整个请求过程中，数据输入至buffer需要时间，而从buffer复制数据至进程也需要时间。因此根据在这两段时间内等待方式的不同，I/O动作可以分为以下<strong>五种模式</strong>：</p>
+<ol>
+<li><p><strong>阻塞I/O (Blocking I/O)</strong></p>
+</li>
+<li><p><strong>非阻塞I/O (Non-Blocking I/O)</strong></p>
+</li>
+<li><p><strong>I/O复用（I/O Multiplexing)</strong></p>
+</li>
+<li><p><strong>信号驱动的I/O (Signal Driven I/O)</strong></p>
+</li>
+<li><p><strong>异步I/O (Asynchrnous I/O)</strong></p>
+</li>
+</ol>
+<blockquote>
+<p>本文最重要的参考文献是Richard Stevens的“UNIX® Network Programming Volume 1, Third Edition: The Sockets Networking ”，6.2节“I/O Models ”。</p>
+</blockquote>
+<a id="more"></a>
+<p><strong>Important</strong> : </p>
+<ol>
+<li>等待数据准备 (Waiting for the data to be ready)</li>
+<li>将数据从内核拷贝到进程中 (Copying the data from the kernel to the process)</li>
+</ol>
+<hr>
+<h3 id="阻塞I-O-Blocking-I-O"><a href="#阻塞I-O-Blocking-I-O" class="headerlink" title="阻塞I/O (Blocking I/O)"></a>阻塞I/O (Blocking I/O)</h3><p>在linux中，默认情况下所有的socket都是blocking，一个典型的读操作流程大概是这样：</p>
+<p><img src="/md_images\jk_java/17.png" alt=""></p>
+<p>当用户进程调用了recvfrom这个系统调用，内核就开始了IO的第一个阶段：等待数据准备。对于network io来说，很多时候数据在一开始还没有到达（比如，还没有收到一个完整的UDP包），这个时候内核就要等待足够的数据到来。而在用户进程这边，整个进程会被阻塞。当内核一直等到数据准备好了，它就会将数据从内核中拷贝到用户内存，然后内核返回结果，用户进程才解除block的状态，重新运行起来。<br>所以，blocking IO的特点就是<strong>在IO执行的两个阶段（wait for data and copy data from kernel to user）都被block了。</strong></p>
+<hr>
+<h3 id="非阻塞I-O-Non-Blocking-I-O"><a href="#非阻塞I-O-Non-Blocking-I-O" class="headerlink" title="非阻塞I/O (Non-Blocking I/O)"></a>非阻塞I/O (Non-Blocking I/O)</h3><p>linux下，可以通过设置socket使其变为non-blocking。当对一个non-blocking socket执行读操作时，流程是这个样子：</p>
+<p><img src="/md_images\jk_java/18.png" alt=""></p>
+<p>当用户进程调用recvfrom时，系统不会阻塞用户进程，而是立刻返回一个ewouldblock错误，从用户进程角度讲 ，并不需要等待，而是马上就得到了一个结果。用户进程判断标志是ewouldblock时，就知道数据还没准备好，于是它就可以去做其他的事了，于是它可以再次发送recvfrom，一旦内核中的数据准备好了。并且又再次收到了用户进程的system call，那么它马上就将数据拷贝到了用户内存，然后返回。</p>
+<p><strong>当一个应用程序在一个循环里对一个非阻塞调用recvfrom，我们称为轮询</strong>。应用程序不断轮询内核，看看是否已经准备好了某些操作。这通常是<strong>浪费CPU时间</strong>，但这种模式偶尔会遇到。</p>
+<hr>
+<h3 id="I-O复用（I-O-Multiplexing"><a href="#I-O复用（I-O-Multiplexing" class="headerlink" title="I/O复用（I/O Multiplexing)"></a>I/O复用（I/O Multiplexing)</h3><p>IO multiplexing 即是 select，epoll，有些地方也称这种IO方式为event driven IO。我们都知道，<strong>select/epoll的好处就在于单个process就可以同时处理多个网络连接的IO。</strong> 它的基本原理就是select/epoll这个function会不断的轮询所负责的所有socket，当某个socket有数据到达了，就通知用户进程。它的流程如图：</p>
+<p><img src="/md_images\jk_java/19.png" alt=""></p>
+<p>当用户进程调用了select，那么整个进程会被block，而同时，内核会“监视”所有select负责的socket，当任何一个socket中的数据准备好了，select就会返回。这个时候用户进程再调用read操作，将数据从内核拷贝到用户进程。</p>
+<ul>
+<li>这个图和blocking IO的图其实并没有太大的不同，事实上，还更差一些。因为这里需要使用两个system call (select 和 recvfrom)，而blocking IO只调用了一个system call (recvfrom)。但是，<strong>用select的优势在于它可以同时处理多个connection。</strong></li>
+</ul>
+<ul>
+<li>所以，如果处理的连接数不是很高的话，使用select/epoll的web server不一定比使用multi-threading + blocking IO的web server性能更好，可能延迟还更大。select/epoll的优势并不是对于单个连接能处理得更快，而是在于能处理更多的连接。）</li>
+</ul>
+<p>在IO multiplexing Model中，实际中，对于每一个socket，一般都设置成为non-blocking，但是，如上图所示，整个用户的process其实是一直被block的。只不过process是被select这个函数block，而不是被socket IO给block。</p>
+<hr>
+<h3 id="信号驱动的I-O-Signal-Driven-I-O"><a href="#信号驱动的I-O-Signal-Driven-I-O" class="headerlink" title="信号驱动的I/O (Signal Driven I/O)"></a>信号驱动的I/O (Signal Driven I/O)</h3><p>由于signal driven IO在实际中并不常用，所以简单提下。</p>
+<p><img src="/md_images\jk_java/20.png" alt=""></p>
+<p>很明显可以看出用户进程不是阻塞的。首先用户进程建立SIGIO信号处理程序，并通过系统调用sigaction执行一个信号处理函数，这时用户进程便可以做其他的事了，一旦数据准备好，系统便为该进程生成一个SIGIO信号，去通知它数据已经准备好了，于是用户进程便调用recvfrom把数据从内核拷贝出来，并返回结果。</p>
+<hr>
+<h3 id="异步I-O"><a href="#异步I-O" class="headerlink" title="异步I/O"></a>异步I/O</h3><p>一般来说，这些函数通过告诉内核启动操作并在整个操作（包括内核的数据到缓冲区的副本）完成时通知我们。</p>
+<p>这个模型和前面的信号驱动I/O模型的主要区别是，<strong>在信号驱动的I/O中，内核告诉我们何时可以启动I/O操作，但是异步I/O时，内核告诉我们何时I/O操作完成。</strong></p>
+<p><img src="/md_images\jk_java/21.png" alt=""></p>
+<p>当用户进程向内核发起某个操作后，会立刻得到返回，并把所有的任务都交给内核去完成（包括将数据从内核拷贝到用户自己的缓冲区），内核完成之后，只需返回一个信号告诉用户进程已经完成就可以了。</p>
+<hr>
+<h3 id="5个I-O模型的对比"><a href="#5个I-O模型的对比" class="headerlink" title="5个I/O模型的对比"></a>5个I/O模型的对比</h3><p><img src="/md_images\jk_java/22.png" alt=""></p>
+<p><strong>结果表明：</strong>前四个模型之间的主要区别是第一阶段，四个模型的第二阶段是一样的：过程受阻在调用recvfrom当数据从内核拷贝到用户缓冲区。然而，异步I/O处理两个阶段，与前四个不同。</p>
+<p><strong>从同步、异步，以及阻塞、非阻塞两个维度来划分来看：</strong></p>
+<p><img src="/md_images\jk_java/23.png" alt=""></p>
+
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: '打赏支持', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: '/md_images/static/1.jpg',
+  alipayImage: '/md_images/static/2.jpg'
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>本文作者:  </strong>Kuanger
+          </li>
+          <li class="post-copyright-link">
+          <strong>本文链接:  </strong>
+          <a href="/2019/01/30/backend/java_基础/io/NIO相关基础篇（二）-- Linux 网络 IO模型/" target="_blank" title="NIO相关基础篇（二）-- Linux 网络 I/O模型">http://www.kuanger.top/2019/01/30/backend/java_基础/io/NIO相关基础篇（二）-- Linux 网络 IO模型/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>版权声明:   </strong>
+            本博客所有文章除特别声明外，均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            许可协议。转载请注明出处
+          </li>
+         
+        </ul>
+<div>
+</div></div>
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IO/">IO</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/01/31/backend/java_基础/io/NIO相关基础篇（三）-- Zero-Copy 零拷贝/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          NIO相关基础篇（三）-- Zero-Copy 零拷贝
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/01/29/backend/java_基础/io/NIO相关基础篇（一）-- 空间概念/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">NIO相关基础篇（一）-- 空间概念</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#阻塞I-O-Blocking-I-O"><span class="nav-number">1.</span> <span class="nav-text">阻塞I/O (Blocking I/O)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非阻塞I-O-Non-Blocking-I-O"><span class="nav-number">2.</span> <span class="nav-text">非阻塞I/O (Non-Blocking I/O)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#I-O复用（I-O-Multiplexing"><span class="nav-number">3.</span> <span class="nav-text">I/O复用（I/O Multiplexing)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#信号驱动的I-O-Signal-Driven-I-O"><span class="nav-number">4.</span> <span class="nav-text">信号驱动的I/O (Signal Driven I/O)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异步I-O"><span class="nav-number">5.</span> <span class="nav-text">异步I/O</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5个I-O模型的对比"><span class="nav-number">6.</span> <span class="nav-text">5个I/O模型的对比</span></a></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <!-- <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>-->
+	      <p id="copyRightEn">Copyright &copy; 2018 - 2019 Kuanger All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				访客数 : <span id="busuanzi_value_site_uv"></span> |  
+				访问量 : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Better than yesterday
+          </div>
+          <div class="panel-body">
+            Copyright © 2019 Kuanger All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>
