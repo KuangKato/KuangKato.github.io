@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="jGpOWJy4VY">
+  
+  <title>设计模式（一） | Better than yesterday</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Kuanger">
+  
+  
+  
+  
+  <meta name="description" content="归类设计模式大致按照模式的应用目标分类，设计模式可以分为创建型模式、结构型模式和行为型模式。  创建型模式，是对对象创建过程的各种问题和解决方案的总结。  包括各种工厂模式（Factory、Abstract Factory）、单例模式（Singleton）、构建器模式（Builder）、原型模式（ProtoType）。   结构型模式，是针对软件设计结构的总结，关注于类、对象继承、组合方式的实践经">
+<meta name="keywords" content="java,java基础,设计模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式（一）">
+<meta property="og:url" content="http://www.kuanger.top/2019/04/01/backend/java_基础/design pattern/设计模式（一）/index.html">
+<meta property="og:site_name" content="Better than yesterday">
+<meta property="og:description" content="归类设计模式大致按照模式的应用目标分类，设计模式可以分为创建型模式、结构型模式和行为型模式。  创建型模式，是对对象创建过程的各种问题和解决方案的总结。  包括各种工厂模式（Factory、Abstract Factory）、单例模式（Singleton）、构建器模式（Builder）、原型模式（ProtoType）。   结构型模式，是针对软件设计结构的总结，关注于类、对象继承、组合方式的实践经">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://www.kuanger.top/md_images/jk_java/28.png">
+<meta property="og:image" content="http://www.kuanger.top/md_images/jk_java/29.png">
+<meta property="og:image" content="http://www.kuanger.top/md_images/jk_java/30.png">
+<meta property="og:updated_time" content="2019-03-28T16:31:57.252Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="设计模式（一）">
+<meta name="twitter:description" content="归类设计模式大致按照模式的应用目标分类，设计模式可以分为创建型模式、结构型模式和行为型模式。  创建型模式，是对对象创建过程的各种问题和解决方案的总结。  包括各种工厂模式（Factory、Abstract Factory）、单例模式（Singleton）、构建器模式（Builder）、原型模式（ProtoType）。   结构型模式，是针对软件设计结构的总结，关注于类、对象继承、组合方式的实践经">
+<meta name="twitter:image" content="http://www.kuanger.top/md_images/jk_java/28.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Better than yesterday" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css">
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css">
+  
+
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;" href="#" data-toggle="modal" data-target="#myModal">
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">首页</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">归档</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">分类</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">标签</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">关于</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="">
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(无标题)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </ul></div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-backend/java_基础/design pattern/设计模式（一）" style="width: 75%; float:left;" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      设计模式（一）
+    </h1>
+  
+
+		    
+        <!-- 开始添加字数统计-->
+        
+          <div style="margin-top:10px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">1.3k字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">4分</span>
+      </span>
+    </span>
+</div>
+
+          
+        
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/04/01/backend/java_基础/design pattern/设计模式（一）/" class="article-date">
+	  <time datetime="2019-03-31T16:00:00.000Z" itemprop="datePublished">2019-04-01</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/java/">java</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		阅读量<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <!-- <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="归类设计模式"><a href="#归类设计模式" class="headerlink" title="归类设计模式"></a>归类设计模式</h2><p>大致按照模式的应用目标分类，设计模式可以分为创建型模式、结构型模式和行为型模式。</p>
+<ol>
+<li><p><strong>创建型模式</strong>，是对对象创建过程的各种问题和解决方案的总结。</p>
+<ul>
+<li>包括各种工厂模式（Factory、Abstract Factory）、单例模式（Singleton）、构建器模式（Builder）、原型模式（ProtoType）。</li>
+</ul>
+</li>
+<li><p><strong>结构型模式</strong>，是针对软件设计结构的总结，关注于类、对象继承、组合方式的实践经验。</p>
+<ul>
+<li>常见的结构型模式，包括桥接模式（Bridge）、适配器模式（Adapter）、装饰者模式（Decorator）、代理模式（Proxy）、组合模式（Composite）、外观模式（Facade）、享元模式（Flyweight）等。</li>
+</ul>
+</li>
+<li><p><strong>行为型模式</strong>，是从类或对象之间交互、职责划分等角度总结的模式。</p>
+<ul>
+<li>比较常见的行为型模式有策略模式（Strategy）、解释器模式（Interpreter）、命令模式（Command）、观察者模式（Observer）、迭代器模式（Iterator）、模板方法模式（Template Method）、访问者模式（Visitor）。</li>
+</ul>
+</li>
+</ol>
+<a id="more"></a>
+<hr>
+<h3 id="装饰者模式"><a href="#装饰者模式" class="headerlink" title="装饰者模式"></a>装饰者模式</h3><ul>
+<li>识别装饰器模式，可以通过识别类设计特征来进行判断，也就是其类构造函数以相同的抽象类或者接口为输入参数。</li>
+</ul>
+<p>我们知道 InputStream 是一个抽象类，标准类库中提供了 FileInputStream、ByteArrayInputStream 等各种不同的子类，分别从不同角度对 InputStream 进行了功能扩展，这是典型的装饰器模式应用案例。</p>
+<ul>
+<li>例如，BufferedInputStream 经过包装，为输入流过程增加缓存，类似这种装饰器还可以多次嵌套，不断地增加不同层次的功能。</li>
+</ul>
+<p><img src="/md_images/jk_java/28.png" alt=""></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">BufferedInputStream</span><span class="params">(InputStream in)</span></span></span><br></pre></td></tr></table></figure>
+<p><strong>因为装饰器模式本质上是包装同类型实例，我们对目标对象的调用，往往会通过包装类覆盖过的方法，迂回调用被包装的实例，这就可以很自然地实现增加额外逻辑的目的，也就是所谓的“装饰”。</strong></p>
+<hr>
+<h3 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h3><p>工厂模式，在我们的代码中随处可见，我举个相对不同的 API 设计实践。比如，JDK 最新版本中 HTTP/2 Client API，下面这个创建 HttpRequest 的过程，就是典型的构建器模式（Builder），通常会被实现成fluent 风格的 API，也有人叫它方法链。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">HttpRequest request = HttpRequest.newBuilder(<span class="keyword">new</span> URI(uri))</span><br><span class="line">        .header(headerAlice, valueAlice)</span><br><span class="line">        .headers(headerBob, value1Bob,</span><br><span class="line">        headerCarl, valueCarl,</span><br><span class="line">        headerBob, value2Bob)</span><br><span class="line">        .GET()</span><br><span class="line">        .build();</span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用构建器模式，可以比较优雅地解决构建复杂对象的麻烦，这里的“复杂”是指类似需要输入的参数组合较多;</li>
+<li>如果用构造函数，我们往往需要为每一种可能的输入参数组合实现相应的构造函数，一系列复杂的构造函数会让代码阅读性和可维护性变得很差。</li>
+</ul>
+<p>代码简单示例：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BeanFactory</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 编写工厂类的四个基本步骤：</span></span><br><span class="line"><span class="comment">    * 	1.声明一个私有的工厂对象引用</span></span><br><span class="line"><span class="comment">    * 	2.把构造方法私有化</span></span><br><span class="line"><span class="comment">    * 	3.使用静态代码块初始化</span></span><br><span class="line"><span class="comment">    * 	4.提供共有的静态的方法，获取工厂类对象的引用</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">  <span class="comment">// 1.声明一个私有的工厂对象引用</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> BeanFactory beanFactory= <span class="keyword">null</span>;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> Properties prop;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 	2.把构造方法私有化</span></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">BeanFactory</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 	3.使用静态代码块初始化</span></span><br><span class="line">  <span class="keyword">static</span>&#123;</span><br><span class="line">    beanFactory = <span class="keyword">new</span> BeanFactory();</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//通过加载本类的字节码对象,然后加载并获得输入流</span></span><br><span class="line">    InputStream inStream = BeanFactory.class.getClassLoader().getResourceAsStream(<span class="string">"bean.properties"</span>);</span><br><span class="line">    prop = <span class="keyword">new</span> Properties();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">//读取properties文件的属性</span></span><br><span class="line">      prop.load(inStream);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">      e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 4.提供共有的静态的方法，获取工厂类对象的引用</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> BeanFactory <span class="title">getBeanFactory</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> beanFactory;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 工厂创建对象的改良版本：</span></span><br><span class="line"><span class="comment">    * 	1.通过配置文件的方式，解决了对具体实现的依赖</span></span><br><span class="line"><span class="comment">    * 	2.如果需要修改为其它的实现类对象，不需要再修改java代码，只需要修改配置文件即可</span></span><br><span class="line"><span class="comment">    * 	3.这里可以统一创建我们需要的全部目标对象</span></span><br><span class="line"><span class="comment">    * 	</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Object <span class="title">getInstance</span><span class="params">(String beanName)</span></span>&#123;</span><br><span class="line">    String className = (String) prop.get(beanName);</span><br><span class="line">    Object result = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      result = Class.forName(className).newInstance();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">      e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>properties文件<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CUSTOMERDAO=com.dao.impl.CustomerDaoImpl</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>Spring的IOC思想也是用到了工厂模式</strong>，之前对于对象的创建,由在程序代码中主动new对象，转变为由工厂创建提供，我们使用的地方被动接收的方式。称为控制反转。</p>
+<ul>
+<li>主动创建对象<br><img src="/md_images/jk_java/29.png" alt=""></li>
+<li>被动获取对象<br><img src="/md_images/jk_java/30.png" alt=""></li>
+</ul>
+<hr>
+<h3 id="框架使用的模式"><a href="#框架使用的模式" class="headerlink" title="框架使用的模式"></a>框架使用的模式</h3><p>简要看看主流开源框架，如 <strong>Spring</strong> 等如何在 <strong>API</strong> 设计中使用<strong>设计模式</strong>。你至少要有个大体的印象，如：</p>
+<ul>
+<li><p><strong>BeanFactory和ApplicationContext应用了工厂模式。</strong></p>
+</li>
+<li><p>在 <strong>Bean</strong> 的创建中，Spring 也为不同 scope 定义的对象，提供了<strong>单例和原型等模式</strong>实现。</p>
+</li>
+<li><p><strong>AOP</strong> 领域则是使用了<strong>代理模式、装饰器模式、适配器模式</strong>等。</p>
+</li>
+<li><p>各种<strong>事件监听器</strong>，是<strong>观察者模式</strong>的典型应用。</p>
+</li>
+<li><p>类似 <strong>JdbcTemplate</strong> 等则是应用了<strong>模板模式</strong>。</p>
+</li>
+</ul>
+
+      
+    </div> -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+        
+          <h2 id="归类设计模式"><a href="#归类设计模式" class="headerlink" title="归类设计模式"></a>归类设计模式</h2><p>大致按照模式的应用目标分类，设计模式可以分为创建型模式、结构型模式和行为型模式。</p>
+<ol>
+<li><p><strong>创建型模式</strong>，是对对象创建过程的各种问题和解决方案的总结。</p>
+<ul>
+<li>包括各种工厂模式（Factory、Abstract Factory）、单例模式（Singleton）、构建器模式（Builder）、原型模式（ProtoType）。</li>
+</ul>
+</li>
+<li><p><strong>结构型模式</strong>，是针对软件设计结构的总结，关注于类、对象继承、组合方式的实践经验。</p>
+<ul>
+<li>常见的结构型模式，包括桥接模式（Bridge）、适配器模式（Adapter）、装饰者模式（Decorator）、代理模式（Proxy）、组合模式（Composite）、外观模式（Facade）、享元模式（Flyweight）等。</li>
+</ul>
+</li>
+<li><p><strong>行为型模式</strong>，是从类或对象之间交互、职责划分等角度总结的模式。</p>
+<ul>
+<li>比较常见的行为型模式有策略模式（Strategy）、解释器模式（Interpreter）、命令模式（Command）、观察者模式（Observer）、迭代器模式（Iterator）、模板方法模式（Template Method）、访问者模式（Visitor）。</li>
+</ul>
+</li>
+</ol>
+<a id="more"></a>
+<hr>
+<h3 id="装饰者模式"><a href="#装饰者模式" class="headerlink" title="装饰者模式"></a>装饰者模式</h3><ul>
+<li>识别装饰器模式，可以通过识别类设计特征来进行判断，也就是其类构造函数以相同的抽象类或者接口为输入参数。</li>
+</ul>
+<p>我们知道 InputStream 是一个抽象类，标准类库中提供了 FileInputStream、ByteArrayInputStream 等各种不同的子类，分别从不同角度对 InputStream 进行了功能扩展，这是典型的装饰器模式应用案例。</p>
+<ul>
+<li>例如，BufferedInputStream 经过包装，为输入流过程增加缓存，类似这种装饰器还可以多次嵌套，不断地增加不同层次的功能。</li>
+</ul>
+<p><img src="/md_images/jk_java/28.png" alt=""></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">BufferedInputStream</span><span class="params">(InputStream in)</span></span></span><br></pre></td></tr></table></figure>
+<p><strong>因为装饰器模式本质上是包装同类型实例，我们对目标对象的调用，往往会通过包装类覆盖过的方法，迂回调用被包装的实例，这就可以很自然地实现增加额外逻辑的目的，也就是所谓的“装饰”。</strong></p>
+<hr>
+<h3 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h3><p>工厂模式，在我们的代码中随处可见，我举个相对不同的 API 设计实践。比如，JDK 最新版本中 HTTP/2 Client API，下面这个创建 HttpRequest 的过程，就是典型的构建器模式（Builder），通常会被实现成fluent 风格的 API，也有人叫它方法链。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">HttpRequest request = HttpRequest.newBuilder(<span class="keyword">new</span> URI(uri))</span><br><span class="line">        .header(headerAlice, valueAlice)</span><br><span class="line">        .headers(headerBob, value1Bob,</span><br><span class="line">        headerCarl, valueCarl,</span><br><span class="line">        headerBob, value2Bob)</span><br><span class="line">        .GET()</span><br><span class="line">        .build();</span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用构建器模式，可以比较优雅地解决构建复杂对象的麻烦，这里的“复杂”是指类似需要输入的参数组合较多;</li>
+<li>如果用构造函数，我们往往需要为每一种可能的输入参数组合实现相应的构造函数，一系列复杂的构造函数会让代码阅读性和可维护性变得很差。</li>
+</ul>
+<p>代码简单示例：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BeanFactory</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 编写工厂类的四个基本步骤：</span></span><br><span class="line"><span class="comment">    * 	1.声明一个私有的工厂对象引用</span></span><br><span class="line"><span class="comment">    * 	2.把构造方法私有化</span></span><br><span class="line"><span class="comment">    * 	3.使用静态代码块初始化</span></span><br><span class="line"><span class="comment">    * 	4.提供共有的静态的方法，获取工厂类对象的引用</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">  <span class="comment">// 1.声明一个私有的工厂对象引用</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> BeanFactory beanFactory= <span class="keyword">null</span>;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> Properties prop;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 	2.把构造方法私有化</span></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">BeanFactory</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 	3.使用静态代码块初始化</span></span><br><span class="line">  <span class="keyword">static</span>&#123;</span><br><span class="line">    beanFactory = <span class="keyword">new</span> BeanFactory();</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//通过加载本类的字节码对象,然后加载并获得输入流</span></span><br><span class="line">    InputStream inStream = BeanFactory.class.getClassLoader().getResourceAsStream(<span class="string">"bean.properties"</span>);</span><br><span class="line">    prop = <span class="keyword">new</span> Properties();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">//读取properties文件的属性</span></span><br><span class="line">      prop.load(inStream);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">      e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 4.提供共有的静态的方法，获取工厂类对象的引用</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> BeanFactory <span class="title">getBeanFactory</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> beanFactory;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 工厂创建对象的改良版本：</span></span><br><span class="line"><span class="comment">    * 	1.通过配置文件的方式，解决了对具体实现的依赖</span></span><br><span class="line"><span class="comment">    * 	2.如果需要修改为其它的实现类对象，不需要再修改java代码，只需要修改配置文件即可</span></span><br><span class="line"><span class="comment">    * 	3.这里可以统一创建我们需要的全部目标对象</span></span><br><span class="line"><span class="comment">    * 	</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Object <span class="title">getInstance</span><span class="params">(String beanName)</span></span>&#123;</span><br><span class="line">    String className = (String) prop.get(beanName);</span><br><span class="line">    Object result = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      result = Class.forName(className).newInstance();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">      e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>properties文件<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CUSTOMERDAO=com.dao.impl.CustomerDaoImpl</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>Spring的IOC思想也是用到了工厂模式</strong>，之前对于对象的创建,由在程序代码中主动new对象，转变为由工厂创建提供，我们使用的地方被动接收的方式。称为控制反转。</p>
+<ul>
+<li>主动创建对象<br><img src="/md_images/jk_java/29.png" alt=""></li>
+<li>被动获取对象<br><img src="/md_images/jk_java/30.png" alt=""></li>
+</ul>
+<hr>
+<h3 id="框架使用的模式"><a href="#框架使用的模式" class="headerlink" title="框架使用的模式"></a>框架使用的模式</h3><p>简要看看主流开源框架，如 <strong>Spring</strong> 等如何在 <strong>API</strong> 设计中使用<strong>设计模式</strong>。你至少要有个大体的印象，如：</p>
+<ul>
+<li><p><strong>BeanFactory和ApplicationContext应用了工厂模式。</strong></p>
+</li>
+<li><p>在 <strong>Bean</strong> 的创建中，Spring 也为不同 scope 定义的对象，提供了<strong>单例和原型等模式</strong>实现。</p>
+</li>
+<li><p><strong>AOP</strong> 领域则是使用了<strong>代理模式、装饰器模式、适配器模式</strong>等。</p>
+</li>
+<li><p>各种<strong>事件监听器</strong>，是<strong>观察者模式</strong>的典型应用。</p>
+</li>
+<li><p>类似 <strong>JdbcTemplate</strong> 等则是应用了<strong>模板模式</strong>。</p>
+</li>
+</ul>
+
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: '打赏支持', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: '/md_images/static/1.jpg',
+  alipayImage: '/md_images/static/2.jpg'
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>本文作者:  </strong>Kuanger
+          </li>
+          <li class="post-copyright-link">
+          <strong>本文链接:  </strong>
+          <a href="/2019/04/01/backend/java_基础/design pattern/设计模式（一）/" target="_blank" title="设计模式（一）">http://www.kuanger.top/2019/04/01/backend/java_基础/design pattern/设计模式（一）/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>版权声明:   </strong>
+            本博客所有文章除特别声明外，均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            许可协议。转载请注明出处
+          </li>
+         
+        </ul>
+<div>
+</div></div>
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/04/02/backend/java_基础/design pattern/设计模式（二）/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          设计模式（二）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/01/31/backend/java_基础/io/NIO相关基础篇（三）-- Zero-Copy 零拷贝/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">NIO相关基础篇（三）-- Zero-Copy 零拷贝</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#归类设计模式"><span class="nav-number">1.</span> <span class="nav-text">归类设计模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#装饰者模式"><span class="nav-number">1.1.</span> <span class="nav-text">装饰者模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工厂模式"><span class="nav-number">1.2.</span> <span class="nav-text">工厂模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#框架使用的模式"><span class="nav-number">1.3.</span> <span class="nav-text">框架使用的模式</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <!-- <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>-->
+	      <p id="copyRightEn">Copyright &copy; 2018 - 2019 Kuanger All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				访客数 : <span id="busuanzi_value_site_uv"></span> |  
+				访问量 : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Better than yesterday
+          </div>
+          <div class="panel-body">
+            Copyright © 2019 Kuanger All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>

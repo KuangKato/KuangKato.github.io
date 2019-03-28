@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="jGpOWJy4VY">
+  
+  <title>设计模式（二） | Better than yesterday</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Kuanger">
+  
+  
+  
+  
+  <meta name="description" content="单例设计模式一个类在程序的运行过程中，只有一个对象。  比如日历类 Calendar.getInstance()   单例特点  不能让外界创建该类的对象：私有构造方法  单例类本身要负责创建该类的唯一对象。  单例类要提供一个静态公开的方法返回该类的唯一对象。">
+<meta name="keywords" content="java,java基础,设计模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式（二）">
+<meta property="og:url" content="http://www.kuanger.top/2019/04/02/backend/java_基础/design pattern/设计模式（二）/index.html">
+<meta property="og:site_name" content="Better than yesterday">
+<meta property="og:description" content="单例设计模式一个类在程序的运行过程中，只有一个对象。  比如日历类 Calendar.getInstance()   单例特点  不能让外界创建该类的对象：私有构造方法  单例类本身要负责创建该类的唯一对象。  单例类要提供一个静态公开的方法返回该类的唯一对象。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-03-28T16:47:57.616Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="设计模式（二）">
+<meta name="twitter:description" content="单例设计模式一个类在程序的运行过程中，只有一个对象。  比如日历类 Calendar.getInstance()   单例特点  不能让外界创建该类的对象：私有构造方法  单例类本身要负责创建该类的唯一对象。  单例类要提供一个静态公开的方法返回该类的唯一对象。">
+  
+    <link rel="alternate" href="/atom.xml" title="Better than yesterday" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css">
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css">
+  
+
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;" href="#" data-toggle="modal" data-target="#myModal">
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">首页</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">归档</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">分类</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">标签</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">关于</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="">
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(无标题)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </ul></div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-backend/java_基础/design pattern/设计模式（二）" style="width: 75%; float:left;" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      设计模式（二）
+    </h1>
+  
+
+		    
+        <!-- 开始添加字数统计-->
+        
+          <div style="margin-top:10px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">1.1k字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">4分</span>
+      </span>
+    </span>
+</div>
+
+          
+        
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/04/02/backend/java_基础/design pattern/设计模式（二）/" class="article-date">
+	  <time datetime="2019-04-01T16:00:00.000Z" itemprop="datePublished">2019-04-02</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/java/">java</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		阅读量<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <!-- <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="单例设计模式"><a href="#单例设计模式" class="headerlink" title="单例设计模式"></a>单例设计模式</h3><p>一个类在程序的运行过程中，只有一个对象。</p>
+<blockquote>
+<p>比如日历类 Calendar.getInstance()</p>
+</blockquote>
+<ul>
+<li><p>单例特点</p>
+<ul>
+<li><p>不能让外界创建该类的对象：私有构造方法</p>
+</li>
+<li><p>单例类本身要负责创建该类的唯一对象。</p>
+</li>
+<li><p>单例类要提供一个静态公开的方法返回该类的唯一对象。</p>
+</li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+<h4 id="简单写一个单例模式"><a href="#简单写一个单例模式" class="headerlink" title="简单写一个单例模式"></a>简单写一个单例模式</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> instance;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>原来，Java 会自动为没有明确声明构造函数的类，定义一个 public 的无参数的构造函数，所以上面的例子并不能保证额外的对象不被创建出来，别人<strong>完全可以直接“new Singleton()”</strong>，那我们应该怎么处理呢？</p>
+<p>不错，<strong>可以为单例定义一个 private 的构造函数</strong>（也有建议声明为枚举，这是有争议的，我个人不建议选择相对复杂的枚举，毕竟日常开发不是学术研究）。这样还有什么改进的余地吗？</p>
+<p>在标准类库中很多地方使用懒加载（lazy-load），改善初始内存开销，单例同样适用，下面是修正后的改进版本。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance;</span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">      instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">      &#125;</span><br><span class="line">  <span class="keyword">return</span> instance;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个实现在单线程环境不存在问题，但是如果处于并发场景，<strong>就需要考虑线程安全，最熟悉的就莫过于“双检锁”</strong>，其要点在于：</p>
+<ul>
+<li>这里的 volatile 能够提供可见性，以及保证 getInstance 返回的是初始化完全的对象。</li>
+<li>在同步之前进行 null 检查，以尽量避免进入相对昂贵的同步块。</li>
+<li>直接在 class 级别进行同步，保证线程安全的类方法调用。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> Singleton singleton = <span class="keyword">null</span>;</span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getSingleton</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (singleton == <span class="keyword">null</span>) &#123; <span class="comment">// 尽量避免重复进入同步块</span></span><br><span class="line">      <span class="keyword">synchronized</span> (Singleton.class) &#123; <span class="comment">// 同步.class，意味着对同步类方法调用</span></span><br><span class="line">        <span class="keyword">if</span> (singleton == <span class="keyword">null</span>) &#123;</span><br><span class="line">          singleton = <span class="keyword">new</span> Singleton();</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> singleton;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在这段代码中，争论较多的是 <strong>volatile</strong> 修饰静态变量，当 <strong>Singleton</strong> 类本身有多个成员变量时，需要保证初始化过程完成后，才能被 get 到。</p>
+<p>在现代 Java 中，内存排序模型（JMM）已经非常完善，通过 <strong>volatile</strong> 的 <strong>write</strong> 或者 <strong>read</strong>，能保证所谓的 <strong>happen-before</strong>，也就是避免常被提到的指令重排。换句话说，构造对象的 <strong>store</strong> 指令能够被保证一定在 <strong>volatile read</strong> 之前。</p>
+<p>当然，<strong>也有一些人推荐利用内部类持有静态对象的方式实现，其理论依据是对象初始化过程中隐含的初始化锁</strong>（有兴趣的话你可以参考<a href="https://docs.oracle.com/javase/specs/jls/se7/html/jls-12.html#jls-12.4.2" target="_blank" rel="noopener">jls-12.4.2</a> 中对 LC 的说明），这种和前面的双检锁实现都能保证线程安全，不过语法稍显晦涩，未必有特别的优势。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getSingleton</span><span class="params">()</span></span>&#123;</span><br><span class="line">    	<span class="keyword">return</span> Holder.singleton;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Holder</span> </span>&#123;</span><br><span class="line">    	<span class="keyword">private</span> <span class="keyword">static</span> Singleton singleton = <span class="keyword">new</span> Singleton();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>所以，可以看出，即使是看似最简单的单例模式，在增加各种高标准需求之后，同样需要非常多的实现考量。</p>
+<p>上面是比较学究的考察，其实实践中未必需要如此复杂，如果我们看 Java 核心类库自己的单例实现，比如<a href="http://hg.openjdk.java.net/jdk/jdk/file/18fba780c1d1/src/java.base/share/classes/java/lang/Runtime.java" target="_blank" rel="noopener">java.lang.Runtime</a>，你会发现：</p>
+<ul>
+<li>它并没使用复杂的双检锁之类。</li>
+<li>静态实例被声明为 final，这是被通常实践忽略的，一定程度保证了实例不被篡改，也有有限的保证执行顺序的语义。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Runtime currentRuntime = <span class="keyword">new</span> Runtime();</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> Version version;</span><br><span class="line"><span class="comment">// …</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Runtime <span class="title">getRuntime</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> currentRuntime;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/** Don't let anyone else instantiate this class */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="title">Runtime</span><span class="params">()</span> </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><h4 id="饿汉式"><a href="#饿汉式" class="headerlink" title="饿汉式"></a>饿汉式</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span></span>&#123;</span><br><span class="line">	<span class="comment">//饿汉式</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> Singleton s=<span class="keyword">new</span> Singleton();</span><br><span class="line">	<span class="comment">//私有构造方法</span></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//对外提供访问对象的方法</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> s;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="懒汉式"><a href="#懒汉式" class="headerlink" title="懒汉式"></a>懒汉式</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">	<span class="comment">//懒汉式</span></span><br><span class="line">	<span class="comment">//要进行线程安全操作</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> Singleton s = <span class="keyword">null</span>;</span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	&#125;</span><br><span class="line">  </span><br><span class="line">	<span class="comment">//同步方法</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span>  <span class="keyword">synchronized</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (s == <span class="keyword">null</span>) &#123;</span><br><span class="line">			s = <span class="keyword">new</span> Singleton();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> s;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="考虑线程问题"><a href="#考虑线程问题" class="headerlink" title="考虑线程问题"></a>考虑线程问题</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">	<span class="comment">//懒汉式</span></span><br><span class="line">	<span class="comment">//要进行线程安全操作</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> Singleton s = <span class="keyword">null</span>;</span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//同步代码块</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (s == <span class="keyword">null</span>) &#123;</span><br><span class="line">			<span class="keyword">synchronized</span> (Singleton.class) &#123;</span><br><span class="line">				<span class="keyword">if</span> (s == <span class="keyword">null</span>) &#123;</span><br><span class="line">					s = <span class="keyword">new</span> Singleton();</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> s;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div> -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+        
+          <h3 id="单例设计模式"><a href="#单例设计模式" class="headerlink" title="单例设计模式"></a>单例设计模式</h3><p>一个类在程序的运行过程中，只有一个对象。</p>
+<blockquote>
+<p>比如日历类 Calendar.getInstance()</p>
+</blockquote>
+<ul>
+<li><p>单例特点</p>
+<ul>
+<li><p>不能让外界创建该类的对象：私有构造方法</p>
+</li>
+<li><p>单例类本身要负责创建该类的唯一对象。</p>
+</li>
+<li><p>单例类要提供一个静态公开的方法返回该类的唯一对象。</p>
+</li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+<h4 id="简单写一个单例模式"><a href="#简单写一个单例模式" class="headerlink" title="简单写一个单例模式"></a>简单写一个单例模式</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> instance;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>原来，Java 会自动为没有明确声明构造函数的类，定义一个 public 的无参数的构造函数，所以上面的例子并不能保证额外的对象不被创建出来，别人<strong>完全可以直接“new Singleton()”</strong>，那我们应该怎么处理呢？</p>
+<p>不错，<strong>可以为单例定义一个 private 的构造函数</strong>（也有建议声明为枚举，这是有争议的，我个人不建议选择相对复杂的枚举，毕竟日常开发不是学术研究）。这样还有什么改进的余地吗？</p>
+<p>在标准类库中很多地方使用懒加载（lazy-load），改善初始内存开销，单例同样适用，下面是修正后的改进版本。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance;</span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">      instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">      &#125;</span><br><span class="line">  <span class="keyword">return</span> instance;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个实现在单线程环境不存在问题，但是如果处于并发场景，<strong>就需要考虑线程安全，最熟悉的就莫过于“双检锁”</strong>，其要点在于：</p>
+<ul>
+<li>这里的 volatile 能够提供可见性，以及保证 getInstance 返回的是初始化完全的对象。</li>
+<li>在同步之前进行 null 检查，以尽量避免进入相对昂贵的同步块。</li>
+<li>直接在 class 级别进行同步，保证线程安全的类方法调用。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> Singleton singleton = <span class="keyword">null</span>;</span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getSingleton</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (singleton == <span class="keyword">null</span>) &#123; <span class="comment">// 尽量避免重复进入同步块</span></span><br><span class="line">      <span class="keyword">synchronized</span> (Singleton.class) &#123; <span class="comment">// 同步.class，意味着对同步类方法调用</span></span><br><span class="line">        <span class="keyword">if</span> (singleton == <span class="keyword">null</span>) &#123;</span><br><span class="line">          singleton = <span class="keyword">new</span> Singleton();</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> singleton;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在这段代码中，争论较多的是 <strong>volatile</strong> 修饰静态变量，当 <strong>Singleton</strong> 类本身有多个成员变量时，需要保证初始化过程完成后，才能被 get 到。</p>
+<p>在现代 Java 中，内存排序模型（JMM）已经非常完善，通过 <strong>volatile</strong> 的 <strong>write</strong> 或者 <strong>read</strong>，能保证所谓的 <strong>happen-before</strong>，也就是避免常被提到的指令重排。换句话说，构造对象的 <strong>store</strong> 指令能够被保证一定在 <strong>volatile read</strong> 之前。</p>
+<p>当然，<strong>也有一些人推荐利用内部类持有静态对象的方式实现，其理论依据是对象初始化过程中隐含的初始化锁</strong>（有兴趣的话你可以参考<a href="https://docs.oracle.com/javase/specs/jls/se7/html/jls-12.html#jls-12.4.2" target="_blank" rel="noopener">jls-12.4.2</a> 中对 LC 的说明），这种和前面的双检锁实现都能保证线程安全，不过语法稍显晦涩，未必有特别的优势。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getSingleton</span><span class="params">()</span></span>&#123;</span><br><span class="line">    	<span class="keyword">return</span> Holder.singleton;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Holder</span> </span>&#123;</span><br><span class="line">    	<span class="keyword">private</span> <span class="keyword">static</span> Singleton singleton = <span class="keyword">new</span> Singleton();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>所以，可以看出，即使是看似最简单的单例模式，在增加各种高标准需求之后，同样需要非常多的实现考量。</p>
+<p>上面是比较学究的考察，其实实践中未必需要如此复杂，如果我们看 Java 核心类库自己的单例实现，比如<a href="http://hg.openjdk.java.net/jdk/jdk/file/18fba780c1d1/src/java.base/share/classes/java/lang/Runtime.java" target="_blank" rel="noopener">java.lang.Runtime</a>，你会发现：</p>
+<ul>
+<li>它并没使用复杂的双检锁之类。</li>
+<li>静态实例被声明为 final，这是被通常实践忽略的，一定程度保证了实例不被篡改，也有有限的保证执行顺序的语义。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Runtime currentRuntime = <span class="keyword">new</span> Runtime();</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> Version version;</span><br><span class="line"><span class="comment">// …</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Runtime <span class="title">getRuntime</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> currentRuntime;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/** Don't let anyone else instantiate this class */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="title">Runtime</span><span class="params">()</span> </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><h4 id="饿汉式"><a href="#饿汉式" class="headerlink" title="饿汉式"></a>饿汉式</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span></span>&#123;</span><br><span class="line">	<span class="comment">//饿汉式</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> Singleton s=<span class="keyword">new</span> Singleton();</span><br><span class="line">	<span class="comment">//私有构造方法</span></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//对外提供访问对象的方法</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> s;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="懒汉式"><a href="#懒汉式" class="headerlink" title="懒汉式"></a>懒汉式</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">	<span class="comment">//懒汉式</span></span><br><span class="line">	<span class="comment">//要进行线程安全操作</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> Singleton s = <span class="keyword">null</span>;</span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	&#125;</span><br><span class="line">  </span><br><span class="line">	<span class="comment">//同步方法</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span>  <span class="keyword">synchronized</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (s == <span class="keyword">null</span>) &#123;</span><br><span class="line">			s = <span class="keyword">new</span> Singleton();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> s;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="考虑线程问题"><a href="#考虑线程问题" class="headerlink" title="考虑线程问题"></a>考虑线程问题</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">	<span class="comment">//懒汉式</span></span><br><span class="line">	<span class="comment">//要进行线程安全操作</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> Singleton s = <span class="keyword">null</span>;</span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//同步代码块</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (s == <span class="keyword">null</span>) &#123;</span><br><span class="line">			<span class="keyword">synchronized</span> (Singleton.class) &#123;</span><br><span class="line">				<span class="keyword">if</span> (s == <span class="keyword">null</span>) &#123;</span><br><span class="line">					s = <span class="keyword">new</span> Singleton();</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> s;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: '打赏支持', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: '/md_images/static/1.jpg',
+  alipayImage: '/md_images/static/2.jpg'
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>本文作者:  </strong>Kuanger
+          </li>
+          <li class="post-copyright-link">
+          <strong>本文链接:  </strong>
+          <a href="/2019/04/02/backend/java_基础/design pattern/设计模式（二）/" target="_blank" title="设计模式（二）">http://www.kuanger.top/2019/04/02/backend/java_基础/design pattern/设计模式（二）/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>版权声明:   </strong>
+            本博客所有文章除特别声明外，均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            许可协议。转载请注明出处
+          </li>
+         
+        </ul>
+<div>
+</div></div>
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/04/01/backend/java_基础/design pattern/设计模式（一）/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">设计模式（一）</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#单例设计模式"><span class="nav-number">1.</span> <span class="nav-text">单例设计模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简单写一个单例模式"><span class="nav-number">1.1.</span> <span class="nav-text">简单写一个单例模式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">2.</span> <span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#饿汉式"><span class="nav-number">2.1.</span> <span class="nav-text">饿汉式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#懒汉式"><span class="nav-number">2.2.</span> <span class="nav-text">懒汉式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#考虑线程问题"><span class="nav-number">2.3.</span> <span class="nav-text">考虑线程问题</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <!-- <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>-->
+	      <p id="copyRightEn">Copyright &copy; 2018 - 2019 Kuanger All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				访客数 : <span id="busuanzi_value_site_uv"></span> |  
+				访问量 : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Better than yesterday
+          </div>
+          <div class="panel-body">
+            Copyright © 2019 Kuanger All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>
