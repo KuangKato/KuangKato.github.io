@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="jGpOWJy4VY">
+  
+  <title>一条sql执行慢的原因 (一) | Better than yesterday</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Kuanger">
+  
+  
+  
+  
+  <meta name="description" content="asd{font-weight: bold;color: rgb(255, 104, 39)}   原因归类为两种 大多数情况是正常的，只是偶尔会出现很慢的情况  在数据量不变的情况下，这条SQL语句一直以来都执行的很慢">
+<meta name="keywords" content="SQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一条SQL执行慢的原因 (一)">
+<meta property="og:url" content="http://www.kuanger.top/2019/05/04/backend/sql/一条SQL执行慢的原因(一)/index.html">
+<meta property="og:site_name" content="Better than yesterday">
+<meta property="og:description" content="asd{font-weight: bold;color: rgb(255, 104, 39)}   原因归类为两种 大多数情况是正常的，只是偶尔会出现很慢的情况  在数据量不变的情况下，这条SQL语句一直以来都执行的很慢">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-05-05T05:03:29.062Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="一条SQL执行慢的原因 (一)">
+<meta name="twitter:description" content="asd{font-weight: bold;color: rgb(255, 104, 39)}   原因归类为两种 大多数情况是正常的，只是偶尔会出现很慢的情况  在数据量不变的情况下，这条SQL语句一直以来都执行的很慢">
+  
+    <link rel="alternate" href="/atom.xml" title="Better than yesterday" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css">
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css">
+  
+
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;" href="#" data-toggle="modal" data-target="#myModal">
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">首页</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">归档</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">分类</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">标签</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">关于</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="">
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(无标题)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </ul></div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-backend/sql/一条SQL执行慢的原因(一)" style="width: 75%; float:left;" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      一条SQL执行慢的原因 (一)
+    </h1>
+  
+
+		    
+        <!-- 开始添加字数统计-->
+        
+          <div style="margin-top:10px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">2.1k字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">7分</span>
+      </span>
+    </span>
+</div>
+
+          
+        
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/05/04/backend/sql/一条SQL执行慢的原因(一)/" class="article-date">
+	  <time datetime="2019-05-03T16:00:00.000Z" itemprop="datePublished">2019-05-04</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/SQL/">SQL</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		阅读量<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <!-- <div class="article-entry" itemprop="articleBody">
+      
+        <style> asd{font-weight: bold;color: rgb(255, 104, 39)} </style>
+
+<h2 id="原因归类为两种"><a href="#原因归类为两种" class="headerlink" title="原因归类为两种"></a>原因归类为两种</h2><ul>
+<li><p>大多数情况是正常的，只是偶尔会出现很慢的情况</p>
+</li>
+<li><p>在数据量不变的情况下，这条SQL语句一直以来都执行的很慢</p>
+</li>
+</ul>
+<a id="more"></a>
+<h3 id="一、针对偶尔很慢的情况"><a href="#一、针对偶尔很慢的情况" class="headerlink" title="一、针对偶尔很慢的情况"></a>一、针对偶尔很慢的情况</h3><p>一条 SQL 大多数情况正常，偶尔才能出现很慢的情况，针对这种情况，我觉得这条SQL语句的书写本身是没什么问题的，而是其他原因导致的</p>
+<h4 id="数据库在刷新脏页（flush）"><a href="#数据库在刷新脏页（flush）" class="headerlink" title="数据库在刷新脏页（flush）"></a>数据库在刷新脏页（flush）</h4><p>当我们要往数据库插入一条数据、或者要更新一条数据的时候，我们知道数据库会在 <asd>内存</asd> 中把对应字段的数据更新了，但是更新之后，这些更新的字段并不会马上同步持久化到 <asd>磁盘</asd> 中去，而是把这些更新的记录写入到 <asd>redo log</asd> 日记中去，等到空闲的时候，在通过 <asd>redo log</asd> 里的日记把最新的数据同步到 <asd>磁盘</asd> 中去。</p>
+<blockquote>
+<p>当内存数据页跟磁盘数据页内容不一致的时候，我们称这个内存页为 <strong>“脏页”</strong>。<br>内存数据写入到磁盘后，内存和磁盘上的数据页的内容就一致了，称为 <strong>“干净页”</strong>。</p>
+</blockquote>
+<ul>
+<li>刷脏页有下面4种场景：</li>
+</ul>
+<ol>
+<li><p><asd>redo log写满了</asd> ：redo log 里的容量是有限的，如果数据库一直很忙，更新又很频繁，这个时候 redo log 很快就会被写满了，这个时候就没办法等到空闲的时候再把数据同步到磁盘的，只能暂停其他操作，全身心来把数据同步到磁盘中去的，而这个时候，就会导致我们平时正常的SQL语句突然执行的很慢，所以说，数据库在在同步数据到磁盘的时候，就有可能导致我们的SQL语句执行的很慢了。</p>
+</li>
+<li><p><asd>内存不够用了</asd>：如果一次查询较多的数据，恰好碰到所查数据页不在内存中时，需要申请内存，而此时恰好内存不足的时候就需要淘汰一部分内存数据页，如果是干净页，就直接释放，如果恰好是脏页就需要刷脏页。</p>
+</li>
+<li><p><asd>MySQL 认为系统“空闲”的时候</asd>：这时系统没什么压力。</p>
+</li>
+<li><p><asd>MySQL 正常关闭的时候</asd>：这时候，MySQL 会把内存的脏页都 flush 到磁盘上，这样下次 MySQL 启动的时候，就可以直接从磁盘上读数据，启动速度会很快。</p>
+</li>
+</ol>
+<p>后两种不用太关注“性能”问题。</p>
+<hr>
+<h4 id="程序拿不到锁"><a href="#程序拿不到锁" class="headerlink" title="程序拿不到锁"></a>程序拿不到锁</h4><ul>
+<li>这个就比较容易想到了，我们要执行的这条语句，刚好这条语句涉及到的表，别人在用，并且加锁了，我们拿不到锁，只能慢慢等待别人释放锁了。</li>
+<li>或者，表没有加锁，但要使用到的某个一行被加锁了。</li>
+</ul>
+<p>如果要判断是否真的在等待锁，我们可以用 <asd>show processlist</asd> 这个命令来查看当前的状态</p>
+<hr>
+<h3 id="二、针对一直都这么慢的情况"><a href="#二、针对一直都这么慢的情况" class="headerlink" title="二、针对一直都这么慢的情况"></a>二、针对一直都这么慢的情况</h3><p>如果在数据量一样大的情况下，这条 SQL 语句每次都执行的这么慢，那就就要好好考虑下你的 SQL 书写了，下面我们来分析下哪些原因会导致我们的 SQL 语句执行的很不理想。</p>
+<p>我们先来假设我们有一个表，表里有下面两个字段,分别是主键 id，和两个普通字段 a 和 b。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE TABLE `t` (</span><br><span class="line">  `id` int(11) NOT NULL,</span><br><span class="line">  `a` int(11) DEFAULT NULL,</span><br><span class="line">  `b` int(11) DEFAULT NULL,</span><br><span class="line">  PRIMARY KEY (`id`)</span><br><span class="line">) ENGINE=InnoDB;</span><br></pre></td></tr></table></figure>
+<h4 id="没用上索引"><a href="#没用上索引" class="headerlink" title="没用上索引"></a>没用上索引</h4><p>没有用上索引，我觉得这个原因是很多人都能想到的，例如你要查询这条语句<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> t <span class="keyword">where</span> <span class="number">100</span> &lt;a <span class="keyword">and</span> a &lt; <span class="number">100000</span>;</span><br></pre></td></tr></table></figure></p>
+<h5 id="（1）字段没有索引"><a href="#（1）字段没有索引" class="headerlink" title="（1）字段没有索引"></a>（1）字段没有索引</h5><p>刚好你的 a 字段上没有索引，那么抱歉，只能走全表扫描了，你就体验不会索引带来的乐趣了，所以，这回导致这条查询语句很慢。</p>
+<h5 id="（2）字段有索引，但却没有用索引"><a href="#（2）字段有索引，但却没有用索引" class="headerlink" title="（2）字段有索引，但却没有用索引"></a>（2）字段有索引，但却没有用索引</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> t <span class="keyword">where</span> a - <span class="number">1</span> = <span class="number">1000</span>;</span><br></pre></td></tr></table></figure>
+<p>如果我们在字段的左边做了运算，那么很抱歉，在查询的时候，就不会用上索引了, 应该改为：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> t <span class="keyword">where</span> a = <span class="number">1000</span> + <span class="number">1</span>;</span><br></pre></td></tr></table></figure></p>
+<h5 id="（3）函数操作导致没有用上索引"><a href="#（3）函数操作导致没有用上索引" class="headerlink" title="（3）函数操作导致没有用上索引"></a>（3）函数操作导致没有用上索引</h5><p>如果我们在查询的时候，对字段进行了函数操作，也是会导致没有用上索引的，例如<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> t <span class="keyword">where</span> <span class="keyword">pow</span>(a,<span class="number">2</span>) = <span class="number">1000</span>;</span><br></pre></td></tr></table></figure></p>
+<p>假设函数 pow 是求 a 的 n 次方，实际上可能并没有 pow(a,2)这个函数。其实这个和上面在左边做运算也是很类似的。</p>
+<hr>
+<h4 id="数据库没选中索引"><a href="#数据库没选中索引" class="headerlink" title="数据库没选中索引"></a>数据库没选中索引</h4><p>我们在进行查询操作的时候，例如<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> t <span class="keyword">where</span> <span class="number">100</span> &lt; a <span class="keyword">and</span> a &lt; <span class="number">100000</span>;</span><br></pre></td></tr></table></figure></p>
+<p>我们知道，<asd>主键索引</asd> 和 <asd>非主键索引</asd>是有区别的，主键索引存放的值是<asd>整行字段的数据</asd>，而非主键索引上存放的值不是整行字段的数据，而且<asd>存放主键字段的值</asd>。</p>
+<p>如果是扫描全表的话，那么扫描的次数就是这个表的总行数了，假设为 n；而如果走索引 a 的话，我们通过索引 a 找到主键之后，还得再通过主键索引来找我们整行的数据，也就是说，<strong>需要走两次索引</strong>。而且，我们也不知道符合 <code>100 a &lt; and a &lt; 10000</code> 这个条件的数据有多少行，万一这个表是全部数据都符合呢？这个时候意味着，走 a 索引不仅扫描的行数是 n，同时还得每行数据走两次索引。</p>
+<asd>所以呢，系统是有可能走全表扫描而不走索引的。那系统是怎么判断呢？</asd>
+
+<p>系统是通过<asd>索引的区分度</asd>来判断的，一个索引上不同的值越多，意味着出现相同数值的索引越少，意味着索引的区分度越高。<br>我们也把区分度称之为<asd>基数</asd>，即区分度越高，基数越大。所以呢，基数越大，意味着符合 <code>100 &lt; c and c &lt; 10000</code> 这个条件的行数越少。</p>
+<p>所以，一个索引的基数越大即索引区分度越高，意味着走索引查询越有优势。</p>
+<asd>但是</asd>, 系统需要获取这个索引基数的时候，当然是不会遍历全部来获得一个索引的基数的，代价太大了，索引系统是通过遍历部分数据，也就是通过<asd>采样的方式</asd>，来预测索引的基数的。<br>既然是采样就会出现误差，如果采样的那一部分数据刚好基数很小， 实际上却相反，系统就误以为索引的基数很小，<asd>不走索引了，直接走全部扫描了，这种情况也会导致我们 SQL 语句执行的很慢的原因</asd>
+
+<blockquote>
+<p>系统判断是否走索引，扫描行数的预测其实只是原因之一，这条查询语句是否需要使用使用临时表、是否需要排序等也是会影响系统的选择的。</p>
+</blockquote>
+<p>不过呢，我们有时候也可以通过强制走索引的方式来查询，例如<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> t <span class="keyword">force</span> <span class="keyword">index</span>(a) <span class="keyword">where</span> a &lt; <span class="number">100</span> <span class="keyword">and</span> a &lt; <span class="number">100000</span>;</span><br></pre></td></tr></table></figure></p>
+<p>我们也可以通过命令来查询索引的基数和实际是否符合<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">index</span> <span class="keyword">from</span> t;</span><br></pre></td></tr></table></figure></p>
+<p>如果和实际很不符合的话，我们可以重新来统计索引的基数，可以用这条命令来重新统计分析。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">analyze</span> <span class="keyword">table</span> t;</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>一个 <code>SQL</code> 执行的很慢，大部分可以分两种情况：</p>
+<p>1、<strong>大多数情况下很正常，偶尔很慢，则有如下原因</strong></p>
+<p>(1)、数据库在刷新脏页，例如 redo log 写满了需要同步到磁盘。</p>
+<p>(2)、执行的时候，遇到锁，如表锁、行锁。</p>
+<p>2、<strong>这条 SQL 语句一直执行的很慢（SQL本身也有问题），则有如下原因</strong></p>
+<p>(1)、没有用上索引：例如该字段没有索引；由于对字段进行运算、函数操作导致无法用索引。</p>
+<p>(2)、数据库选错了索引。</p>
+<blockquote>
+<p>当然还有SQL本身有没有问题、expain sql来看是否用上索引，以及是否文件排序或者全表扫描或者生成临时表都会导致sql变慢等等</p>
+</blockquote>
+
+      
+    </div> -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+        
+          <style> asd{font-weight: bold;color: rgb(255, 104, 39)} </style>
+
+<h2 id="原因归类为两种"><a href="#原因归类为两种" class="headerlink" title="原因归类为两种"></a>原因归类为两种</h2><ul>
+<li><p>大多数情况是正常的，只是偶尔会出现很慢的情况</p>
+</li>
+<li><p>在数据量不变的情况下，这条SQL语句一直以来都执行的很慢</p>
+</li>
+</ul>
+<a id="more"></a>
+<h3 id="一、针对偶尔很慢的情况"><a href="#一、针对偶尔很慢的情况" class="headerlink" title="一、针对偶尔很慢的情况"></a>一、针对偶尔很慢的情况</h3><p>一条 SQL 大多数情况正常，偶尔才能出现很慢的情况，针对这种情况，我觉得这条SQL语句的书写本身是没什么问题的，而是其他原因导致的</p>
+<h4 id="数据库在刷新脏页（flush）"><a href="#数据库在刷新脏页（flush）" class="headerlink" title="数据库在刷新脏页（flush）"></a>数据库在刷新脏页（flush）</h4><p>当我们要往数据库插入一条数据、或者要更新一条数据的时候，我们知道数据库会在 <asd>内存</asd> 中把对应字段的数据更新了，但是更新之后，这些更新的字段并不会马上同步持久化到 <asd>磁盘</asd> 中去，而是把这些更新的记录写入到 <asd>redo log</asd> 日记中去，等到空闲的时候，在通过 <asd>redo log</asd> 里的日记把最新的数据同步到 <asd>磁盘</asd> 中去。</p>
+<blockquote>
+<p>当内存数据页跟磁盘数据页内容不一致的时候，我们称这个内存页为 <strong>“脏页”</strong>。<br>内存数据写入到磁盘后，内存和磁盘上的数据页的内容就一致了，称为 <strong>“干净页”</strong>。</p>
+</blockquote>
+<ul>
+<li>刷脏页有下面4种场景：</li>
+</ul>
+<ol>
+<li><p><asd>redo log写满了</asd> ：redo log 里的容量是有限的，如果数据库一直很忙，更新又很频繁，这个时候 redo log 很快就会被写满了，这个时候就没办法等到空闲的时候再把数据同步到磁盘的，只能暂停其他操作，全身心来把数据同步到磁盘中去的，而这个时候，就会导致我们平时正常的SQL语句突然执行的很慢，所以说，数据库在在同步数据到磁盘的时候，就有可能导致我们的SQL语句执行的很慢了。</p>
+</li>
+<li><p><asd>内存不够用了</asd>：如果一次查询较多的数据，恰好碰到所查数据页不在内存中时，需要申请内存，而此时恰好内存不足的时候就需要淘汰一部分内存数据页，如果是干净页，就直接释放，如果恰好是脏页就需要刷脏页。</p>
+</li>
+<li><p><asd>MySQL 认为系统“空闲”的时候</asd>：这时系统没什么压力。</p>
+</li>
+<li><p><asd>MySQL 正常关闭的时候</asd>：这时候，MySQL 会把内存的脏页都 flush 到磁盘上，这样下次 MySQL 启动的时候，就可以直接从磁盘上读数据，启动速度会很快。</p>
+</li>
+</ol>
+<p>后两种不用太关注“性能”问题。</p>
+<hr>
+<h4 id="程序拿不到锁"><a href="#程序拿不到锁" class="headerlink" title="程序拿不到锁"></a>程序拿不到锁</h4><ul>
+<li>这个就比较容易想到了，我们要执行的这条语句，刚好这条语句涉及到的表，别人在用，并且加锁了，我们拿不到锁，只能慢慢等待别人释放锁了。</li>
+<li>或者，表没有加锁，但要使用到的某个一行被加锁了。</li>
+</ul>
+<p>如果要判断是否真的在等待锁，我们可以用 <asd>show processlist</asd> 这个命令来查看当前的状态</p>
+<hr>
+<h3 id="二、针对一直都这么慢的情况"><a href="#二、针对一直都这么慢的情况" class="headerlink" title="二、针对一直都这么慢的情况"></a>二、针对一直都这么慢的情况</h3><p>如果在数据量一样大的情况下，这条 SQL 语句每次都执行的这么慢，那就就要好好考虑下你的 SQL 书写了，下面我们来分析下哪些原因会导致我们的 SQL 语句执行的很不理想。</p>
+<p>我们先来假设我们有一个表，表里有下面两个字段,分别是主键 id，和两个普通字段 a 和 b。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE TABLE `t` (</span><br><span class="line">  `id` int(11) NOT NULL,</span><br><span class="line">  `a` int(11) DEFAULT NULL,</span><br><span class="line">  `b` int(11) DEFAULT NULL,</span><br><span class="line">  PRIMARY KEY (`id`)</span><br><span class="line">) ENGINE=InnoDB;</span><br></pre></td></tr></table></figure>
+<h4 id="没用上索引"><a href="#没用上索引" class="headerlink" title="没用上索引"></a>没用上索引</h4><p>没有用上索引，我觉得这个原因是很多人都能想到的，例如你要查询这条语句<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> t <span class="keyword">where</span> <span class="number">100</span> &lt;a <span class="keyword">and</span> a &lt; <span class="number">100000</span>;</span><br></pre></td></tr></table></figure></p>
+<h5 id="（1）字段没有索引"><a href="#（1）字段没有索引" class="headerlink" title="（1）字段没有索引"></a>（1）字段没有索引</h5><p>刚好你的 a 字段上没有索引，那么抱歉，只能走全表扫描了，你就体验不会索引带来的乐趣了，所以，这回导致这条查询语句很慢。</p>
+<h5 id="（2）字段有索引，但却没有用索引"><a href="#（2）字段有索引，但却没有用索引" class="headerlink" title="（2）字段有索引，但却没有用索引"></a>（2）字段有索引，但却没有用索引</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> t <span class="keyword">where</span> a - <span class="number">1</span> = <span class="number">1000</span>;</span><br></pre></td></tr></table></figure>
+<p>如果我们在字段的左边做了运算，那么很抱歉，在查询的时候，就不会用上索引了, 应该改为：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> t <span class="keyword">where</span> a = <span class="number">1000</span> + <span class="number">1</span>;</span><br></pre></td></tr></table></figure></p>
+<h5 id="（3）函数操作导致没有用上索引"><a href="#（3）函数操作导致没有用上索引" class="headerlink" title="（3）函数操作导致没有用上索引"></a>（3）函数操作导致没有用上索引</h5><p>如果我们在查询的时候，对字段进行了函数操作，也是会导致没有用上索引的，例如<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> t <span class="keyword">where</span> <span class="keyword">pow</span>(a,<span class="number">2</span>) = <span class="number">1000</span>;</span><br></pre></td></tr></table></figure></p>
+<p>假设函数 pow 是求 a 的 n 次方，实际上可能并没有 pow(a,2)这个函数。其实这个和上面在左边做运算也是很类似的。</p>
+<hr>
+<h4 id="数据库没选中索引"><a href="#数据库没选中索引" class="headerlink" title="数据库没选中索引"></a>数据库没选中索引</h4><p>我们在进行查询操作的时候，例如<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> t <span class="keyword">where</span> <span class="number">100</span> &lt; a <span class="keyword">and</span> a &lt; <span class="number">100000</span>;</span><br></pre></td></tr></table></figure></p>
+<p>我们知道，<asd>主键索引</asd> 和 <asd>非主键索引</asd>是有区别的，主键索引存放的值是<asd>整行字段的数据</asd>，而非主键索引上存放的值不是整行字段的数据，而且<asd>存放主键字段的值</asd>。</p>
+<p>如果是扫描全表的话，那么扫描的次数就是这个表的总行数了，假设为 n；而如果走索引 a 的话，我们通过索引 a 找到主键之后，还得再通过主键索引来找我们整行的数据，也就是说，<strong>需要走两次索引</strong>。而且，我们也不知道符合 <code>100 a &lt; and a &lt; 10000</code> 这个条件的数据有多少行，万一这个表是全部数据都符合呢？这个时候意味着，走 a 索引不仅扫描的行数是 n，同时还得每行数据走两次索引。</p>
+<asd>所以呢，系统是有可能走全表扫描而不走索引的。那系统是怎么判断呢？</asd>
+
+<p>系统是通过<asd>索引的区分度</asd>来判断的，一个索引上不同的值越多，意味着出现相同数值的索引越少，意味着索引的区分度越高。<br>我们也把区分度称之为<asd>基数</asd>，即区分度越高，基数越大。所以呢，基数越大，意味着符合 <code>100 &lt; c and c &lt; 10000</code> 这个条件的行数越少。</p>
+<p>所以，一个索引的基数越大即索引区分度越高，意味着走索引查询越有优势。</p>
+<asd>但是</asd>, 系统需要获取这个索引基数的时候，当然是不会遍历全部来获得一个索引的基数的，代价太大了，索引系统是通过遍历部分数据，也就是通过<asd>采样的方式</asd>，来预测索引的基数的。<br>既然是采样就会出现误差，如果采样的那一部分数据刚好基数很小， 实际上却相反，系统就误以为索引的基数很小，<asd>不走索引了，直接走全部扫描了，这种情况也会导致我们 SQL 语句执行的很慢的原因</asd>
+
+<blockquote>
+<p>系统判断是否走索引，扫描行数的预测其实只是原因之一，这条查询语句是否需要使用使用临时表、是否需要排序等也是会影响系统的选择的。</p>
+</blockquote>
+<p>不过呢，我们有时候也可以通过强制走索引的方式来查询，例如<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> t <span class="keyword">force</span> <span class="keyword">index</span>(a) <span class="keyword">where</span> a &lt; <span class="number">100</span> <span class="keyword">and</span> a &lt; <span class="number">100000</span>;</span><br></pre></td></tr></table></figure></p>
+<p>我们也可以通过命令来查询索引的基数和实际是否符合<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">index</span> <span class="keyword">from</span> t;</span><br></pre></td></tr></table></figure></p>
+<p>如果和实际很不符合的话，我们可以重新来统计索引的基数，可以用这条命令来重新统计分析。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">analyze</span> <span class="keyword">table</span> t;</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>一个 <code>SQL</code> 执行的很慢，大部分可以分两种情况：</p>
+<p>1、<strong>大多数情况下很正常，偶尔很慢，则有如下原因</strong></p>
+<p>(1)、数据库在刷新脏页，例如 redo log 写满了需要同步到磁盘。</p>
+<p>(2)、执行的时候，遇到锁，如表锁、行锁。</p>
+<p>2、<strong>这条 SQL 语句一直执行的很慢（SQL本身也有问题），则有如下原因</strong></p>
+<p>(1)、没有用上索引：例如该字段没有索引；由于对字段进行运算、函数操作导致无法用索引。</p>
+<p>(2)、数据库选错了索引。</p>
+<blockquote>
+<p>当然还有SQL本身有没有问题、expain sql来看是否用上索引，以及是否文件排序或者全表扫描或者生成临时表都会导致sql变慢等等</p>
+</blockquote>
+
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: '打赏支持', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: '/md_images/static/1.jpg',
+  alipayImage: '/md_images/static/2.jpg'
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>本文作者:  </strong>Kuanger
+          </li>
+          <li class="post-copyright-link">
+          <strong>本文链接:  </strong>
+          <a href="/2019/05/04/backend/sql/一条SQL执行慢的原因(一)/" target="_blank" title="一条SQL执行慢的原因 (一)">http://www.kuanger.top/2019/05/04/backend/sql/一条SQL执行慢的原因(一)/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>版权声明:   </strong>
+            本博客所有文章除特别声明外，均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            许可协议。转载请注明出处
+          </li>
+         
+        </ul>
+<div>
+</div></div>
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL/">SQL</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/04/01/backend/java_基础/thread/多线程--浅入多线程/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">多线程--浅入多线程</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#原因归类为两种"><span class="nav-number">1.</span> <span class="nav-text">原因归类为两种</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、针对偶尔很慢的情况"><span class="nav-number">1.1.</span> <span class="nav-text">一、针对偶尔很慢的情况</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#数据库在刷新脏页（flush）"><span class="nav-number">1.1.1.</span> <span class="nav-text">数据库在刷新脏页（flush）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#程序拿不到锁"><span class="nav-number">1.1.2.</span> <span class="nav-text">程序拿不到锁</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、针对一直都这么慢的情况"><span class="nav-number">1.2.</span> <span class="nav-text">二、针对一直都这么慢的情况</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#没用上索引"><span class="nav-number">1.2.1.</span> <span class="nav-text">没用上索引</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#（1）字段没有索引"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">（1）字段没有索引</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#（2）字段有索引，但却没有用索引"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">（2）字段有索引，但却没有用索引</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#（3）函数操作导致没有用上索引"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">（3）函数操作导致没有用上索引</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据库没选中索引"><span class="nav-number">1.2.2.</span> <span class="nav-text">数据库没选中索引</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">2.</span> <span class="nav-text">总结</span></a></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <!-- <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>-->
+	      <p id="copyRightEn">Copyright &copy; 2018 - 2019 Kuanger All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				访客数 : <span id="busuanzi_value_site_uv"></span> |  
+				访问量 : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Better than yesterday
+          </div>
+          <div class="panel-body">
+            Copyright © 2019 Kuanger All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>

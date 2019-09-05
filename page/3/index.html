@@ -240,6 +240,188 @@
         
           <section id="main" style="float:none;">
   
+    <article id="post-backend/java_基础/谈谈对Java平台的理解" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/12/27/backend/java_基础/谈谈对Java平台的理解/">谈谈对Java平台的理解</a>
+    </h1>
+  
+
+		    
+        <!-- 开始添加字数统计-->
+        
+          <div style="margin-top:10px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">1.8k字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">6分</span>
+      </span>
+    </span>
+</div>
+
+          
+        
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/12/27/backend/java_基础/谈谈对Java平台的理解/" class="article-date">
+	  <time datetime="2018-12-26T16:00:00.000Z" itemprop="datePublished">2018-12-27</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/java/">java</a><a class="article-category-link" href="/categories/java/JVM/">JVM</a>
+
+      
+    </div>
+    <!-- <div class="article-entry" itemprop="articleBody">
+      
+        <p><br></p>
+<blockquote class="pullquote left"><p>知其然而不知其所以然</p>
+</blockquote>
+<p>如果谈起对Java的理解，对于这类笼统的问题，或许会稍微紧张一下，有点知其然而不知其所以然的感觉，可能不知从何说起或者回答会有稍微片面，所以今天就点到线地整理一下对Java的理解。</p>
+      
+    </div> -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><br></p>
+<blockquote class="pullquote left"><p>知其然而不知其所以然</p>
+</blockquote>
+<p>如果谈起对Java的理解，对于这类笼统的问题，或许会稍微紧张一下，有点知其然而不知其所以然的感觉，可能不知从何说起或者回答会有稍微片面，所以今天就点到线地整理一下对Java的理解。</p>
+        <p class="article-more-link">
+          <a href="/2018/12/27/backend/java_基础/谈谈对Java平台的理解/#more">阅读全文</a>
+        </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JVM/">JVM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-backend/规约/阿里巴巴Java开发手册中的开发规约之一(3)" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/12/26/backend/规约/阿里巴巴Java开发手册中的开发规约之一(3)/">阿里巴巴Java开发手册中的开发规约之一(3)</a>
+    </h1>
+  
+
+		    
+        <!-- 开始添加字数统计-->
+        
+          <div style="margin-top:10px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">1.3k字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">5分</span>
+      </span>
+    </span>
+</div>
+
+          
+        
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/12/26/backend/规约/阿里巴巴Java开发手册中的开发规约之一(3)/" class="article-date">
+	  <time datetime="2018-12-25T16:00:00.000Z" itemprop="datePublished">2018-12-26</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/java/">java</a>
+
+      
+    </div>
+    <!-- <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="包装类比较"><a href="#包装类比较" class="headerlink" title="包装类比较"></a>包装类比较</h3><ul>
+<li><p><strong>【强制】所有的相同类型的包装类对象之间值的比较，全部使用 equals 方法比较。</strong></p>
+<ul>
+<li>说明： 对于 Integer var=? <strong>在-128 至 127 之间的赋值</strong>， Integer 对象是在<br><code>IntegerCache.cache</code> 产生，会复用已有对象，这个区间内的 Integer 值可以直接使用 <code>==</code> 进行<br>判断，但是这个区间之外的所有数据，都会在堆上产生，并不会复用已有对象，这是一个大坑，<br>推荐使用 equals 方法进行判断。</li>
+</ul>
+</li>
+</ul>
+      
+    </div> -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="包装类比较"><a href="#包装类比较" class="headerlink" title="包装类比较"></a>包装类比较</h3><ul>
+<li><p><strong>【强制】所有的相同类型的包装类对象之间值的比较，全部使用 equals 方法比较。</strong></p>
+<ul>
+<li>说明： 对于 Integer var=? <strong>在-128 至 127 之间的赋值</strong>， Integer 对象是在<br><code>IntegerCache.cache</code> 产生，会复用已有对象，这个区间内的 Integer 值可以直接使用 <code>==</code> 进行<br>判断，但是这个区间之外的所有数据，都会在堆上产生，并不会复用已有对象，这是一个大坑，<br>推荐使用 equals 方法进行判断。</li>
+</ul>
+</li>
+</ul>
+        <p class="article-more-link">
+          <a href="/2018/12/26/backend/规约/阿里巴巴Java开发手册中的开发规约之一(3)/#more">阅读全文</a>
+        </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/规范/">规范</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
     <article id="post-backend/规约/阿里巴巴Java开发手册中的开发规约之一(2)" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div id="articleInner" class="article-inner">
     
@@ -948,222 +1130,6 @@
       
         
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/笔记/">笔记</a></li></ul>
-
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-knowledge/CAP理论" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/12/03/knowledge/CAP理论/">CAP理论</a>
-    </h1>
-  
-
-		    
-        <!-- 开始添加字数统计-->
-        
-          <div style="margin-top:10px;">
-    <span class="post-time">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-keyboard-o"></i>
-        <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">920字</span>
-      </span>
-    </span>
-
-    <span class="post-time">
-      &nbsp; | &nbsp;
-      <span class="post-meta-item-icon">
-        <i class="fa fa-hourglass-half"></i>
-        <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">3分</span>
-      </span>
-    </span>
-</div>
-
-          
-        
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/12/03/knowledge/CAP理论/" class="article-date">
-	  <time datetime="2018-12-03T03:54:55.000Z" itemprop="datePublished">2018-12-03</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/分布式-微服务理论/">分布式/微服务理论</a>
-
-      
-    </div>
-    <!-- <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>对于分布式概念就不详细介绍了，分布式简单理解就是：<strong>一个业务分拆多个子业务，部署在不同的服务器上</strong>。</p>
-<ul>
-<li>一般来说，一个子业务我们称为节点。</li>
-</ul>
-<hr>
-<h3 id="Content"><a href="#Content" class="headerlink" title="Content"></a>Content</h3><ul>
-<li><p>首先，我们来看一下CAP分别代表的是什么意思：</p>
-<ul>
-<li><p>C：数据一致性(consistency)</p>
-<ul>
-<li><strong>所有</strong>节点拥有数据的最新版本</li>
-</ul>
-</li>
-<li><p>A：可用性(availability)</p>
-<ul>
-<li>数据具备高可用性</li>
-</ul>
-</li>
-<li><p>P：分区容错性(partition-tolerance)</p>
-<ul>
-<li><strong>容忍网络出现分区</strong>，分区之间网络不可达。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-      
-    </div> -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>对于分布式概念就不详细介绍了，分布式简单理解就是：<strong>一个业务分拆多个子业务，部署在不同的服务器上</strong>。</p>
-<ul>
-<li>一般来说，一个子业务我们称为节点。</li>
-</ul>
-<hr>
-<h3 id="Content"><a href="#Content" class="headerlink" title="Content"></a>Content</h3><ul>
-<li><p>首先，我们来看一下CAP分别代表的是什么意思：</p>
-<ul>
-<li><p>C：数据一致性(consistency)</p>
-<ul>
-<li><strong>所有</strong>节点拥有数据的最新版本</li>
-</ul>
-</li>
-<li><p>A：可用性(availability)</p>
-<ul>
-<li>数据具备高可用性</li>
-</ul>
-</li>
-<li><p>P：分区容错性(partition-tolerance)</p>
-<ul>
-<li><strong>容忍网络出现分区</strong>，分区之间网络不可达。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-        <p class="article-more-link">
-          <a href="/2018/12/03/knowledge/CAP理论/#more">阅读全文</a>
-        </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CAP理论/">CAP理论</a></li></ul>
-
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-something/一个学习Git的有趣网站" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/11/30/something/一个学习Git的有趣网站/">一个学习Git的有趣网站</a>
-    </h1>
-  
-
-		    
-        <!-- 开始添加字数统计-->
-        
-          <div style="margin-top:10px;">
-    <span class="post-time">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-keyboard-o"></i>
-        <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">267字</span>
-      </span>
-    </span>
-
-    <span class="post-time">
-      &nbsp; | &nbsp;
-      <span class="post-meta-item-icon">
-        <i class="fa fa-hourglass-half"></i>
-        <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">1分</span>
-      </span>
-    </span>
-</div>
-
-          
-        
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/11/30/something/一个学习Git的有趣网站/" class="article-date">
-	  <time datetime="2018-11-30T06:54:55.000Z" itemprop="datePublished">2018-11-30</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/Version-Control/">Version Control</a>
-
-      
-    </div>
-    <!-- <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="/md_images/p3/1.jpg" alt=""></p>
-<p><strong>一个非常有趣的小网站，把Git的命令和知识点做成类似于游戏闯关一样，生动有效地帮助初步学习Git的朋友们。</strong></p>
-      
-    </div> -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="/md_images/p3/1.jpg" alt=""></p>
-<p><strong>一个非常有趣的小网站，把Git的命令和知识点做成类似于游戏闯关一样，生动有效地帮助初步学习Git的朋友们。</strong></p>
-        <p class="article-more-link">
-          <a href="/2018/11/30/something/一个学习Git的有趣网站/#more">阅读全文</a>
-        </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git/">Git</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Version-Control/">Version Control</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/funny/">funny</a></li></ul>
 
       
 

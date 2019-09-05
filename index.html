@@ -240,7 +240,7 @@
         
           <section id="main" style="float:none;">
   
-    <article id="post-backend/java_基础/design pattern/设计模式（二）" class="article article-type-post" itemscope="" itemprop="blogPost">
+    <article id="post-backend/sql/一条SQL执行慢的原因(一)" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div id="articleInner" class="article-inner">
     
     
@@ -248,7 +248,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2019/04/02/backend/java_基础/design pattern/设计模式（二）/">设计模式（二）</a>
+      <a class="article-title" href="/2019/05/04/backend/sql/一条SQL执行慢的原因(一)/">一条SQL执行慢的原因 (一)</a>
     </h1>
   
 
@@ -260,7 +260,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">1.1k字</span>
+        <span class="post-count">2.1k字</span>
       </span>
     </span>
 
@@ -269,7 +269,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-hourglass-half"></i>
         <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">4分</span>
+        <span class="post-count">7分</span>
       </span>
     </span>
 </div>
@@ -280,8 +280,196 @@
     
     <div class="article-meta">
       
-	<a href="/2019/04/02/backend/java_基础/design pattern/设计模式（二）/" class="article-date">
-	  <time datetime="2019-04-01T16:00:00.000Z" itemprop="datePublished">2019-04-02</time>
+	<a href="/2019/05/04/backend/sql/一条SQL执行慢的原因(一)/" class="article-date">
+	  <time datetime="2019-05-03T16:00:00.000Z" itemprop="datePublished">2019-05-04</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/SQL/">SQL</a>
+
+      
+    </div>
+    <!-- <div class="article-entry" itemprop="articleBody">
+      
+        <style> asd{font-weight: bold;color: rgb(255, 104, 39)} </style>
+
+<h2 id="原因归类为两种"><a href="#原因归类为两种" class="headerlink" title="原因归类为两种"></a>原因归类为两种</h2><ul>
+<li><p>大多数情况是正常的，只是偶尔会出现很慢的情况</p>
+</li>
+<li><p>在数据量不变的情况下，这条SQL语句一直以来都执行的很慢</p>
+</li>
+</ul>
+      
+    </div> -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <style> asd{font-weight: bold;color: rgb(255, 104, 39)} </style>
+
+<h2 id="原因归类为两种"><a href="#原因归类为两种" class="headerlink" title="原因归类为两种"></a>原因归类为两种</h2><ul>
+<li><p>大多数情况是正常的，只是偶尔会出现很慢的情况</p>
+</li>
+<li><p>在数据量不变的情况下，这条SQL语句一直以来都执行的很慢</p>
+</li>
+</ul>
+        <p class="article-more-link">
+          <a href="/2019/05/04/backend/sql/一条SQL执行慢的原因(一)/#more">阅读全文</a>
+        </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL/">SQL</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-backend/java_基础/thread/多线程--浅入多线程" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2019/04/01/backend/java_基础/thread/多线程--浅入多线程/">多线程--浅入多线程</a>
+    </h1>
+  
+
+		    
+        <!-- 开始添加字数统计-->
+        
+          <div style="margin-top:10px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">652字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">2分</span>
+      </span>
+    </span>
+</div>
+
+          
+        
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/04/01/backend/java_基础/thread/多线程--浅入多线程/" class="article-date">
+	  <time datetime="2019-03-31T16:20:00.000Z" itemprop="datePublished">2019-04-01</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/java/">java</a><a class="article-category-link" href="/categories/java/thread/">thread</a>
+
+      
+    </div>
+    <!-- <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="JAVA多线程实现的四种方式"><a href="#JAVA多线程实现的四种方式" class="headerlink" title="JAVA多线程实现的四种方式"></a>JAVA多线程实现的四种方式</h3><ol>
+<li>继承Thread类创建线程</li>
+<li>实现Runnable接口创建线程</li>
+<li>实现Callable接口通过FutureTask包装器来创建Thread线程</li>
+<li>使用ExecutorService、Callable、Future实现有返回结果的线程 线程状态</li>
+</ol>
+      
+    </div> -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="JAVA多线程实现的四种方式"><a href="#JAVA多线程实现的四种方式" class="headerlink" title="JAVA多线程实现的四种方式"></a>JAVA多线程实现的四种方式</h3><ol>
+<li>继承Thread类创建线程</li>
+<li>实现Runnable接口创建线程</li>
+<li>实现Callable接口通过FutureTask包装器来创建Thread线程</li>
+<li>使用ExecutorService、Callable、Future实现有返回结果的线程 线程状态</li>
+</ol>
+        <p class="article-more-link">
+          <a href="/2019/04/01/backend/java_基础/thread/多线程--浅入多线程/#more">阅读全文</a>
+        </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/多线程/">多线程</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-backend/java_基础/design pattern/设计模式（二）" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2019/04/01/backend/java_基础/design pattern/设计模式（二）/">设计模式（二）</a>
+    </h1>
+  
+
+		    
+        <!-- 开始添加字数统计-->
+        
+          <div style="margin-top:10px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">766字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">3分</span>
+      </span>
+    </span>
+</div>
+
+          
+        
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/04/01/backend/java_基础/design pattern/设计模式（二）/" class="article-date">
+	  <time datetime="2019-03-31T16:10:00.000Z" itemprop="datePublished">2019-04-01</time>
 	</a>
 
       
@@ -328,7 +516,7 @@
 </li>
 </ul>
         <p class="article-more-link">
-          <a href="/2019/04/02/backend/java_基础/design pattern/设计模式（二）/#more">阅读全文</a>
+          <a href="/2019/04/01/backend/java_基础/design pattern/设计模式（二）/#more">阅读全文</a>
         </p>
         
       
@@ -513,7 +701,7 @@
 	</a>
 
       
-    <a class="article-category-link" href="/categories/java/">java</a>
+    <a class="article-category-link" href="/categories/java/">java</a><a class="article-category-link" href="/categories/java/IO/">IO</a>
 
       
     </div>
@@ -595,7 +783,7 @@
 	</a>
 
       
-    <a class="article-category-link" href="/categories/java/">java</a>
+    <a class="article-category-link" href="/categories/java/">java</a><a class="article-category-link" href="/categories/java/IO/">IO</a>
 
       
     </div>
@@ -715,7 +903,7 @@
 	</a>
 
       
-    <a class="article-category-link" href="/categories/java/">java</a>
+    <a class="article-category-link" href="/categories/java/">java</a><a class="article-category-link" href="/categories/java/IO/">IO</a>
 
       
     </div>
@@ -797,7 +985,7 @@
 	</a>
 
       
-    <a class="article-category-link" href="/categories/java/">java</a>
+    <a class="article-category-link" href="/categories/java/">java</a><a class="article-category-link" href="/categories/java/IO/">IO</a>
 
       
     </div>
@@ -1004,196 +1192,6 @@
       
         
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hashMap/">hashMap</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/集合/">集合</a></li></ul>
-
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-backend/java_基础/Map集合" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2019/01/05/backend/java_基础/Map集合/">Map集合</a>
-    </h1>
-  
-
-		    
-        <!-- 开始添加字数统计-->
-        
-          <div style="margin-top:10px;">
-    <span class="post-time">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-keyboard-o"></i>
-        <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">1.7k字</span>
-      </span>
-    </span>
-
-    <span class="post-time">
-      &nbsp; | &nbsp;
-      <span class="post-meta-item-icon">
-        <i class="fa fa-hourglass-half"></i>
-        <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">6分</span>
-      </span>
-    </span>
-</div>
-
-          
-        
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2019/01/05/backend/java_基础/Map集合/" class="article-date">
-	  <time datetime="2019-01-04T16:00:00.000Z" itemprop="datePublished">2019-01-05</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/java/">java</a>
-
-      
-    </div>
-    <!-- <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><p>Map 是广义 Java 集合框架中的另外一部分，Hashtable、HashMap、TreeMap 都是最常见的一些 Map 实现，是以<strong>键值对</strong>的形式存储和操作数据的容器类型。</p>
-<h3 id="典型区别"><a href="#典型区别" class="headerlink" title="典型区别"></a>典型区别</h3><ul>
-<li><p>Hashtable 是早期 Java 类库提供的一个 <a href="https://zh.wikipedia.org/wiki/%E5%93%88%E5%B8%8C%E8%A1%A8" target="_blank" rel="noopener">哈希表</a> 实现，本身是同步的，不支持 null 键和值，由于同步导致的性能开销，所以已经很少被推荐使用。</p>
-</li>
-<li><p>HashMap 是应用更加广泛的哈希表实现，行为上大致上与 HashTable 一致，主要区别在于 HashMap 不是同步的，支持 null 键和值等。通常情况下，HashMap 进行 put 或者 get 操作，可以达到常数时间的性能，所以<strong>它是绝大部分利用键值对存取场景的首选</strong>，比如，实现一个用户 ID 和用户信息对应的运行时存储结构。</p>
-</li>
-<li><p>TreeMap 则是基于红黑树的一种提供顺序访问的 Map，和 HashMap 不同，它的 get、put、remove 之类操作都是 O（log(n)）的时间复杂度，具体顺序可以由指定的 Comparator 来决定，或者根据键的自然顺序来判断。</p>
-</li>
-</ul>
-<blockquote>
-<p>HashMap 在并发环境可能出现 <a href="https://bugs.java.com/bugdatabase/view_bug.do?bug_id=6423457" target="_blank" rel="noopener">无限循环占用 CPU</a> 、size 不准确等诡异的问题。我认为这是一种典型的使用错误，因为 HashMap 明确声明不是线程安全的数据结构，如果忽略这一点，简单用在多线程场景里，难免会出现问题。</p>
-<p>理解导致这种错误的原因，也是深入理解并发程序运行的好办法。对于具体发生了什么，你可以参考这篇很久以前的 <a href="http://mailinator.blogspot.com/2009/06/beautiful-race-condition.html" target="_blank" rel="noopener">分析</a> 。</p>
-</blockquote>
-      
-    </div> -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><p>Map 是广义 Java 集合框架中的另外一部分，Hashtable、HashMap、TreeMap 都是最常见的一些 Map 实现，是以<strong>键值对</strong>的形式存储和操作数据的容器类型。</p>
-<h3 id="典型区别"><a href="#典型区别" class="headerlink" title="典型区别"></a>典型区别</h3><ul>
-<li><p>Hashtable 是早期 Java 类库提供的一个 <a href="https://zh.wikipedia.org/wiki/%E5%93%88%E5%B8%8C%E8%A1%A8" target="_blank" rel="noopener">哈希表</a> 实现，本身是同步的，不支持 null 键和值，由于同步导致的性能开销，所以已经很少被推荐使用。</p>
-</li>
-<li><p>HashMap 是应用更加广泛的哈希表实现，行为上大致上与 HashTable 一致，主要区别在于 HashMap 不是同步的，支持 null 键和值等。通常情况下，HashMap 进行 put 或者 get 操作，可以达到常数时间的性能，所以<strong>它是绝大部分利用键值对存取场景的首选</strong>，比如，实现一个用户 ID 和用户信息对应的运行时存储结构。</p>
-</li>
-<li><p>TreeMap 则是基于红黑树的一种提供顺序访问的 Map，和 HashMap 不同，它的 get、put、remove 之类操作都是 O（log(n)）的时间复杂度，具体顺序可以由指定的 Comparator 来决定，或者根据键的自然顺序来判断。</p>
-</li>
-</ul>
-<blockquote>
-<p>HashMap 在并发环境可能出现 <a href="https://bugs.java.com/bugdatabase/view_bug.do?bug_id=6423457" target="_blank" rel="noopener">无限循环占用 CPU</a> 、size 不准确等诡异的问题。我认为这是一种典型的使用错误，因为 HashMap 明确声明不是线程安全的数据结构，如果忽略这一点，简单用在多线程场景里，难免会出现问题。</p>
-<p>理解导致这种错误的原因，也是深入理解并发程序运行的好办法。对于具体发生了什么，你可以参考这篇很久以前的 <a href="http://mailinator.blogspot.com/2009/06/beautiful-race-condition.html" target="_blank" rel="noopener">分析</a> 。</p>
-</blockquote>
-        <p class="article-more-link">
-          <a href="/2019/01/05/backend/java_基础/Map集合/#more">阅读全文</a>
-        </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hashMap/">hashMap</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/集合/">集合</a></li></ul>
-
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-backend/java_基础/Collection集合" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2019/01/04/backend/java_基础/Collection集合/">Collection集合</a>
-    </h1>
-  
-
-		    
-        <!-- 开始添加字数统计-->
-        
-          <div style="margin-top:10px;">
-    <span class="post-time">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-keyboard-o"></i>
-        <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">599字</span>
-      </span>
-    </span>
-
-    <span class="post-time">
-      &nbsp; | &nbsp;
-      <span class="post-meta-item-icon">
-        <i class="fa fa-hourglass-half"></i>
-        <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">2分</span>
-      </span>
-    </span>
-</div>
-
-          
-        
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2019/01/04/backend/java_基础/Collection集合/" class="article-date">
-	  <time datetime="2019-01-03T16:00:00.000Z" itemprop="datePublished">2019-01-04</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/java/">java</a>
-
-      
-    </div>
-    <!-- <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="集合框架"><a href="#集合框架" class="headerlink" title="集合框架"></a>集合框架</h3><p>没有 <code>java.util.concurrent</code> 下面的线程安全容器添加进来；也没有列出 <code>Map</code> 容器</p>
-<p><img src="/md_images/jk_java/6.png" alt=""></p>
-      
-    </div> -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="集合框架"><a href="#集合框架" class="headerlink" title="集合框架"></a>集合框架</h3><p>没有 <code>java.util.concurrent</code> 下面的线程安全容器添加进来；也没有列出 <code>Map</code> 容器</p>
-<p><img src="/md_images/jk_java/6.png" alt=""></p>
-        <p class="article-more-link">
-          <a href="/2019/01/04/backend/java_基础/Collection集合/#more">阅读全文</a>
-        </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/集合/">集合</a></li></ul>
 
       
 

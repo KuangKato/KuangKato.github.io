@@ -24,7 +24,7 @@
 <meta property="og:image" content="http://www.kuanger.top/md_images/p4/2.jpg">
 <meta property="og:image" content="http://www.kuanger.top/md_images/p4/3.jpg">
 <meta property="og:image" content="http://www.kuanger.top/md_images/p4/4.jpg">
-<meta property="og:updated_time" content="2018-12-30T11:35:20.314Z">
+<meta property="og:updated_time" content="2019-06-17T06:34:38.581Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CAP理论">
 <meta name="twitter:description" content="前言对于分布式概念就不详细介绍了，分布式简单理解就是：一个业务分拆多个子业务，部署在不同的服务器上。  一般来说，一个子业务我们称为节点。   Content 首先，我们来看一下CAP分别代表的是什么意思：  C：数据一致性(consistency)  所有节点拥有数据的最新版本   A：可用性(availability)  数据具备高可用性   P：分区容错性(partition-toleran">
@@ -187,7 +187,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">920字</span>
+        <span class="post-count">976字</span>
       </span>
     </span>
 
@@ -297,6 +297,12 @@
 <p><strong>可用性的值域可以定义成0到100%的连续区间。</strong></p>
 <p><img src="/md_images/p4/4.jpg" alt=""></p>
 <p>所以，<strong>CAP理论定义的其实是在容忍网络分区的条件下，“强一致性”和“极致可用性”无法同时达到</strong>。</p>
+<h3 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h3><ul>
+<li><p>Eureka就是采用了AP，放弃了C（只是暂时放弃了最终一致性而已）</p>
+</li>
+<li><p>Zookeeper是采用了CP，放弃了A（在宕机的时候，需要重新选举，选举途中是不可用的）</p>
+</li>
+</ul>
 <hr>
 <h3 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h3><ul>
 <li><p>摘取文章片段 ： <a href="https://mp.weixin.qq.com/s/oTJaEFrHQi_7R68n26yfew" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/oTJaEFrHQi_7R68n26yfew</a></p>
@@ -397,6 +403,12 @@
 <p><strong>可用性的值域可以定义成0到100%的连续区间。</strong></p>
 <p><img src="/md_images/p4/4.jpg" alt=""></p>
 <p>所以，<strong>CAP理论定义的其实是在容忍网络分区的条件下，“强一致性”和“极致可用性”无法同时达到</strong>。</p>
+<h3 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h3><ul>
+<li><p>Eureka就是采用了AP，放弃了C（只是暂时放弃了最终一致性而已）</p>
+</li>
+<li><p>Zookeeper是采用了CP，放弃了A（在宕机的时候，需要重新选举，选举途中是不可用的）</p>
+</li>
+</ul>
 <hr>
 <h3 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h3><ul>
 <li><p>摘取文章片段 ： <a href="https://mp.weixin.qq.com/s/oTJaEFrHQi_7R68n26yfew" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/oTJaEFrHQi_7R68n26yfew</a></p>
@@ -520,7 +532,7 @@ var a = new Donate({
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Content"><span class="nav-number">2.</span> <span class="nav-text">Content</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#如果出现故障"><span class="nav-number">2.1.</span> <span class="nav-text">如果出现故障</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#再次梳理一下CAP理论"><span class="nav-number">3.</span> <span class="nav-text">再次梳理一下CAP理论</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料："><span class="nav-number">4.</span> <span class="nav-text">参考资料：</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Content"><span class="nav-number">2.</span> <span class="nav-text">Content</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#如果出现故障"><span class="nav-number">2.1.</span> <span class="nav-text">如果出现故障</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#再次梳理一下CAP理论"><span class="nav-number">3.</span> <span class="nav-text">再次梳理一下CAP理论</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#举例"><span class="nav-number">4.</span> <span class="nav-text">举例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料："><span class="nav-number">5.</span> <span class="nav-text">参考资料：</span></a></li></ol>
     
     </div>
   </aside>

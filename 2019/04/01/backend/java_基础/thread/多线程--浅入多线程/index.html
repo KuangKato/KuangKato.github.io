@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="baidu-site-verification" content="jGpOWJy4VY">
   
-  <title>值传递和引用传递 | Better than yesterday</title>
+  <title>多线程--浅入多线程 | Better than yesterday</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
     <meta name="keywords" content="Kuanger">
@@ -12,18 +12,20 @@
   
   
   
-  <meta name="description" content="值传递（pass by value）  是指在调用函数时将实际参数复制一份传递到函数中，这样在函数中如果对参数进行修改，将不会影响到实际参数。   引用传递（pass by reference）  是指在调用函数时将实际参数的地址直接传递到函数中，那么在函数中对参数所进行的修改，将影响到实际参数。">
-<meta name="keywords" content="java,java基础">
+  <meta name="description" content="JAVA多线程实现的四种方式 继承Thread类创建线程 实现Runnable接口创建线程 实现Callable接口通过FutureTask包装器来创建Thread线程 使用ExecutorService、Callable、Future实现有返回结果的线程 线程状态">
+<meta name="keywords" content="java,多线程">
 <meta property="og:type" content="article">
-<meta property="og:title" content="值传递和引用传递">
-<meta property="og:url" content="http://www.kuanger.top/2018/12/30/backend/java_基础/值传递和引用传递/index.html">
+<meta property="og:title" content="多线程--浅入多线程">
+<meta property="og:url" content="http://www.kuanger.top/2019/04/01/backend/java_基础/thread/多线程--浅入多线程/index.html">
 <meta property="og:site_name" content="Better than yesterday">
-<meta property="og:description" content="值传递（pass by value）  是指在调用函数时将实际参数复制一份传递到函数中，这样在函数中如果对参数进行修改，将不会影响到实际参数。   引用传递（pass by reference）  是指在调用函数时将实际参数的地址直接传递到函数中，那么在函数中对参数所进行的修改，将影响到实际参数。">
+<meta property="og:description" content="JAVA多线程实现的四种方式 继承Thread类创建线程 实现Runnable接口创建线程 实现Callable接口通过FutureTask包装器来创建Thread线程 使用ExecutorService、Callable、Future实现有返回结果的线程 线程状态">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-12-30T13:13:47.019Z">
+<meta property="og:image" content="http://www.kuanger.top/md_images/jk_java/31.png">
+<meta property="og:updated_time" content="2019-03-31T15:30:51.445Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="值传递和引用传递">
-<meta name="twitter:description" content="值传递（pass by value）  是指在调用函数时将实际参数复制一份传递到函数中，这样在函数中如果对参数进行修改，将不会影响到实际参数。   引用传递（pass by reference）  是指在调用函数时将实际参数的地址直接传递到函数中，那么在函数中对参数所进行的修改，将影响到实际参数。">
+<meta name="twitter:title" content="多线程--浅入多线程">
+<meta name="twitter:description" content="JAVA多线程实现的四种方式 继承Thread类创建线程 实现Runnable接口创建线程 实现Callable接口通过FutureTask包装器来创建Thread线程 使用ExecutorService、Callable、Future实现有返回结果的线程 线程状态">
+<meta name="twitter:image" content="http://www.kuanger.top/md_images/jk_java/31.png">
   
     <link rel="alternate" href="/atom.xml" title="Better than yesterday" type="application/atom+xml">
   
@@ -162,7 +164,7 @@
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;"><article id="post-backend/java_基础/值传递和引用传递" style="width: 75%; float:left;" class="article article-type-post" itemscope="" itemprop="blogPost">
+          <section id="main" style="float:none;"><article id="post-backend/java_基础/thread/多线程--浅入多线程" style="width: 75%; float:left;" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div id="articleInner" class="article-inner">
     
     
@@ -170,7 +172,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      值传递和引用传递
+      多线程--浅入多线程
     </h1>
   
 
@@ -182,7 +184,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">502字</span>
+        <span class="post-count">652字</span>
       </span>
     </span>
 
@@ -191,7 +193,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-hourglass-half"></i>
         <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">1分</span>
+        <span class="post-count">2分</span>
       </span>
     </span>
 </div>
@@ -202,12 +204,12 @@
     
     <div class="article-meta">
       
-	<a href="/2018/12/30/backend/java_基础/值传递和引用传递/" class="article-date">
-	  <time datetime="2018-12-29T16:00:00.000Z" itemprop="datePublished">2018-12-30</time>
+	<a href="/2019/04/01/backend/java_基础/thread/多线程--浅入多线程/" class="article-date">
+	  <time datetime="2019-03-31T16:20:00.000Z" itemprop="datePublished">2019-04-01</time>
 	</a>
 
       
-    <a class="article-category-link" href="/categories/java/">java</a>
+    <a class="article-category-link" href="/categories/java/">java</a><a class="article-category-link" href="/categories/java/thread/">thread</a>
 
       
 	<a class="article-views">
@@ -219,36 +221,31 @@
     </div>
     <!-- <div class="article-entry" itemprop="articleBody">
       
-        <ul>
-<li><p><strong>值传递（pass by value）</strong></p>
-<ul>
-<li>是指在调用函数时将实际参数<strong>复制</strong>一份传递到函数中，这样在函数中如果对<strong>参数</strong>进行修改，将不会影响到实际参数。</li>
-</ul>
-</li>
-<li><p><strong>引用传递（pass by reference）</strong></p>
-<ul>
-<li>是指在调用函数时将实际参数的地址<strong>直接</strong>传递到函数中，那么在函数中对<strong>参数</strong>所进行的修改，将影响到实际参数。</li>
-</ul>
-</li>
-</ul>
+        <h3 id="JAVA多线程实现的四种方式"><a href="#JAVA多线程实现的四种方式" class="headerlink" title="JAVA多线程实现的四种方式"></a>JAVA多线程实现的四种方式</h3><ol>
+<li>继承Thread类创建线程</li>
+<li>实现Runnable接口创建线程</li>
+<li>实现Callable接口通过FutureTask包装器来创建Thread线程</li>
+<li>使用ExecutorService、Callable、Future实现有返回结果的线程 线程状态</li>
+</ol>
 <a id="more"></a>
 <hr>
-<h4 id="口述"><a href="#口述" class="headerlink" title="口述"></a>口述</h4><p>先说基本类型和引用类型</p>
-<p>基本类型创建的时候,他的值都分别会放在栈中和常量池中的,而引用类型的话他的值是存放在堆内存中,然后栈存放的只是这个对象的地址值</p>
-<p>其实所以值传递,其实很多人都会有误区都认为传递的参数如果是普通类型，那就是值传递，如果是对象，那就是引用传递, </p>
-<p>并不是这样的,其实如果把值传递和引用传递放在C语言中,那就地址传递,其实Java也是可以这样理解的, 传递也是地址值, </p>
-<ul>
-<li><p><strong>在调用函数的时候,他会把实际参数的地址值拷贝一份传递到函数中</strong></p>
-<ul>
-<li><p>如果这个地址的实际参数是 <strong>在栈中</strong> 的话,他会 <strong>直接拷贝值</strong> ,所以函数内部对参数进行操作是不会对实际参数产生影响的,</p>
-</li>
-<li><p>如果拷贝的原 <strong>值在堆中的地址</strong> ,他会 <strong>根据该地址值去堆中对应的对象</strong> ,再进行操作,所以测函数内对值的操作是影响实际参数的. </p>
-</li>
-</ul>
-</li>
-</ul>
-<p><span style="background-color:#D5F3F4;">其实不管是值传递还是引用传递,其实都是一种求值策略,在求值策略中,叫做按共享传递, 所以简单点的来说, java的传递是值传递,而这个值是地址值,可以是栈中的值或堆中对象的引用罢了</span></p>
-<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p>文章 : <a href="http://mp.weixin.qq.com/s/F7Niaa7nD1tLApCEGKAj4A" target="_blank" rel="noopener">http://mp.weixin.qq.com/s/F7Niaa7nD1tLApCEGKAj4A</a></p>
+<h3 id="状态"><a href="#状态" class="headerlink" title="状态"></a>状态</h3><p><img src="/md_images/jk_java/31.png" alt=""></p>
+<h4 id="新建状态"><a href="#新建状态" class="headerlink" title="新建状态"></a>新建状态</h4><p>当用new操作符创建一个线程时。此时程序还没有开始运行线程中的代码。</p>
+<h4 id="就绪状态"><a href="#就绪状态" class="headerlink" title="就绪状态"></a>就绪状态</h4><p>一个新创建的线程并不自动开始运行，要执行线程，必须调用线程的start()方法。当线程对象调用start()方法即启动了线程，start()方法创建线程运行的系统资源，并调度线程运行run()方法。当start()方法返回后，线程就处于就绪状态。</p>
+<p>处于就绪状态的线程并不一定立即运行run()方法，线程还必须同其他线程竞争CPU时间，只有获得CPU时间才可以运行线程。因为在单CPU的计算机系统中，不可能同时运行多个线程，一个时刻仅有一个线程处于运行状态。因此此时可能有多个线程处于就绪状态。对多个处于就绪状态的线程是由Java运行时系统的线程调度程序来调度的。</p>
+<h4 id="运行状态（running）"><a href="#运行状态（running）" class="headerlink" title="运行状态（running）"></a>运行状态（running）</h4><p>当线程获得CPU时间后，它才进入运行状态，真正开始执行run()方法。</p>
+<h4 id="阻塞状态（blocked）"><a href="#阻塞状态（blocked）" class="headerlink" title="阻塞状态（blocked）"></a>阻塞状态（blocked）</h4><p>线程运行过程中，可能由于各种原因进入阻塞状态：</p>
+<ol>
+<li>线程通过调用sleep方法进入睡眠状态；<br>线程调用一个在I/O上被阻塞的操作，即该操作在输入输出操作完成之前不会返回到它的调用者；</li>
+<li>线程试图得到一个锁，而该锁正被其他线程持有；</li>
+<li>线程在等待某个触发条件； 所谓阻塞状态是正在运行的线程没有运行结束，暂时让出CPU，这时其他处于就绪状态的线程就可以获得CPU时间，进入运行状态。</li>
+</ol>
+<h4 id="死亡状态（dead）"><a href="#死亡状态（dead）" class="headerlink" title="死亡状态（dead）"></a>死亡状态（dead）</h4><p>有两个原因会导致线程死亡： </p>
+<ol>
+<li>run方法正常退出而自然死亡； </li>
+<li>一个未捕获的异常终止了run方法而使线程猝死； </li>
+</ol>
+<p>为了确定线程在当前是否存活着（就是要么是可运行的，要么是被阻塞了），需要使用isAlive方法，如果是可运行或被阻塞，这个方法返回true；如果线程仍旧是new状态且不是可运行的，或者线程死亡了，则返回false。</p>
 
       
     </div> -->
@@ -256,36 +253,31 @@
       
         
         
-          <ul>
-<li><p><strong>值传递（pass by value）</strong></p>
-<ul>
-<li>是指在调用函数时将实际参数<strong>复制</strong>一份传递到函数中，这样在函数中如果对<strong>参数</strong>进行修改，将不会影响到实际参数。</li>
-</ul>
-</li>
-<li><p><strong>引用传递（pass by reference）</strong></p>
-<ul>
-<li>是指在调用函数时将实际参数的地址<strong>直接</strong>传递到函数中，那么在函数中对<strong>参数</strong>所进行的修改，将影响到实际参数。</li>
-</ul>
-</li>
-</ul>
+          <h3 id="JAVA多线程实现的四种方式"><a href="#JAVA多线程实现的四种方式" class="headerlink" title="JAVA多线程实现的四种方式"></a>JAVA多线程实现的四种方式</h3><ol>
+<li>继承Thread类创建线程</li>
+<li>实现Runnable接口创建线程</li>
+<li>实现Callable接口通过FutureTask包装器来创建Thread线程</li>
+<li>使用ExecutorService、Callable、Future实现有返回结果的线程 线程状态</li>
+</ol>
 <a id="more"></a>
 <hr>
-<h4 id="口述"><a href="#口述" class="headerlink" title="口述"></a>口述</h4><p>先说基本类型和引用类型</p>
-<p>基本类型创建的时候,他的值都分别会放在栈中和常量池中的,而引用类型的话他的值是存放在堆内存中,然后栈存放的只是这个对象的地址值</p>
-<p>其实所以值传递,其实很多人都会有误区都认为传递的参数如果是普通类型，那就是值传递，如果是对象，那就是引用传递, </p>
-<p>并不是这样的,其实如果把值传递和引用传递放在C语言中,那就地址传递,其实Java也是可以这样理解的, 传递也是地址值, </p>
-<ul>
-<li><p><strong>在调用函数的时候,他会把实际参数的地址值拷贝一份传递到函数中</strong></p>
-<ul>
-<li><p>如果这个地址的实际参数是 <strong>在栈中</strong> 的话,他会 <strong>直接拷贝值</strong> ,所以函数内部对参数进行操作是不会对实际参数产生影响的,</p>
-</li>
-<li><p>如果拷贝的原 <strong>值在堆中的地址</strong> ,他会 <strong>根据该地址值去堆中对应的对象</strong> ,再进行操作,所以测函数内对值的操作是影响实际参数的. </p>
-</li>
-</ul>
-</li>
-</ul>
-<p><span style="background-color:#D5F3F4;">其实不管是值传递还是引用传递,其实都是一种求值策略,在求值策略中,叫做按共享传递, 所以简单点的来说, java的传递是值传递,而这个值是地址值,可以是栈中的值或堆中对象的引用罢了</span></p>
-<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p>文章 : <a href="http://mp.weixin.qq.com/s/F7Niaa7nD1tLApCEGKAj4A" target="_blank" rel="noopener">http://mp.weixin.qq.com/s/F7Niaa7nD1tLApCEGKAj4A</a></p>
+<h3 id="状态"><a href="#状态" class="headerlink" title="状态"></a>状态</h3><p><img src="/md_images/jk_java/31.png" alt=""></p>
+<h4 id="新建状态"><a href="#新建状态" class="headerlink" title="新建状态"></a>新建状态</h4><p>当用new操作符创建一个线程时。此时程序还没有开始运行线程中的代码。</p>
+<h4 id="就绪状态"><a href="#就绪状态" class="headerlink" title="就绪状态"></a>就绪状态</h4><p>一个新创建的线程并不自动开始运行，要执行线程，必须调用线程的start()方法。当线程对象调用start()方法即启动了线程，start()方法创建线程运行的系统资源，并调度线程运行run()方法。当start()方法返回后，线程就处于就绪状态。</p>
+<p>处于就绪状态的线程并不一定立即运行run()方法，线程还必须同其他线程竞争CPU时间，只有获得CPU时间才可以运行线程。因为在单CPU的计算机系统中，不可能同时运行多个线程，一个时刻仅有一个线程处于运行状态。因此此时可能有多个线程处于就绪状态。对多个处于就绪状态的线程是由Java运行时系统的线程调度程序来调度的。</p>
+<h4 id="运行状态（running）"><a href="#运行状态（running）" class="headerlink" title="运行状态（running）"></a>运行状态（running）</h4><p>当线程获得CPU时间后，它才进入运行状态，真正开始执行run()方法。</p>
+<h4 id="阻塞状态（blocked）"><a href="#阻塞状态（blocked）" class="headerlink" title="阻塞状态（blocked）"></a>阻塞状态（blocked）</h4><p>线程运行过程中，可能由于各种原因进入阻塞状态：</p>
+<ol>
+<li>线程通过调用sleep方法进入睡眠状态；<br>线程调用一个在I/O上被阻塞的操作，即该操作在输入输出操作完成之前不会返回到它的调用者；</li>
+<li>线程试图得到一个锁，而该锁正被其他线程持有；</li>
+<li>线程在等待某个触发条件； 所谓阻塞状态是正在运行的线程没有运行结束，暂时让出CPU，这时其他处于就绪状态的线程就可以获得CPU时间，进入运行状态。</li>
+</ol>
+<h4 id="死亡状态（dead）"><a href="#死亡状态（dead）" class="headerlink" title="死亡状态（dead）"></a>死亡状态（dead）</h4><p>有两个原因会导致线程死亡： </p>
+<ol>
+<li>run方法正常退出而自然死亡； </li>
+<li>一个未捕获的异常终止了run方法而使线程猝死； </li>
+</ol>
+<p>为了确定线程在当前是否存活着（就是要么是可运行的，要么是被阻塞了），需要使用isAlive方法，如果是可运行或被阻塞，这个方法返回true；如果线程仍旧是new状态且不是可运行的，或者线程死亡了，则返回false。</p>
 
         
       
@@ -313,7 +305,7 @@ var a = new Donate({
           </li>
           <li class="post-copyright-link">
           <strong>本文链接:  </strong>
-          <a href="/2018/12/30/backend/java_基础/值传递和引用传递/" target="_blank" title="值传递和引用传递">http://www.kuanger.top/2018/12/30/backend/java_基础/值传递和引用传递/</a>
+          <a href="/2019/04/01/backend/java_基础/thread/多线程--浅入多线程/" target="_blank" title="多线程--浅入多线程">http://www.kuanger.top/2019/04/01/backend/java_基础/thread/多线程--浅入多线程/</a>
           </li>
           <li class="post-copyright-license">
             <strong>版权声明:   </strong>
@@ -353,7 +345,7 @@ var a = new Donate({
       
       
         
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/多线程/">多线程</a></li></ul>
 
       
 
@@ -363,19 +355,19 @@ var a = new Donate({
     
 <nav id="article-nav">
   
-    <a href="/2018/12/30/backend/java_基础/fail-fast和fail-safe/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/05/04/backend/sql/一条SQL执行慢的原因(一)/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">上一篇</strong>
       <div class="article-nav-title">
         
-          fail-fast和fail-safe
+          一条SQL执行慢的原因 (一)
         
       </div>
     </a>
   
   
-    <a href="/2018/12/30/backend/java_基础/String、StringBuffer、StringBuilder有什么区别/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2019/04/01/backend/java_基础/design pattern/设计模式（二）/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">String、StringBuffer、StringBuilder有什么区别</div>
+      <div class="article-nav-title">设计模式（二）</div>
     </a>
   
 </nav>
@@ -389,7 +381,7 @@ var a = new Donate({
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#口述"><span class="nav-number">1.</span> <span class="nav-text">口述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考"><span class="nav-number">2.</span> <span class="nav-text">参考</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#JAVA多线程实现的四种方式"><span class="nav-number">1.</span> <span class="nav-text">JAVA多线程实现的四种方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#状态"><span class="nav-number">2.</span> <span class="nav-text">状态</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#新建状态"><span class="nav-number">2.1.</span> <span class="nav-text">新建状态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#就绪状态"><span class="nav-number">2.2.</span> <span class="nav-text">就绪状态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#运行状态（running）"><span class="nav-number">2.3.</span> <span class="nav-text">运行状态（running）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阻塞状态（blocked）"><span class="nav-number">2.4.</span> <span class="nav-text">阻塞状态（blocked）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#死亡状态（dead）"><span class="nav-number">2.5.</span> <span class="nav-text">死亡状态（dead）</span></a></li></ol></li></ol>
     
     </div>
   </aside>
